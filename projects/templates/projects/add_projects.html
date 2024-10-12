@@ -1,0 +1,23 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+<title> Добавление проекта </title>
+{% endblock %}
+
+{% block content%}
+<a href="/"> главная </a>
+<h1>Добавление проекта</h1>
+
+<form method = "post" >
+    {% csrf_token %}
+
+    {{ form.title }}
+    {{ form.stack }}
+    {{ form.description }}
+    {{ form.date_t }}
+
+    <button class="btn btn-success" type="sumbit">Добавить проект</button>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+<title>Все проекты </title>
+{% endblock %}
+
+{% block content%}
+<a href="/"> главная </a>
+<h1> {{ project.title }}</h1>
+<p> {{ project.stack }}</p>
+<p> {{ project.description }}</p>
+<p> {{ project.date_t }}</p>
+
+
+<a href = "/projects/add_projects"> добавить проект </a>
+<span> {{ error }}</span>
+
+{% endblock %}

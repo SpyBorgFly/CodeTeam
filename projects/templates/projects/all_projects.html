@@ -1,0 +1,18 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+<title>Все проекты </title>
+{% endblock %}
+
+{% block content%}
+<a href="/"> главная </a>
+<h1>Все проекты снизу должны быть</h1>
+
+{% for el in projects %}
+<a href = "{% url 'project-details' el.id %}" > <h3 > {{ el.title }} </h3> </a>
+<p>{{ el.stack }}</p>
+{% endfor %}
+<a href = "/projects/add_projects"> добавить проект </a>
+<span> {{ error }}</span>
+
+{% endblock %}
