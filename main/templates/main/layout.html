@@ -17,14 +17,16 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  {% if user.is_authenticated %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'profile' user.username %}">Профиль</a>
+                    </li>
+                  {% endif %}
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Профиль</a>
+                    <a class="nav-link" href="{% url 'all_projects' %}">Проекты</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'all_projects' %}"> проекты </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'about' %}"> о нас</a>
+                    <a class="nav-link" href="{% url 'about' %}">О нас</a>
                   </li>
                 </ul>
                 <form class="d-flex" role="search">
@@ -34,9 +36,8 @@
               </div>
             </div>
           </nav>
-</header>
+    </header>
     {% block content %}
-
     {% endblock %}
 </body>
 </html>

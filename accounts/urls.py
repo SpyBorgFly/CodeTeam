@@ -1,10 +1,9 @@
-from django.urls import path, include
-from . import views
-
+from django.urls import path
+from .views import RegisterView, LoginView, LogoutView, ProfileView
 
 urlpatterns = [
-    path('login', views.login_view, name='login'),
-    path('register', views.register, name='register')
-
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('profile/<str:username>/', ProfileView.as_view(), name='profile'),  # Измените маршрут для профиля
 ]
-
