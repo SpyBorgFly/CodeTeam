@@ -1,24 +1,33 @@
 {% extends 'main/layout.html' %}
 
 {% block title %}
-<title> Добавление проекта </title>
+<title>Добавление проекта</title>
 {% endblock %}
 
-{% block content%}
+{% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'projects/add_projects.css' %}">
 <h1>Добавление проекта</h1>
 
-<form method = "post" >
+<form method="post">
     {% csrf_token %}
-
-    {{ form.title }}
-    {{ form.stack }}
-    {{ form.description }}
-    {{ form.date_t }}
-
-    <button class="btn btn-success" type="sumbit">Добавить проект</button>
-
+    <div class="mb-3">
+        {{ form.title.label_tag }}
+        {{ form.title }}
+    </div>
+    <div class="mb-3">
+        {{ form.stack.label_tag }}
+        {{ form.stack }}
+    </div>
+    <div class="mb-3">
+        {{ form.description.label_tag }}
+        {{ form.description }}
+    </div>
+    <div class="mb-3">
+        <label for="id_date_t" class="form-label">Дата и время создания</label>
+        <input type="text" class="form-control" id="id_date_t" value="{{ form.instance.date_t }}" readonly>
+    </div>
+    <button class="btn btn-success" type="submit">Добавить проект</button>
 </form>
 
 {% endblock %}

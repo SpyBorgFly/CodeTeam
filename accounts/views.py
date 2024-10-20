@@ -48,6 +48,8 @@ class LogoutView(View):
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
     def get(self, request, username):
-        user = get_object_or_404(User, username=username)  # Получите пользователя по имени
-        return render(request, 'accounts/profile.html', {'user': user})  # Передайте пользователя в шаблон
+        user = get_object_or_404(User, username=username)
+        projects = user.projects.all()
+        is_owner = request.user == user
+        return render(request, 'accounts/profile.html', {'user': user, 'projects': projects, 'is_owner': is_owner})
 

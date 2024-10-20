@@ -5,8 +5,21 @@
 {% block content %}
 <h2>Профиль: {{ user.username }}</h2>
 <p>Email: {{ user.email }}</p>
+
+<h3>Текущие проекты: </h3>
+<ul>
+    {% for project in projects %}
+    <li>
+        <a href="{% url 'project-details' project.pk %}">{{ project.title }}</a>
+    </li>
+    {% empty %}
+    <li>Нет проектов</li>
+    {% endfor %}
+</ul>
+{% if is_owner %}
 <form method="post" action="{% url 'logout' %}">
     {% csrf_token %}
     <button type="submit">Выйти</button>
 </form>
+{% endif %}
 {% endblock %}

@@ -5,7 +5,7 @@ from django.forms import ModelForm, TextInput, DateTimeInput, Textarea
 class ProjectsForm(ModelForm):
     class Meta:
         model = Projects
-        fields = ['title', 'description', 'stack', 'date_t']
+        fields = ['title', 'description', 'stack']
         widgets = {
             "title": TextInput(attrs={
                 'class': "form-control",
@@ -18,10 +18,7 @@ class ProjectsForm(ModelForm):
             "description": Textarea(attrs={
                 'class': "form-control",
                 'placeholder': 'Описание'
-            }),
-            "date_t": DateTimeInput(attrs={
-                'class': "form-control",
-                'placeholder': 'Дата и время публикации'
             })
+
 
         }
