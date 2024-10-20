@@ -1,0 +1,28 @@
+/* Шляпа */
+.parents{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.project{
+    display: inline-block;
+    color: green;
+    justify-content: center;
+    border: 2px solid green;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.sec{
+    border: 2px solid green;
+    border-radius: 10px;
+    margin-left: 200px; /* Отступ слева */
+    margin-right: 200px; /* Отступ справа */
+    padding-top: 20px;
+    margin-bottom:30px;
+}
+
+.blockinf{
+    display: block;
+}
