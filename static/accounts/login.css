@@ -1,10 +1,7 @@
-/* Центрируем форму на странице */
+/* Общие стили */
 html, body {
-    height: 100%;
     margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 0;
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
 }
@@ -16,8 +13,10 @@ html, body {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px; /* Ограничиваем максимальную ширину */
+    max-width: 400px;
+    margin: 50px auto; /* Центрируем форму */
     text-align: center;
+    box-sizing: border-box;
 }
 
 /* Заголовок */
@@ -47,7 +46,7 @@ input[type="password"] {
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
-    box-sizing: border-box; /* Учитываем паддинг и бордер в размере */
+    box-sizing: border-box;
 }
 
 /* Кнопка входа */
@@ -78,9 +77,4 @@ input[type="password"] {
     .login-container {
         padding: 20px;
     }
-}
-
-
-h2{
-    background-color: aqua;
 }
