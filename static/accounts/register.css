@@ -1,0 +1,55 @@
+/* static/accounts/register.css */
+
+/* Общие стили для всей формы */
+form {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* Стили для заголовка */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Стили для полей формы */
+form p {
+    margin-bottom: 15px;
+}
+
+/* Стили для меток (labels) */
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Стили для инпутов */
+form input[type="text"],
+form input[type="password"],
+form input[type="email"] {
+    width: calc(100% - 10px);
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/* Стили для кнопки */
+form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #218838;
+}
