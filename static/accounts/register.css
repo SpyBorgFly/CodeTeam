@@ -1,55 +1,61 @@
-/* static/accounts/register.css */
 
-/* Общие стили для всей формы */
+/* Общие стили */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+}
+
 form {
-    width: 300px;
-    margin: 0 auto;
+    width: 450px;
+    margin: 30px auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* Стили для заголовка */
-h2 {
+h2{
     text-align: center;
     margin-bottom: 20px;
+    color: #333;
 }
 
-/* Стили для полей формы */
 form p {
     margin-bottom: 15px;
 }
 
-/* Стили для меток (labels) */
 form label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: #555;
 }
 
-/* Стили для инпутов */
 form input[type="text"],
 form input[type="password"],
 form input[type="email"] {
     width: calc(100% - 10px);
-    padding: 5px;
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
 }
 
-/* Стили для кнопки */
 form button {
     width: 100%;
     padding: 10px;
-    background-color: #28a745;
+    background-color: #4CAF50;
     border: none;
-    border-radius: 3px;
+    border-radius: 4px;
     color: white;
     font-size: 16px;
     cursor: pointer;
 }
 
 form button:hover {
-    background-color: #218838;
+    background-color:  #45a049;
 }
