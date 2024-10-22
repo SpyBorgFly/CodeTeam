@@ -24,9 +24,6 @@
     {% endfor %}
 </ul>
 {% if is_owner %}
-<form method="post" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit">Выйти</button>
-</form>
+
 {% endif %}
 {% endblock %}

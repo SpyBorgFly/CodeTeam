@@ -20,7 +20,9 @@
     $(document).ready(function() {
         $('#id_programming_languages').select2({
             placeholder: "Выберите языки программирования",
-            allowClear: true
+            allowClear: true,
+            width: '100%',  // Установим ширину на 100%
+            dropdownAutoWidth: true  // Автоширина выпадающего списка
         });
     });
 </script>
