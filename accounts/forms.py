@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import UserProfile
 
-
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
@@ -15,3 +14,8 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['bio', 'location', 'programming_languages', 'github']
+        widgets = {
+            'programming_languages': forms.SelectMultiple(attrs={'id': 'id_programming_languages'}),
+        }
+
+        
