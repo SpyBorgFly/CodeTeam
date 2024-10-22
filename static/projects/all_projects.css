@@ -1,34 +1,128 @@
-/* Шляпа */
-body{
-    background-color: #f7f7f7;
+/* Основной фон и цвет текста */
+body {
+    background-color: #1c1c1e;
+    color: #e5e5e5;
+    font-family: 'Arial', sans-serif;
 }
-.parents{
-    margin-top: 10px;
+
+/* Секции и контейнеры */
+.sec {
+    border: 2px solid #333;
+    border-radius: 10px;
+    margin: 20px 200px;
+    margin-top: 60px;
+    padding: 20px;
+    background-color: #2c2c2e;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Стили фильтров */
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #2c2c2e;
+}
+
+.filter-select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #333;
+    background-color: #2c2c2e;
+    color: #e5e5e5;
+    margin-right: 20px;
+}
+
+.filter-divider {
+    border: 1px solid #444;
+    margin: 20px 0;
+}
+
+/* Кнопка фильтра */
+.btn-filter {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-filter:hover {
+    background-color: #1976D2;
+}
+
+/* Блоки проектов в виде сетки */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.project-card {
+    background-color: #333;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.project-title {
+    color: #bb86fc;
+    font-size: 1.5rem;
+}
+
+.project-stack, .project-date, .project-type {
+    color: #a0a0a0;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+/* Кнопки */
+.btn-add-project {
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-add-project:hover {
+    background-color: #3700b3;
+}
+
+/* Сообщение об ошибке */
+.error-message {
+    color: #ff3333;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.1rem;
+}
+
+/* Стили для ссылок и наведения */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Header */
+.header-section {
     display: flex;
     justify-content: center;
+    padding: 20px;
+    background-color: #1c1c1e;
+    border-bottom: 2px solid #333;
 }
-
-.project{
-    display: inline-block;
-    color: gray;
-    justify-content: center;
-    border: 2px solid gray;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.sec{
-    border: 2px solid gray;
-    border-radius: 10px;
-    margin-left: 200px; /* Отступ слева */
-    margin-right: 200px; /* Отступ справа */
-    padding-top: 20px;
-    margin-bottom:30px;
-    background-color: #fff;
-}
-
-.blockinf{
-    display: block;
-}
-

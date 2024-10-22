@@ -1,0 +1,14 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Редактирование профиля{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'accounts/edit_profile.css' %}">
+<h2>Редактирование профиля</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить изменения</button>
+</form>
+{% endblock %}

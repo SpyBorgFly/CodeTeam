@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import UserProfile
@@ -49,7 +49,25 @@ class LogoutView(View):
 class ProfileView(View):
     def get(self, request, username):
         user = get_object_or_404(User, username=username)
+        user_profile = get_object_or_404(UserProfile, user=user)
         projects = user.projects.all()
         is_owner = request.user == user
-        return render(request, 'accounts/profile.html', {'user': user, 'projects': projects, 'is_owner': is_owner})
 
+        return render(request, 'accounts/profile.html', {'user': user, 'projects': projects, 'is_owner': is_owner,
+                                                         'user_profile': user_profile})
+
+
+@method_decorator(login_required, name='dispatch')
+class EditProfileView(View):
+    def get(self, request, username):
+        user = get_object_or_404(User, username=username)
+        form = UserProfileForm(instance=user.userprofile)
+        return render(request, 'accounts/edit_profile.html', {'form': form})
+
+    def post(self, request, username):
+        user = get_object_or_404(User, username=username)
+        form = UserProfileForm(request.POST, request.FILES, instance=user.userprofile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile', username=user.username)
+        return render(request, 'accounts/edit_profile.html', {'form': form})

@@ -3,8 +3,15 @@
 {% block title %}Профиль пользователя{% endblock %}
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'accounts/profile.css' %}">
 <h2>Профиль: {{ user.username }}</h2>
 <p>Email: {{ user.email }}</p>
+<p>Github_link: {{ user_profile.github }}</p>
+<p>Bio: {{ user_profile.bio }}</p>
+<p>Location: {{ user_profile.location }}</p>
+<p>Programming Languages: {{ user_profile.programming_languages }}</p>
+
 
 <h3>Текущие проекты: </h3>
 <ul>

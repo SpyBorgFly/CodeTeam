@@ -1,36 +1,73 @@
-
 {% extends 'main/layout.html' %}
 
 {% block title %}
-<title>Все проекты </title>
+<title>Все проекты</title>
 {% endblock %}
 
-
-{% block content%}
-
+{% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'projects/all_projects.css' %}">
 
-<header>
+<header class="header-section">
     <div class="parents">
         <h1 class="project">Проекты</h1>
     </div>
 </header>
 
-<section>
-    <div class="sec">
-        
-        <div class="content_site">
-            <div class="blockinf">
-                {% for el in projects %}
-                <a href = "{% url 'project-details' el.id %}" > <h3 > {{ el.title }} </h3> </a>
-                <p>{{ el.stack }}</p>
-                {% endfor %}
+<section class="sec">
+    <!-- Фильтры в контейнере, разделенные линией -->
+    <div class="filter-container">
+        <form method="GET" action=".">
+            <!-- Фильтр по дате -->
+            <label for="date">Дата:</label>
+            <select name="date" id="date" class="filter-select">
+                <option value="recent">Недавно добавленные</option>
+                <option value="old">Старые проекты</option>
+            </select>
+
+            <!-- Фильтр по языку программирования -->
+            <label for="stack">Язык программирования:</label>
+            <select name="stack" id="stack" class="filter-select">
+                <option value="python">Python</option>
+                <option value="javascript">JavaScript</option>
+                <option value="java">Java</option>
+                <option value="csharp">C#</option>
+                <option value="ruby">Ruby</option>
+            </select>
+
+            <!-- Фильтр по типу разработки -->
+            <label for="type">Тип разработки:</label>
+            <select name="type" id="type" class="filter-select">
+                <option value="frontend">Frontend</option>
+                <option value="backend">Backend</option>
+                <option value="ml">Machine Learning</option>
+                <option value="fullstack">Fullstack</option>
+                <option value="mobile">Mobile</option>
+            </select>
+
+            <button type="submit" class="btn btn-filter">Фильтровать</button>
+        </form>
+    </div>
+
+    <hr class="filter-divider"> <!-- Разделительная линия -->
+
+    <div class="content_site">
+        <div class="projects-grid">
+            {% for el in projects %}
+            <div class="project-card">
+                <a href="{% url 'project-details' el.id %}">
+                    <h3 class="project-title">{{ el.title }}</h3>
+                </a>
+                <p class="project-stack">{{ el.stack }}</p>
+                <p class="project-date">{{ el.date_created }}</p>
+                <p class="project-type">{{ el.type }}</p>
             </div>
-            <a href="/projects/add_projects">
-                <button type="button" class="btn btn-outline-success">Добавить проект</button> </a>
-            <span> {{ error }}</span>
+            {% endfor %}
         </div>
+        <a href="/projects/add_projects">
+            <button type="button" class="btn btn-add-project">Добавить проект</button>
+        </a>
+        <span class="error-message">{{ error }}</span>
     </div>
 </section>
 
