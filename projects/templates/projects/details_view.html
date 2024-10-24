@@ -21,10 +21,12 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Описание: {{ project.description }}</li>
                         <li class="list-group-item">Дата создания: {{ project.date_t }}</li>
+                        <li class="list-group-item">
+                            Создатель: <a href="{% url 'profile' project.creator.username %}">{{ project.creator.username }}</a>
+                        </li>
                     </ul>
                     <div class="card-body">
-                        <a href="#" class="card-link">Подробнее</a>
-                        <a href="#" class="card-link">Другие проекты</a>
+                        <a href="#" class="card-link"></a>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,82 @@
+/* Стилизация контейнера Select2 */
+.select2-container--default .select2-selection--multiple {
+    border: 1px solid #ced4da; /* Граница */
+    border-radius: 0.25rem; /* Скругленные углы */
+    padding: 0.5rem; /* Отступы */
+    background-color: #f8f9fa; /* Цвет фона */
+}
+
+/* Стилизация выбранного элемента */
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #007bff; /* Цвет фона выбранного элемента */
+    border: 1px solid #007bff; /* Цвет границы */
+    color: white; /* Цвет текста */
+    border-radius: 0.25rem; /* Скругление углов */
+    padding: 0.2rem 0.5rem; /* Отступы */
+    margin: 0.2rem; /* Отступ между выбранными элементами */
+}
+
+/* Стилизация для выпадающего списка */
+.select2-container--default .select2-selection--multiple .select2-selection__placeholder {
+    color: #6c757d; /* Цвет плейсхолдера */
+}
+
+/* Стилизация стрелки выпадающего списка */
+.select2-container--default .select2-selection--multiple .select2-selection__arrow {
+    height: 100%; /* Высота стрелки */
+}
+
+/* Стилизация для выпадающего списка (опции) */
+.select2-container--default .select2-results__option {
+    padding: 0.5rem 1rem; /* Отступы для опций */
+}
+
+/* Hover-эффект для опций в списке */
+.select2-container--default .select2-results__option--highlighted {
+    background-color: #007bff; /* Цвет фона при наведении */
+    color: white; /* Цвет текста при наведении */
+}
+
+/* Обеспечиваем, чтобы выпадающий список не накладывался на другие элементы */
+.select2-container--default .select2-results {
+    z-index: 1000; /* Обеспечиваем, что выпадающий список выше остальных элементов */
+}
+.modal {
+    display: none; /* Скрыть модальное окно по умолчанию */
+    position: fixed; /* Окно фиксировано по отношению к окну браузера */
+    z-index: 1000; /* Показать поверх других элементов */
+    left: 0;
+    top: 0;
+    width: 100%; /* Полная ширина */
+    height: 100%; /* Полная высота */
+    overflow: auto; /* Включить прокрутку, если необходимо */
+    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+}
+
+/* Стили для содержимого модального окна */
+.modal-content {
+    background-color: #fefefe; /* Цвет фона */
+    margin: 15% auto; /* Центрировать окно */
+    padding: 20px; /* Отступы */
+    border: 1px solid #888; /* Граница */
+    width: 300px; /* Ширина окна */
+    border-radius: 5px; /* Скругление углов */
+}
+
+/* Кнопка закрытия */
+.close-button {
+    color: #aaa; /* Цвет текста */
+    float: right; /* Правый край */
+    font-size: 28px; /* Размер шрифта */
+    font-weight: bold; /* Жирный текст */
+}
+
+/* Изменения при наведении на кнопку закрытия */
+.close-button:hover,
+.close-button:focus {
+    color: black; /* Цвет текста при наведении */
+    text-decoration: none; /* Убрать подчеркивание */
+    cursor: pointer; /* Курсор указатель */
+}
+
+/* Стили для Select2 */
