@@ -7,31 +7,26 @@ from django.utils import timezone
 def all_projects(request):
     projects = Projects.objects.all()
 
-    if request.method == 'GET':
-        form = ProjectFilterForm(request.GET)
-        if form.is_valid():
-            date_filter = form.cleaned_data.get('date')
-            stack_filter = form.cleaned_data.get('stack')
-            type_filter = form.cleaned_data.get('type')
+    date_filter = request.GET.get('date')
+    stack_filter = request.GET.get('stack')
+    type_filter = request.GET.get('type')
+    hashtag_filter = request.GET.get('hashtag')
 
-            if date_filter == 'recent':
-                projects = projects.order_by('-date_t')
-            elif date_filter == 'old':
-                projects = projects.order_by('date_t')
+    if date_filter == 'recent':
+        projects = projects.order_by('-date_t')
+    elif date_filter == 'old':
+        projects = projects.order_by('date_t')
 
-            if stack_filter:
-                projects = projects.filter(stack__icontains=stack_filter)
+    if stack_filter:
+        projects = projects.filter(stack__icontains=stack_filter)
 
-            if type_filter:
-                projects = projects.filter(type=type_filter)
+    if type_filter:
+        projects = projects.filter(type__icontains=type_filter)
+    
+    if hashtag_filter:
+        projects = projects.filter(hashtag__icontains=hashtag_filter)
 
-    else:
-        form = ProjectFilterForm()
-
-    context = {
-        'projects': projects,
-        'form': form
-    }
+    context = {'projects': projects}
     return render(request, 'projects/all_projects.html', context)
 
 class ProjectsDetailView(DetailView):

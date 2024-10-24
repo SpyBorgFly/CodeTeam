@@ -5,7 +5,7 @@ from django import forms
 class ProjectsForm(ModelForm):
     class Meta:
         model = Projects
-        fields = ['title', 'description', 'stack']
+        fields = ['title', 'description', 'stack', 'type', 'hashtag']
         widgets = {
             "title": TextInput(attrs={
                 'class': "form-control",
@@ -18,7 +18,16 @@ class ProjectsForm(ModelForm):
             "description": Textarea(attrs={
                 'class': "form-control",
                 'placeholder': 'Описание'
-            })
+            }),
+            "type": Textarea(attrs={
+                'class': "form-control",
+                'placeholder': 'Тип разработки'
+            }),
+            "hashtag": Textarea(attrs={
+                'class': "form-control",
+                'placeholder': 'Хэштеги'
+            }),
+
 
 
         }
@@ -38,7 +47,7 @@ class ProjectFilterForm(forms.Form):
         ('ruby', 'Ruby'),
         ('go', 'Go'),
         ('php', 'PHP'),
-        # ... добавьте остальные языки
+        
     ]
 
     date = forms.ChoiceField(choices=date_choices, required=False)

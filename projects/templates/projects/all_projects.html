@@ -51,6 +51,17 @@
                 <option value="mobile">Mobile</option>
             </select>
 
+            <!-- Фильтр по hashtag -->
+            <label for="hashtag">Hashtag:</label>
+            <select name="hashtag" id="hashtag" class="filter-select">
+                <option value="">Без фильтра</option>
+                <!-- Добавьте здесь свои значения hashtag -->
+                <option value="django">Django</option>
+                <option value="react">React</option>
+                <option value="ai">AI</option>
+                <option value="ml">Machine Learning</option>
+            </select>
+
             <button type="submit" class="btn btn-filter">Фильтровать</button>
         </form>
     </div>
@@ -67,6 +78,7 @@
                 <p class="project-stack">{{ el.stack }}</p>
                 <p class="project-date">{{ el.date_created }}</p>
                 <p class="project-type">{{ el.type }}</p>
+                <p class="project-hashtag">{{ el.hashtag }}</p>
             </div>
             {% endfor %}
         </div>

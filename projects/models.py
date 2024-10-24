@@ -9,7 +9,9 @@ class Projects(models.Model):
     stack = models.TextField('Языки')
     date_t = models.DateTimeField(default=timezone.now, editable=False)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects')
-   
+    type = models.CharField('Тип разработки', max_length=50, blank=True, null=True)
+    hashtag = models.CharField('Hashtag', max_length=50, blank=True, null=True)
+    
     def __str__(self):
         return self.title
 
