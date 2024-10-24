@@ -16,6 +16,22 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
+/* Кнопка для показа/скрытия фильтров */
+.btn-filter-toggle {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-filter-toggle:hover {
+    background-color: #1976D2;
+    text-decoration: none; /* Убираем подчеркивание при наведении */
+}
+
 /* Стили фильтров */
 .filter-container {
     display: flex;
@@ -52,12 +68,12 @@ body {
 
 .btn-filter:hover {
     background-color: #1976D2;
+    text-decoration: none; /* Убираем подчеркивание при наведении */
 }
 
-/* Блоки проектов в виде сетки */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: 1fr; /* Один проект на строке */
     gap: 20px;
 }
 
@@ -110,12 +126,12 @@ body {
 
 /* Стили для ссылок и наведения */
 a {
-    text-decoration: none;
+    text-decoration: none; /* Убираем подчеркивание по умолчанию */
     color: inherit;
 }
 
 a:hover {
-    text-decoration: underline;
+    text-decoration: none; /* Убираем подчеркивание при наведении */
 }
 
 /* Header */

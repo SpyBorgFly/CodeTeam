@@ -15,8 +15,11 @@
 </header>
 
 <section class="sec">
-    <!-- Фильтры в контейнере, разделенные линией -->
-    <div class="filter-container">
+    <!-- Кнопка для показа фильтров -->
+    <button type="button" id="filter-toggle-btn" class="btn btn-filter-toggle">Фильтр</button>
+
+    <!-- Контейнер с фильтрами (скрыт по умолчанию) -->
+    <div class="filter-container" id="filter-container" style="display: none;">
         <form method="GET" action=".">
             <!-- Фильтр по дате -->
             <label for="date">Дата:</label>
@@ -70,5 +73,17 @@
         <span class="error-message">{{ error }}</span>
     </div>
 </section>
+
+<script>
+// Показать/скрыть фильтры
+document.getElementById('filter-toggle-btn').addEventListener('click', function() {
+    var filterContainer = document.getElementById('filter-container');
+    if (filterContainer.style.display === 'none') {
+        filterContainer.style.display = 'flex';
+    } else {
+        filterContainer.style.display = 'none';
+    }
+});
+</script>
 
 {% endblock %}
