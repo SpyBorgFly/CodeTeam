@@ -9,20 +9,54 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
-<h2>Редактирование профиля</h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Сохранить изменения</button>
-</form>
+<div class="login-container">
+    <h2>Редактирование профиля</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" id="username" name="username" value="{{ user.username }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="github">Github Link:</label>
+            <input type="text" id="github" name="github" value="{{ user_profile.github }}">
+        </div>
+
+        <div class="form-group">
+            <label for="bio">Биография:</label>
+            <textarea id="bio" name="bio" rows="4" required>{{ user_profile.bio }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="location">Местоположение:</label>
+            <input type="text" id="location" name="location" value="{{ user_profile.location }}">
+        </div>
+
+        <div class="form-group">
+            <label for="programming_languages">Языки программирования:</label>
+            <select id="programming_languages" name="programming_languages" multiple>
+                <!-- Опции для языков программирования -->
+            </select>
+        </div>
+
+        <button type="submit" class="login-btn">Сохранить изменения</button>
+    </form>
+</div>
 
 <script>
     $(document).ready(function() {
-        $('#id_programming_languages').select2({
+        $('#programming_languages').select2({
             placeholder: "Выберите языки программирования",
             allowClear: true,
-            width: '100%',  // Установим ширину на 100%
-            dropdownAutoWidth: true  // Автоширина выпадающего списка
+            width: '100%',
+            dropdownAutoWidth: true
         });
     });
 </script>

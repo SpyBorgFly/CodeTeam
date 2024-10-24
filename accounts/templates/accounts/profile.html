@@ -5,25 +5,30 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'accounts/profile.css' %}">
-<h2>Профиль: {{ user.username }}</h2>
-<p>Email: {{ user.email }}</p>
-<p>Github_link: {{ user_profile.github }}</p>
-<p>Bio: {{ user_profile.bio }}</p>
-<p>Location: {{ user_profile.location }}</p>
-<p>Programming Languages: {{ user_profile.programming_languages }}</p>
 
+<div class="profile-container">
+    <h2 class="profile-title">Профиль: {{ user.username }}</h2>
+    <div class="profile-info">
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Github Link:</strong> <a href="{{ user_profile.github }}" target="_blank">{{ user_profile.github }}</a></p>
+        <p><strong>Bio:</strong> {{ user_profile.bio }}</p>
+        <p><strong>Location:</strong> {{ user_profile.location }}</p>
+        <p><strong>Programming Languages:</strong> {{ user_profile.programming_languages }}</p>
+    </div>
 
-<h3>Текущие проекты: </h3>
-<ul>
-    {% for project in projects %}
-    <li>
-        <a href="{% url 'project-details' project.pk %}">{{ project.title }}</a>
-    </li>
-    {% empty %}
-    <li>Нет проектов</li>
-    {% endfor %}
-</ul>
-{% if is_owner %}
+    <h3 class="projects-title">Текущие проекты:</h3>
+    <ul class="projects-list">
+        {% for project in projects %}
+        <li>
+            <a href="{% url 'project-details' project.pk %}">{{ project.title }}</a>
+        </li>
+        {% empty %}
+        <li>Нет проектов</li>
+        {% endfor %}
+    </ul>
 
-{% endif %}
+    {% if is_owner %}
+    <a href="{% url 'edit_profile' user.username %}" class="btn btn-edit">Редактировать профиль</a>
+    {% endif %}
+</div>
 {% endblock %}
