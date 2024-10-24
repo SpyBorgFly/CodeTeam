@@ -1,0 +1,96 @@
+/* Общие стили */
+body {
+    background-color: #1c1c1e; /* Темный фон страницы */
+    color: #e5e5e5; /* Цвет текста */
+    font-family: 'Roboto', sans-serif; /* Современный шрифт */
+    margin: 0;
+    padding: 0;
+}
+
+/* Секция проектов */
+.projects-section {
+    padding: 40px; /* Увеличиваем отступ */
+    display: flex; /* Центрируем содержимое */
+    justify-content: center; /* Центрируем содержимое */
+}
+
+/* Контейнер для карточек проектов */
+.projects-container {
+    display: flex;
+    justify-content: center; /* Центрируем карточки */
+    flex-wrap: wrap; /* Позволяем карточкам переноситься на следующую строку */
+}
+
+/* Стили карточки проекта */
+.project-card {
+    position: relative; /* Относительное позиционирование для overlay */
+    background: linear-gradient(135deg, rgba(44, 44, 46, 0.9), rgba(34, 193, 195, 0.7)); /* Градиентный фон */
+    border-radius: 20px; /* Скругленные углы */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7); /* Тень для глубины */
+    margin: 20px; /* Отступы между карточками */
+    padding: 40px; /* Увеличиваем отступы внутри карточки */
+    max-width: 900px; /* Увеличиваем максимальную ширину карточки */
+    width: 100%; /* Занимаем всю доступную ширину */
+    color: white; /* Белый цвет текста */
+    transition: transform 0.3s; /* Эффект при наведении */
+}
+
+.project-card:hover {
+    transform: translateY(-5px); /* Подъем карточки при наведении */
+}
+
+/* Информация о проекте */
+.project-info {
+    position: relative; /* Для правильного отображения информации */
+}
+
+/* Заголовок проекта */
+.project-title {
+    font-size: 2.5rem; /* Размер шрифта заголовка */
+    color: white; /* Цвет заголовка */
+    margin: 0; /* Убираем отступы */
+}
+
+/* Стили для стека технологий */
+.project-stack {
+    font-size: 1.5rem; /* Размер шрифта стека */
+    color: #ffffff; /* Цвет стека */
+    margin-bottom: 10px; /* Отступ снизу */
+}
+
+/* Стили для деталей проекта */
+.project-details {
+    list-style: none; /* Убираем маркеры списка */
+    padding: 0; /* Убираем отступы */
+    margin-bottom: 15px; /* Отступ снизу */
+}
+
+.project-details li {
+    margin-bottom: 10px; /* Отступы между строками */
+    font-size: 1.1rem; /* Размер шрифта деталей */
+}
+
+/* Стили для кнопки добавления проекта */
+.add-project-btn {
+    display: inline-block;
+    padding: 12px 25px; /* Отступы */
+    background-color: #6200ea; /* Фиолетовый цвет */
+    color: white; /* Цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+    border-radius: 5px; /* Скругленные углы */
+    transition: background-color 0.3s; /* Эффект перехода */
+    margin-top: 10px; /* Отступ сверху */
+    font-size: 1rem; /* Размер шрифта */
+}
+
+.add-project-btn:hover {
+    background-color: #3700b3; /* Темно-фиолетовый при наведении */
+}
+
+/* Сообщение об ошибке */
+.error-message {
+    color: #ff3333; /* Красный цвет для ошибок */
+    text-align: center; /* Центрируем текст */
+    margin-top: 10px; /* Отступ сверху */
+}
+ 
