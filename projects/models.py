@@ -9,10 +9,12 @@ class Projects(models.Model):
     stack = models.TextField('Языки')
     date_t = models.DateTimeField(default=timezone.now, editable=False)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects')
+   
     def __str__(self):
         return self.title
 
     class Meta:
         verbose_name = 'Проект'
         verbose_name_plural = 'Проекты'
+
 

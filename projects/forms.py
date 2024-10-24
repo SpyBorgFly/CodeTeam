@@ -1,6 +1,6 @@
 from .models import Projects
 from django.forms import ModelForm, TextInput, DateTimeInput, Textarea
-
+from django import forms
 
 class ProjectsForm(ModelForm):
     class Meta:
@@ -22,3 +22,25 @@ class ProjectsForm(ModelForm):
 
 
         }
+
+class ProjectFilterForm(forms.Form):
+    date_choices = [
+        ('recent', 'Недавно добавленные'),
+        ('old', 'Старые проекты'),
+    ]
+    
+    stack_choices = [
+        ('python', 'Python'),
+        ('javascript', 'JavaScript'),
+        ('java', 'Java'),
+        ('csharp', 'C#'),
+        ('cpp', 'C++'),
+        ('ruby', 'Ruby'),
+        ('go', 'Go'),
+        ('php', 'PHP'),
+        # ... добавьте остальные языки
+    ]
+
+    date = forms.ChoiceField(choices=date_choices, required=False)
+    stack = forms.ChoiceField(choices=stack_choices, required=False)
+    
