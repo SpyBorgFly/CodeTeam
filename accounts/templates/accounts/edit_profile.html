@@ -20,11 +20,6 @@
         </div>
 
         <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="{{ user.email }}" required>
-        </div>
-
-        <div class="form-group">
             <label for="github">Github Link:</label>
             <input type="text" id="github" name="github" value="{{ user_profile.github }}">
         </div>
@@ -42,7 +37,9 @@
         <div class="form-group">
             <label for="programming_languages">Языки программирования:</label>
             <select id="programming_languages" name="programming_languages" multiple>
-                <!-- Опции для языков программирования -->
+                {% for code, name in user_profile.PROGRAMMING_LANGUAGES_CHOICES %}
+                    <option value="{{ code }}" {% if code in user_profile.programming_languages %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
             </select>
         </div>
 
