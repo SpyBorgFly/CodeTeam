@@ -24,6 +24,14 @@
         {{ form.description }}
     </div>
     <div class="mb-3">
+        {{ form.type.label_tag }}
+        {{ form.type }}
+    </div>
+    <div class="mb-3">
+        {{ form.hashtag.label_tag }}
+        {{ form.hashtag }}
+    </div>
+    <div class="mb-3">
         <label for="id_date_t" class="form-label">Дата и время создания</label>
         <input type="text" class="form-control" id="id_date_t" value="{{ form.instance.date_t }}" readonly>
     </div>

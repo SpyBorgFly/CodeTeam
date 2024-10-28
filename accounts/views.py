@@ -61,13 +61,17 @@ class ProfileView(View):
 class EditProfileView(View):
     def get(self, request, username):
         user = get_object_or_404(User, username=username)
-        form = UserProfileForm(instance=user.userprofile)
-        return render(request, 'accounts/edit_profile.html', {'form': form})
+        user_profile = user.userprofile
+        form = UserProfileForm(instance=user_profile)
+        return render(request, 'accounts/edit_profile.html', {'form': form, 'user_profile': user_profile, 'user': user})
 
     def post(self, request, username):
         user = get_object_or_404(User, username=username)
-        form = UserProfileForm(request.POST, request.FILES, instance=user.userprofile)
+        user_profile = user.userprofile
+        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
             form.save()
             return redirect('profile', username=user.username)
-        return render(request, 'accounts/edit_profile.html', {'form': form})
+        return render(request, 'accounts/edit_profile.html', {'form': form, 'user_profile': user_profile, 'user': user})
+    
+    

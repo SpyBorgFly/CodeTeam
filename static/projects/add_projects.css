@@ -1,0 +1,81 @@
+/* Основной стиль страницы */
+body {
+    background-color: #1c1c1e;
+    color: #e5e5e5;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #bb86fc;
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 20px;
+}
+
+/* Стиль формы */
+form {
+    background-color: #2c2c2e;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Поля ввода и текстовые области */
+.mb-3 input[type="text"],
+.mb-3 textarea,
+.mb-3 select {
+    width: 100%;
+    padding: 12px;
+    background-color: #3a3a3c;
+    color: #e5e5e5;
+    font-size: 1rem;
+    border: 1px solid #444;
+    border-radius: 8px;
+    transition: border 0.3s;
+}
+
+.mb-3 input[type="text"]:focus,
+.mb-3 textarea:focus,
+.mb-3 select:focus {
+    border-color: #bb86fc;
+    outline: none;
+}
+
+/* Стили для меток */
+form label {
+    font-size: 0.9rem;
+    color: #bb86fc;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Поле для даты (только для чтения) */
+#id_date_t {
+    background-color: #3a3a3c;
+    color: #e5e5e5;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: not-allowed;
+}
+
+/* Кнопка отправки */
+.btn-success {
+    width: 100%;
+    padding: 12px;
+    background-color: #6200ea;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.btn-success:hover {
+    background-color: #3700b3;
+}

@@ -15,7 +15,5 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ['bio', 'location', 'programming_languages', 'github']
         widgets = {
-            'programming_languages': forms.SelectMultiple(attrs={'id': 'id_programming_languages'}),
+            'programming_languages': forms.SelectMultiple(attrs={'class': 'select2'}),
         }
-
-        
