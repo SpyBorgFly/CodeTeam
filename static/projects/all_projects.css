@@ -139,7 +139,6 @@ a:hover {
     display: flex;
     justify-content: center;
     padding: 20px;
-    
 }
 
 /* Кнопки "Читать далее" и "Свернуть" */
@@ -170,3 +169,162 @@ a:hover {
     color: #bb86fc;  /* Цвет ссылки при наведении */
 }
 
+/* Стилизация выпадающего списка Select2 */
+.select2-container {
+    width: 100% !important; /* Применяем ширину 100%, чтобы соответствовать остальным элементам */
+}
+
+.select2-selection {
+    height: 40px; /* Устанавливаем высоту для соответствия остальным полям */
+    border: 1px solid #ccc; /* Цвет рамки, как у других полей */
+    border-radius: 5px; /* Скругление углов */
+    background-color: #f9f9f9; /* Цвет фона, чтобы совпадал с другими элементами */
+    font-size: 14px; /* Размер шрифта */
+    color: #333; /* Цвет текста */
+    padding: 5px 10px; /* Отступы внутри поля */
+}
+
+/* Убираем выделение синего цвета при фокусе */
+.select2-selection:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: #aaa; /* Цвет рамки при фокусе */
+}
+
+/* Стилизация выпадающего списка Select2 */
+.select2-dropdown {
+    border-radius: 5px;
+    background-color: #fff; /* Белый фон выпадающего списка */
+    border: 1px solid #ccc; /* Рамка */
+    font-size: 14px;
+    color: #333;
+}
+
+/* Стилизация активного элемента в выпадающем списке */
+.select2-results__option[aria-selected=true] {
+    background-color: #e5e5e5; /* Цвет фона активного элемента */
+    color: #333;
+}
+
+/* Стилизация hover для элементов выпадающего списка */
+.select2-results__option:hover {
+    background-color: #f0f0f0; /* Цвет фона при наведении */
+    color: #333;
+}
+
+/* Стилизация поля ввода (когда выбрано "Свой запрос") */
+.select2-search__field {
+    padding: 5px;
+    font-size: 14px;
+}
+
+/* Скрытие стрелочки у Select2, если не нужна */
+.select2-selection__arrow {
+    display: none;
+}
+
+/* Стиль для элементов Select2 */
+.select2-container .select2-selection--single {
+    background-color: #2c2c2e !important; /* Серый фон для выпадающего списка */
+    border: 2px solid #333 !important; /* Темная рамка */
+    color: #e5e5e5 !important; /* Цвет текста */
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    color: #e5e5e5 !important; /* Цвет текста в поле */
+}
+
+.select2-container .select2-selection--single .select2-selection__arrow {
+    border-color: #333 !important; /* Цвет стрелки */
+}
+
+.select2-container--open .select2-results__option {
+    background-color: #333 !important; /* Фон выпадающего списка */
+    color: #e5e5e5 !important; /* Цвет текста */
+}
+
+.select2-container--open .select2-results__option--highlighted {
+    background-color: #2196F3 !important; /* Подсветка при наведении */
+    color: white !important;
+}
+
+/* Дополнительный стиль для input даты */
+input[type="date"] {
+    background-color: #2c2c2e;
+    color: #e5e5e5;
+    border: 2px solid #333;
+    padding: 10px;
+    border-radius: 5px;
+}
+/* Стили для контейнера фильтров */
+.filter-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Строки фильтров в одну строку */
+.filter-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px;
+    width: 100%;
+}
+
+.filter-item {
+    flex: 1 1 22%;
+    margin-bottom: 10px;
+}
+
+/* Стили для элементов Select2 */
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-selection {
+    background-color: #e9ecef;
+    border: 1px solid #ccc;
+    color: #333;
+    height: 36px;
+    padding: 5px;
+}
+
+/* Стили для ввода текста */
+.filter-input {
+    width: 100%;
+    height: 36px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    background-color: #e9ecef;
+    color: #333;
+}
+
+/* Стили для кнопок */
+.btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Кнопка фильтра внизу */
+.filter-form button {
+    margin-top: 20px;
+}
+
+/* Стили для хештегов */
+#hashtag {
+    background-color: #e9ecef;
+    color: #333;
+    padding: 8px;
+    border: 1px solid #ccc;
+    width: 100%;
+    height: 36px;
+}

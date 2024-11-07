@@ -7,27 +7,32 @@ from django.utils import timezone
 def all_projects(request):
     projects = Projects.objects.all()
 
-    date_filter = request.GET.get('date')
-    stack_filter = request.GET.get('stack')
-    type_filter = request.GET.get('type')
-    hashtag_filter = request.GET.get('hashtag')
+    # Фильтрация по хештегам
+    hashtag = request.GET.get('hashtag')
+    if hashtag:
+        projects = projects.filter(hashtag__icontains=hashtag)
 
+    # Фильтрация по языку программирования
+    stack = request.GET.get('stack')
+    custom_stack = request.GET.get('custom_stack')
+    if stack and stack != 'Other':
+        projects = projects.filter(stack__icontains=stack)
+    elif custom_stack:
+        projects = projects.filter(stack__icontains=custom_stack)
+
+    # Фильтрация по типу разработки
+    project_type = request.GET.get('type')
+    if project_type:
+        projects = projects.filter(type__icontains=project_type)
+
+    # Фильтрация по дате
+    date_filter = request.GET.get('date')
     if date_filter == 'recent':
         projects = projects.order_by('-date_t')
     elif date_filter == 'old':
         projects = projects.order_by('date_t')
 
-    if stack_filter:
-        projects = projects.filter(stack__icontains=stack_filter)
-
-    if type_filter:
-        projects = projects.filter(type__icontains=type_filter)
-    
-    if hashtag_filter:
-        projects = projects.filter(hashtag__icontains=hashtag_filter)
-
-    context = {'projects': projects}
-    return render(request, 'projects/all_projects.html', context)
+    return render(request, 'projects/all_projects.html', {'projects': projects})
 
 class ProjectsDetailView(DetailView):
     model = Projects
