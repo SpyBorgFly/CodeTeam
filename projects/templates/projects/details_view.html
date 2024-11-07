@@ -15,7 +15,7 @@
                 <h5 class="project-title">{{ project.title }}</h5>
                 <p class="project-stack">{{ project.stack }}</p>
                 <ul class="project-details">
-                    <li><i class="fas fa-info-circle"></i> Описание: {{ project.description }}</li>
+                    <li><i class="fas fa-info-circle"></i> Описание: {{ project.description|safe }}</li>
                     <li><i class="fas fa-calendar-alt"></i> Дата создания: {{ project.date_t }}</li>
                     <li><i class="fas fa-user"></i> Создатель: 
                         <a href="{% url 'profile' project.creator.username %}">{{ project.creator.username }}</a>

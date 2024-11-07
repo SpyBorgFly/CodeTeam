@@ -75,10 +75,11 @@
                 <a href="{% url 'project-details' el.id %}">
                     <h3 class="project-title">{{ el.title }}</h3>
                 </a>
-                <p class="project-stack">{{ el.stack }}</p>
-                <p class="project-date">{{ el.date_created }}</p>
-                <p class="project-type">{{ el.type }}</p>
-                <p class="project-hashtag">{{ el.hashtag }}</p>
+                <p class="project-stack">{{ el.stack |safe}}</p>
+                <p class="project-date">{{ el.date_created |safe}}</p>
+                <p class="project-type">{{ el.type|safe }}</p>
+                <p class="project-hashtag">{{ el.hashtag|safe }}</p>
+                <p class="project-description">{{ el.description|safe }}</p> 
             </div>
             {% endfor %}
         </div>
