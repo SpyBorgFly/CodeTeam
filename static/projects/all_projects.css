@@ -139,6 +139,22 @@ a:hover {
     display: flex;
     justify-content: center;
     padding: 20px;
-    background-color: #1c1c1e;
-    border-bottom: 2px solid #333;
+    
+}
+
+/* Кнопки "Читать далее" и "Свернуть" */
+.btn-read-more {
+    background-color: #7949b4;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.btn-read-more:hover {
+    background-color: #6200ea;
 }

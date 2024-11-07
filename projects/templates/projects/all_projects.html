@@ -76,10 +76,19 @@
                     <h3 class="project-title">{{ el.title }}</h3>
                 </a>
                 <p class="project-stack">{{ el.stack |safe}}</p>
-                <p class="project-date">{{ el.date_created |safe}}</p>
+                
                 <p class="project-type">{{ el.type|safe }}</p>
                 <p class="project-hashtag">{{ el.hashtag|safe }}</p>
-                <p class="project-description">{{ el.description|safe }}</p> 
+                <p class="project-description">
+                    {{ el.description|truncatechars:500|safe }}
+                    {% if el.description|length > 200 %}
+                    <span class="more-text" style="display:none;">{{ el.description|safe }}</span>
+                    <button class="btn-read-more" onclick="toggleDescription(this)">Читать дальше</button>
+                    {% endif %}
+                </p>
+                <p>Создатель: <a href="{% url 'profile' el.creator.username %}">{{ el.creator.username }}</a></p> 
+                <p class="project-date">{{ el.date_t |safe}}</p>
+                
             </div>
             {% endfor %}
         </div>
@@ -100,6 +109,18 @@ document.getElementById('filter-toggle-btn').addEventListener('click', function(
         filterContainer.style.display = 'none';
     }
 });
+
+// Функция для отображения полного описания
+function toggleDescription(button) {
+    var moreText = button.previousElementSibling;
+    if (moreText.style.display === 'none') {
+        moreText.style.display = 'inline';
+        button.textContent = 'Свернуть';
+    } else {
+        moreText.style.display = 'none';
+        button.textContent = 'Читать дальше';
+    }
+}
 </script>
 
 {% endblock %}
