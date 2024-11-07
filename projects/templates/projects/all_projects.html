@@ -55,7 +55,6 @@
             <label for="hashtag">Hashtag:</label>
             <select name="hashtag" id="hashtag" class="filter-select">
                 <option value="">Без фильтра</option>
-                <!-- Добавьте здесь свои значения hashtag -->
                 <option value="django">Django</option>
                 <option value="react">React</option>
                 <option value="ai">AI</option>
@@ -76,19 +75,22 @@
                     <h3 class="project-title">{{ el.title }}</h3>
                 </a>
                 <p class="project-stack">{{ el.stack |safe}}</p>
-                
                 <p class="project-type">{{ el.type|safe }}</p>
                 <p class="project-hashtag">{{ el.hashtag|safe }}</p>
                 <p class="project-description">
-                    {{ el.description|truncatechars:500|safe }}
+                    {{ el.description|truncatechars:200|safe }}
                     {% if el.description|length > 200 %}
                     <span class="more-text" style="display:none;">{{ el.description|safe }}</span>
                     <button class="btn-read-more" onclick="toggleDescription(this)">Читать дальше</button>
                     {% endif %}
                 </p>
-                <p>Создатель: <a href="{% url 'profile' el.creator.username %}">{{ el.creator.username }}</a></p> 
-                <p class="project-date">{{ el.date_t |safe}}</p>
-                
+                <!-- Добавляем имя создателя с ссылкой -->
+                <p class="project-creator">
+                    <a href="{% url 'profile' el.creator.username %}" class="creator-link">
+                        {{ el.creator.username }}
+                    </a>
+                </p>
+                <p class="project-date">{{ el.date_t |date:"d/m/Y H:i"}}</p>
             </div>
             {% endfor %}
         </div>

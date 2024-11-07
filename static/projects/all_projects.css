@@ -95,7 +95,7 @@ body {
     font-size: 1.5rem;
 }
 
-.project-stack, .project-date, .project-type {
+.project-stack, .project-date, .project-type, .project-hashtag {
     color: #a0a0a0;
     font-size: 1.1rem;
     margin-bottom: 10px;
@@ -158,3 +158,15 @@ a:hover {
 .btn-read-more:hover {
     background-color: #6200ea;
 }
+
+.creator-link {
+    color: #bb86fc;  /* Цвет текста создателя */
+    cursor: pointer;  /* Курсор указывает на то, что это кликабельно */
+    font-weight: bold;  /* Делает имя создателя жирным */
+}
+
+.creator-link:hover {
+    text-decoration: underline;  /* Подчеркивание при наведении */
+    color: #bb86fc;  /* Цвет ссылки при наведении */
+}
+
