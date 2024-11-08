@@ -4,9 +4,27 @@ from .forms import ProjectsForm, ProjectFilterForm
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.http import JsonResponse
+from django.core.files.storage import FileSystemStorage
+import bleach
+
+def clean_html(description):
+    allowed_tags = [
+        'p', 'a', 'strong', 'em', 'table', 'tr', 'td', 'th', 'img', 'span', 'colgroup', 'col', 'tbody'
+    ]
+    allowed_attributes = {
+        '*': ['style'],  # Разрешаем атрибут style для всех тегов
+        'a': ['href', 'title'],  # Разрешаем атрибуты для <a>
+        'img': ['src', 'alt'],  # Разрешаем атрибуты для <img>
+        'table': ['width', 'border', 'cellspacing', 'cellpadding'],  # Разрешаем атрибуты для <table>
+        'col': ['style'],  # Разрешаем атрибут style для <col>
+    }
+    return bleach.clean(description, tags=allowed_tags, attributes=allowed_attributes)
+
+
 def all_projects(request):
     projects = Projects.objects.all()
-
+    
     # Фильтрация по хештегам
     hashtag = request.GET.get('hashtag')
     if hashtag:
@@ -40,8 +58,6 @@ class ProjectsDetailView(DetailView):
     context_object_name = 'project'
 
 
-
-
 @login_required
 def add_projects(request):
     error = ''
@@ -51,11 +67,14 @@ def add_projects(request):
             project = form.save(commit=False)
             project.creator = request.user
             project.date_t = timezone.now()
+
+            # Очищаем описание перед сохранением
+            project.description = clean_html(project.description)
+
             project.save()
             return redirect('all_projects')  
         else:
             error = 'ошибка'
-
 
     form = ProjectsForm()
     data = {
@@ -63,3 +82,12 @@ def add_projects(request):
         'error': error
     }
     return render(request, 'projects/add_projects.html', data)
+
+def upload_image(request):
+    if request.method == 'POST' and request.FILES['image']:
+        image = request.FILES['image']
+        fs = FileSystemStorage()
+        filename = fs.save(image.name, image)  # Сохраняем изображение в media
+        uploaded_file_url = fs.url(filename)  # URL для доступа к изображению
+        return JsonResponse({'url': uploaded_file_url})
+    return JsonResponse({'error': 'No image uploaded'}, status=400)

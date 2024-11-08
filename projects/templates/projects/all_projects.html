@@ -17,6 +17,7 @@
 
 <link rel="stylesheet" href="{% static 'projects/all_projects.css' %}">
 
+
 <header class="header-section">
     <div class="parents">
         <h1 class="project">Проекты</h1>
@@ -80,13 +81,13 @@
                 <a href="{% url 'project-details' el.id %}">
                     <h3 class="project-title">{{ el.title }}</h3>
                 </a>
-                <p class="project-stack">{{ el.stack |safe}}</p>
+                <p class="project-stack">{{ el.stack|safe }}</p>
                 <p class="project-date">{{ el.date_t|date:"d/m/Y H:i" }}</p>
                 <p class="project-type">{{ el.type|safe }}</p>
                 <p class="project-hashtag">{{ el.hashtag|safe }}</p>
                 <p class="project-description">
-                    {{ el.description|truncatechars:200|safe }}
-                    {% if el.description|length > 200 %}
+                    {{ el.description|truncatechars:400 |safe }}
+                    {% if el.description|length > 400 %}
                     <span class="more-text" style="display:none;">{{ el.description|safe }}</span>
                     <button class="btn-read-more" onclick="toggleDescription(this)">Читать дальше</button>
                     {% endif %}
