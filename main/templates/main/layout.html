@@ -45,6 +45,7 @@
                 <li><a class="dropdown-item" href="{% url 'profile' user.username %}">Профиль</a></li>
                 <li><a class="dropdown-item" href="{% url 'edit_profile' user.username %}">Редактирование профиля</a>
                 </li>
+                <li><a class="dropdown-item" href="{% url 'user_projects' user.username %}">Мои проекты</a></li>
                 <li>
                   <a class="dropdown-item" href="{% url 'logout' %}"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Выйти</a>
@@ -66,8 +67,6 @@
       </div>
     </nav>
   </header>
-
-
 
   {% block content %}
   {% endblock %}

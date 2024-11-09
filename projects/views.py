@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from .models import Projects
 from .forms import ProjectsForm, ProjectFilterForm
-from django.views.generic import DetailView
+from django.views.generic import DetailView, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.http import JsonResponse
 from django.core.files.storage import FileSystemStorage
 import bleach
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 
 def clean_html(description):
     allowed_tags = [
@@ -91,3 +93,18 @@ def upload_image(request):
         uploaded_file_url = fs.url(filename)  # URL для доступа к изображению
         return JsonResponse({'url': uploaded_file_url})
     return JsonResponse({'error': 'No image uploaded'}, status=400)
+
+class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+    model = Projects
+    form_class = ProjectsForm
+    template_name = 'projects/edit_project.html'
+    context_object_name = 'project'
+    success_url = reverse_lazy('all_projects')
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.creator != self.request.user:
+            
+            return redirect('project-details', pk=obj.pk)
+        return obj
+    

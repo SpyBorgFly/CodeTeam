@@ -23,9 +23,11 @@
                         <a href="{% url 'profile' project.creator.username %}">{{ project.creator.username }}</a>
                     </li>
                 </ul>
-                <a href="/projects/add_projects" class="add-project-btn">
-                    <i class="fas fa-plus"></i> Добавить проект
+                {% if user == project.creator %}
+                <a href="{% url 'edit_project' project.pk %}" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Редактировать проект
                 </a>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-
+from projects.models import Projects
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
@@ -74,4 +74,9 @@ class EditProfileView(View):
             return redirect('profile', username=user.username)
         return render(request, 'accounts/edit_profile.html', {'form': form, 'user_profile': user_profile, 'user': user})
     
+
+def user_projects(request, username):
+    user = get_object_or_404(User, username=username)
+    projects = Projects.objects.filter(creator=user)
+    return render(request, 'accounts/user_projects.html', {'projects': projects, 'user': user})
     

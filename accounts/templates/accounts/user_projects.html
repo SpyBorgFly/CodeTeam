@@ -1,0 +1,34 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+<title>Проекты пользователя {{ user.username }}</title>
+{% endblock %}
+
+{% block content %}
+<section class="projects-section">
+    <div class="container">
+        <h2>Проекты пользователя {{ user.username }}</h2>
+        <div class="row">
+            {% for project in projects %}
+            <div class="col-md-4">
+                <div class="project-card">
+                    <h5 class="project-title">{{ project.title }}</h5>
+                    <p class="project-stack">{{ project.stack }}</p>
+                    <div class="project-details">
+                        <ul>
+                            <li><i class="fas fa-info-circle"></i> Описание: {{ project.description|safe }}</li>
+                            <li><i class="fas fa-code-branch"></i> Тип разработки: {{ project.type }}</li>
+                            <li><i class="fas fa-hashtag"></i> Hashtag: {{ project.hashtag }}</li>
+                            <li><i class="fas fa-calendar-alt"></i> Дата создания: {{ project.date_t }}</li>
+                        </ul>
+                    </div>
+                    <div class="edit-button">
+                        <a href="{% url 'edit_project' project.pk %}" class="btn btn-primary">Редактировать</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
