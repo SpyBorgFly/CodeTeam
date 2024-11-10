@@ -1,7 +1,7 @@
 {% extends 'main/layout.html' %}
 
 {% block title %}
-<title>Все проекты</title>
+<title>Детали проекта</title>
 {% endblock %}
 
 {% block content %}
@@ -15,15 +15,19 @@
                 <h5 class="project-title">{{ project.title }}</h5>
                 <p class="project-stack">{{ project.stack }}</p>
                 <ul class="project-details">
-                    <li><i class="fas fa-info-circle"></i> Описание: {{ project.description }}</li>
+                    <li><i class="fas fa-info-circle"></i> Описание: {{ project.description|safe }}</li>
+                    <li><i class="fas fa-code-branch"></i> Тип разработки: {{ project.type }}</li>
+                    <li><i class="fas fa-hashtag"></i> Hashtag: {{ project.hashtag }}</li>
                     <li><i class="fas fa-calendar-alt"></i> Дата создания: {{ project.date_t }}</li>
                     <li><i class="fas fa-user"></i> Создатель: 
                         <a href="{% url 'profile' project.creator.username %}">{{ project.creator.username }}</a>
                     </li>
                 </ul>
-                <a href="/projects/add_projects" class="add-project-btn">
-                    <i class="fas fa-plus"></i> Добавить проект
+                {% if user == project.creator %}
+                <a href="{% url 'edit_project' project.pk %}" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Редактировать проект
                 </a>
+                {% endif %}
             </div>
         </div>
     </div>

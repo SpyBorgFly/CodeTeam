@@ -1,0 +1,66 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+<title>Проекты пользователя {{ user.username }}</title>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'accounts/user_projects.css' %}">
+
+<section class="projects-section">
+    <div class="container">
+        <h2>Проекты пользователя {{ user.username }}</h2>
+        <div class="row">
+            {% for project in projects %}
+            <div class="col-md-4">
+                <div class="project-card">
+                    <h5 class="project-title">{{ project.title }}</h5>
+                    <p class="project-stack">{{ project.stack }}</p>
+                    <div class="project-details">
+                        <ul>
+                            <li><i class="fas fa-info-circle"></i> Описание: {{ project.description|safe }}</li>
+                            <li><i class="fas fa-code-branch"></i> Тип разработки: {{ project.type }}</li>
+                            <li><i class="fas fa-hashtag"></i> Hashtag: {{ project.hashtag }}</li>
+                            <li><i class="fas fa-calendar-alt"></i> Дата создания: {{ project.date_t }}</li>
+                        </ul>
+                    </div>
+                    <div class="edit-button">
+                        <a href="{% url 'edit_project' project.pk %}" class="btn btn-primary">Редактировать</a>
+                    </div>
+                    <div class="delete-button">
+                        <!-- Кнопка для вызова модального окна -->
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ project.id }}">
+                            Удалить
+                        </button>
+
+                        <!-- Модальное окно -->
+                        <div class="modal fade" id="deleteModal{{ project.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ project.id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel{{ project.id }}">Подтверждение удаления</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Вы уверены, что хотите удалить проект "{{ project.title }}"?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                                        <form action="{% url 'delete_project' user.username project.id %}" method="POST" style="display: inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">Удалить</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Конец модального окна -->
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

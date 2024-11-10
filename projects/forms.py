@@ -19,11 +19,11 @@ class ProjectsForm(ModelForm):
                 'class': "form-control",
                 'placeholder': 'Описание'
             }),
-            "type": Textarea(attrs={
+            "type": TextInput(attrs={
                 'class': "form-control",
                 'placeholder': 'Тип разработки'
             }),
-            "hashtag": Textarea(attrs={
+            "hashtag": TextInput(attrs={
                 'class': "form-control",
                 'placeholder': 'Хэштеги'
             }),

@@ -1,13 +1,13 @@
 {% extends 'main/layout.html' %}
 
 {% block title %}
-<title>Добавление проекта</title>
+<title>Редактирование проекта</title>
 {% endblock %}
 
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'projects/add_projects.css' %}">
-<h1>Добавление проекта</h1>
+<h1>Редактирование проекта</h1>
 
 {% if error %}
     <div class="alert alert-danger">{{ error }}</div>
@@ -39,7 +39,7 @@
         <label for="id_date_t" class="form-label">Дата и время создания</label>
         <input type="text" class="form-control" id="id_date_t" value="{{ form.instance.date_t }}" readonly>
     </div>
-    <button class="btn btn-success" type="submit">Добавить проект</button>
+    <button class="btn btn-success" type="submit">Сохранить изменения</button>
 </form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -50,7 +50,7 @@
     selector: 'textarea.form-control',
     plugins: [
       'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-      'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
+      'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
       'importword', 'exportword', 'exportpdf'
     ],
     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',

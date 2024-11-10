@@ -13,7 +13,19 @@
     <h2>Редактирование профиля</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        
+
+        <div class="form-group">
+            {% if user.userprofile.avatar %}
+                <img src="{{ user.userprofile.avatar.url }}" alt="Аватар" class="img-thumbnail" width="150" height="150">
+            {% else %}
+                <img src="{% static 'default-avatar.png' %}" alt="Аватар" class="img-thumbnail" width="150" height="150">
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="avatar">Загрузить аватар:</label>
+            {{ form.avatar }}
+        </div>
+
         <div class="form-group">
             <label for="username">Имя пользователя:</label>
             <input type="text" id="username" name="username" value="{{ user.username }}" required>
@@ -42,6 +54,7 @@
                 {% endfor %}
             </select>
         </div>
+        
 
         <button type="submit" class="login-btn">Сохранить изменения</button>
     </form>

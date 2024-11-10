@@ -107,3 +107,34 @@ input[type="email"]::placeholder {
         padding: 20px;
     }
 }
+
+/* Стиль для кнопки загрузки файла */
+input[type="file"] {
+    display: block;
+    margin-top: 10px;
+    color: #e5e5e5;
+    font-size: 16px;
+    background-color: #2c2c2e;
+    border: 1px solid #555;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: background-color 0.3s ease;
+}
+
+input[type="file"]:hover {
+    background-color: #3c3c3e;
+}
+
+/* Стиль для аватара */
+/* .img-thumbnail {
+    border-radius: 50%;
+    border: 3px solid #6200ea;
+    width: 150px;
+    height: 150px;
+    object-fit: cover; /* Подгоняет изображение по размеру 
+    margin-bottom: 15px; /* Отступ снизу 
+} */
+
+

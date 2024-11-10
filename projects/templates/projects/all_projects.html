@@ -6,7 +6,17 @@
 
 {% block content %}
 {% load static %}
+<!-- Подключение стилей Select2 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Подключение jQuery (необходим для работы Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Подключение Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
 <link rel="stylesheet" href="{% static 'projects/all_projects.css' %}">
+
 
 <header class="header-section">
     <div class="parents">
@@ -15,58 +25,54 @@
 </header>
 
 <section class="sec">
-    <!-- Кнопка для показа фильтров -->
-    <button type="button" id="filter-toggle-btn" class="btn btn-filter-toggle">Фильтр</button>
-
-    <!-- Контейнер с фильтрами (скрыт по умолчанию) -->
+    <button type="button" id="filter-toggle-btn" class="btn btn-outline-primary">Фильтровать</button>
     <div class="filter-container" id="filter-container" style="display: none;">
-        <form method="GET" action=".">
-            <!-- Фильтр по дате -->
-            <label for="date">Дата:</label>
-            <select name="date" id="date" class="filter-select">
-                <option value="">Без фильтра</option>
-                <option value="recent">Недавно добавленные</option>
-                <option value="old">Старые проекты</option>
-            </select>
+        <form method="GET" action="." class="filter-form">
+            <div class="filter-items">
+                <div class="filter-item">
+                    <label for="date">Дата:</label>
+                    <select name="date" id="date" class="form-select filter-select">
+                        <option value="">Без фильтра</option>
+                        <option value="recent">Недавно добавленные</option>
+                        <option value="old">Старые проекты</option>
+                    </select>
+                </div>
 
-            <!-- Фильтр по языку программирования -->
-            <label for="stack">Язык программирования:</label>
-            <select name="stack" id="stack" class="filter-select">
-                <option value="">Без фильтра</option>
-                <option value="python">Python</option>
-                <option value="javascript">JavaScript</option>
-                <option value="java">Java</option>
-                <option value="csharp">C#</option>
-                <option value="ruby">Ruby</option>
-            </select>
+                <div class="filter-item">
+                    <label for="stack">Язык программирования:</label>
+                    <select name="stack" id="stack" class="form-select filter-select">
+                        <option value="">Выберите язык</option>
+                        <option value="Python">Python</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="Java">Java</option>
+                        <option value="C++">C++</option>
+                        <option value="Ruby">Ruby</option>
+                        <option value="Other">Свой запрос</option>
+                    </select>
+                </div>
 
-            <!-- Фильтр по типу разработки -->
-            <label for="type">Тип разработки:</label>
-            <select name="type" id="type" class="filter-select">
-                <option value="">Без фильтра</option>
-                <option value="frontend">Frontend</option>
-                <option value="backend">Backend</option>
-                <option value="ml">Machine Learning</option>
-                <option value="fullstack">Fullstack</option>
-                <option value="mobile">Mobile</option>
-            </select>
+                <div class="filter-item">
+                    <label for="type">Тип разработки:</label>
+                    <select name="type" id="type" class="form-select filter-select">
+                        <option value="">Выберите тип</option>
+                        <option value="Web">Веб-разработка</option>
+                        <option value="Mobile">Мобильная разработка</option>
+                        <option value="Desktop">Десктопные приложения</option>
+                        <option value="Game">Игры</option>
+                        <option value="Other">Свой запрос</option>
+                    </select>
+                </div>
 
-            <!-- Фильтр по hashtag -->
-            <label for="hashtag">Hashtag:</label>
-            <select name="hashtag" id="hashtag" class="filter-select">
-                <option value="">Без фильтра</option>
-                <!-- Добавьте здесь свои значения hashtag -->
-                <option value="django">Django</option>
-                <option value="react">React</option>
-                <option value="ai">AI</option>
-                <option value="ml">Machine Learning</option>
-            </select>
+                <div class="filter-item">
+                    <label for="hashtag">Хештег:</label>
+                    <input type="text" name="hashtag" id="hashtag" class="form-control filter-input" placeholder="Введите хештег">
+                </div>
+            </div>
 
-            <button type="submit" class="btn btn-filter">Фильтровать</button>
+            <button type="submit" class="btn btn-primary">Фильтровать</button>
         </form>
     </div>
-
-    <hr class="filter-divider"> <!-- Разделительная линия -->
+    <hr class="filter-divider">
 
     <div class="content_site">
         <div class="projects-grid">
@@ -75,30 +81,63 @@
                 <a href="{% url 'project-details' el.id %}">
                     <h3 class="project-title">{{ el.title }}</h3>
                 </a>
-                <p class="project-stack">{{ el.stack }}</p>
-                <p class="project-date">{{ el.date_created }}</p>
-                <p class="project-type">{{ el.type }}</p>
-                <p class="project-hashtag">{{ el.hashtag }}</p>
+                <p class="project-stack">{{ el.stack|safe }}</p>
+                <p class="project-date">{{ el.date_t|date:"d/m/Y H:i" }}</p>
+                <p class="project-type">{{ el.type|safe }}</p>
+                <p class="project-hashtag">{{ el.hashtag|safe }}</p>
+                <p class="project-description">
+                    {{ el.description|truncatechars:400 |safe }}
+                    {% if el.description|length > 400 %}
+                    <span class="more-text" style="display:none;">{{ el.description|safe }}</span>
+                    <button class="btn-read-more" onclick="toggleDescription(this)">Читать дальше</button>
+                    {% endif %}
+                </p>
+                <p class="project-creator">
+                    <a href="{% url 'profile' el.creator.username %}" class="creator-link">
+                        {{ el.creator.username }}
+                    </a>
+                </p>
             </div>
             {% endfor %}
         </div>
         <a href="/projects/add_projects">
-            <button type="button" class="btn btn-add-project">Добавить проект</button>
+            <button type="button" class="btn btn-success">Добавить проект</button>
         </a>
         <span class="error-message">{{ error }}</span>
     </div>
 </section>
 
 <script>
-// Показать/скрыть фильтры
-document.getElementById('filter-toggle-btn').addEventListener('click', function() {
-    var filterContainer = document.getElementById('filter-container');
-    if (filterContainer.style.display === 'none') {
-        filterContainer.style.display = 'flex';
-    } else {
-        filterContainer.style.display = 'none';
-    }
+    $(document).ready(function() {
+    // Инициализация Select2 для полей выбора
+    $('.filter-select').select2({
+        placeholder: "Выберите или введите значение",
+        allowClear: true,
+        tags: true  // Разрешает ввод произвольных значений
+    });
 });
+
+    // Показать/скрыть фильтры
+    document.getElementById('filter-toggle-btn').addEventListener('click', function() {
+        var filterContainer = document.getElementById('filter-container');
+        if (filterContainer.style.display === 'none') {
+            filterContainer.style.display = 'flex';
+        } else {
+            filterContainer.style.display = 'none';
+        }
+    });
+
+    // Функция для отображения полного описания
+    function toggleDescription(button) {
+        var moreText = button.previousElementSibling;
+        if (moreText.style.display === 'none') {
+            moreText.style.display = 'inline';
+            button.textContent = 'Свернуть';
+        } else {
+            moreText.style.display = 'none';
+            button.textContent = 'Читать дальше';
+        }
+    }
 </script>
 
 {% endblock %}
