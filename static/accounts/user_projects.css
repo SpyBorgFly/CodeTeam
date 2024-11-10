@@ -1,0 +1,16 @@
+/* Пример стилей для модального окна */
+.modal-content {
+    border-radius: 8px;
+}
+
+.modal-body {
+    font-size: 16px;
+}
+
+.modal-footer .btn-secondary {
+    background-color: #6c757d;
+}
+
+.modal-footer .btn-danger {
+    background-color: #dc3545;
+}

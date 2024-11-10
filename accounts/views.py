@@ -79,4 +79,12 @@ def user_projects(request, username):
     user = get_object_or_404(User, username=username)
     projects = Projects.objects.filter(creator=user)
     return render(request, 'accounts/user_projects.html', {'projects': projects, 'user': user})
-    
+
+@login_required
+def delete_project(request, username, project_id):
+    user = get_object_or_404(User, username=username)
+    project = get_object_or_404(Projects, id=project_id, creator=user)
+    if request.method == "POST":
+        project.delete()
+        return redirect('user_projects', username=user.username)
+    return render(request, 'accounts/delete_project_confirm.html', {'project': project, 'user': user})

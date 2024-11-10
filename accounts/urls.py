@@ -8,7 +8,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('profile/<str:username>/', ProfileView.as_view(), name='profile'),  # Измените маршрут для профиля
     path('profile/<str:username>/edit/', EditProfileView.as_view(), name='edit_profile'),
-    path('profile/<str:username>/projects/', views.user_projects, name='user_projects')
+    path('profile/<str:username>/projects/', views.user_projects, name='user_projects'),
+    path('profile/<str:username>/projects/delete/<int:project_id>/', views.delete_project, name='delete_project')
 ] 
 
 
