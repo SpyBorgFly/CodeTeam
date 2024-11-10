@@ -5,12 +5,64 @@
 {% endblock %}
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'projects/add_projects.css' %}">
 <h1>Редактирование проекта</h1>
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-</form>
-{% endblock %}
+{% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+{% endif %}
 
+<form method="post" novalidate>
+    {% csrf_token %}
+    <div class="mb-3">
+        {{ form.title.label_tag }}
+        {{ form.title }}
+    </div>
+    <div class="mb-3">
+        {{ form.stack.label_tag }}
+        {{ form.stack }}
+    </div>
+    <div class="mb-3">
+        {{ form.description.label_tag }}
+        {{ form.description }}
+    </div>
+    <div class="mb-3">
+        {{ form.type.label_tag }}
+        {{ form.type }}
+    </div>
+    <div class="mb-3">
+        {{ form.hashtag.label_tag }}
+        {{ form.hashtag }}
+    </div>
+    <div class="mb-3">
+        <label for="id_date_t" class="form-label">Дата и время создания</label>
+        <input type="text" class="form-control" id="id_date_t" value="{{ form.instance.date_t }}" readonly>
+    </div>
+    <button class="btn btn-success" type="submit">Сохранить изменения</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/3n829e9n4vfcfaxioeyc54pht106ut2pb99t2jwackooco83/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+  tinymce.init({
+    selector: 'textarea.form-control',
+    plugins: [
+      'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+      'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
+      'importword', 'exportword', 'exportpdf'
+    ],
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    tinycomments_mode: 'embedded',
+    tinycomments_author: 'Author name',
+    mergetags_list: [
+      { value: 'First.Name', title: 'First Name' },
+      { value: 'Email', title: 'Email' }
+    ],
+    images_upload_url: '/projects/upload_image',
+    file_picker_types: 'image',
+  });
+</script>
+
+{% endblock %}
