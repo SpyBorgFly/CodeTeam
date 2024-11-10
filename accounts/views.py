@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 from projects.models import Projects
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, authenticate, logout
-from .forms import CustomUserCreationForm, UserProfileForm
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
+from .forms import CustomUserCreationForm, UserProfileForm, UserSettingsForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import UserProfile
@@ -90,3 +90,30 @@ def delete_project(request, username, project_id):
         project.delete()
         return redirect('user_projects', username=user.username)
     return render(request, 'accounts/delete_project_confirm.html', {'project': project, 'user': user})
+
+
+@login_required
+def user_settings(request):
+    user = request.user
+    if request.method == 'POST':
+        form = UserSettingsForm(request.POST)
+        if form.is_valid():
+            # Обновляем информацию о пользователе
+            user.username = form.cleaned_data['username']
+            user.email = form.cleaned_data['email']
+
+            # Если был введен новый пароль, обновляем его
+            password = form.cleaned_data.get('password')
+            new_password = form.cleaned_data.get('new_password')
+            if password and new_password:
+                user.set_password(new_password)
+                user.save()
+                update_session_auth_hash(request, user)  # Чтобы не разлогинился после смены пароля
+
+            user.save()
+            return redirect('profile', username=user.username)
+    else:
+        form = UserSettingsForm(initial={'username': user.username, 'email': user.email})
+
+    return render(request, 'accounts/user_settings.html', {'form': form})
+
