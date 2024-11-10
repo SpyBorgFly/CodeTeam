@@ -13,7 +13,7 @@ class CustomUserCreationForm(UserCreationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['bio', 'location', 'programming_languages', 'github']
+        fields = ['bio', 'location', 'programming_languages', 'github', 'avatar']  
         widgets = {
             'programming_languages': forms.SelectMultiple(attrs={'class': 'select2'}),
         }

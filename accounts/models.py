@@ -53,11 +53,11 @@ class UserProfile(models.Model):
         ('erlang', 'Erlang'),
         ('forth', 'Forth'),
         ('icon', 'Icon'),
-        ('c', 'C'), 
-        ('sql', 'SQL'), 
+        ('c', 'C'),
+        ('sql', 'SQL'),
         ('visual_basic', 'Visual Basic'),
-        ('delphi', 'Delphi/Object Pascal'), 
-        ('scratch', 'Scratch') 
+        ('delphi', 'Delphi/Object Pascal'),
+        ('scratch', 'Scratch')
     ]
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -65,3 +65,4 @@ class UserProfile(models.Model):
     location = models.CharField(max_length=30, blank=True)
     programming_languages = MultiSelectField(choices=PROGRAMMING_LANGUAGES_CHOICES, blank=True, null=True)
     github = models.URLField(max_length=200, blank=True, null=True)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)  

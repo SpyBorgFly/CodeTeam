@@ -72,9 +72,11 @@ class EditProfileView(View):
         if form.is_valid():
             form.save()
             return redirect('profile', username=user.username)
-        return render(request, 'accounts/edit_profile.html', {'form': form, 'user_profile': user_profile, 'user': user})
-    
+        else:
+            print(form.errors)  # Добавляем вывод ошибок
+            return render(request, 'accounts/edit_profile.html', {'form': form, 'user_profile': user_profile, 'user': user})
 
+        
 def user_projects(request, username):
     user = get_object_or_404(User, username=username)
     projects = Projects.objects.filter(creator=user)

@@ -8,7 +8,18 @@
 
 <div class="profile-container">
     <h2 class="profile-title">Профиль: {{ user.username }}</h2>
+    
+    
+    
     <div class="profile-info">
+        <!-- Отображение аватара -->
+        <div class="avatar-container">
+            {% if user.userprofile.avatar %}
+                <img src="{{ user.userprofile.avatar.url }}" alt="Аватар" class="img-thumbnail" width="150" height="150">
+            {% else %}
+                <img src="{% static 'default-avatar.png' %}" alt="Аватар" class="img-thumbnail" width="150" height="150">
+            {% endif %}
+        </div>
         <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>Github Link:</strong> <a href="{{ user_profile.github }}" target="_blank">{{ user_profile.github }}</a></p>
         <p><strong>Bio:</strong> {{ user_profile.bio }}</p>
