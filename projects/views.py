@@ -99,12 +99,13 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ProjectsForm
     template_name = 'projects/edit_project.html'
     context_object_name = 'project'
-    success_url = reverse_lazy('all_projects')
+
+    def get_success_url(self):
+        
+        return reverse_lazy('project-details', kwargs={'pk': self.object.pk})
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
         if obj.creator != self.request.user:
-            
             return redirect('project-details', pk=obj.pk)
         return obj
-    
