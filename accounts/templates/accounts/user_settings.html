@@ -3,10 +3,17 @@
 {% block title %}Настройки пользователя{% endblock %}
 
 {% block content %}
-<h2>Настройки пользователя</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Сохранить изменения</button>
-</form>
+{% load static %}
+<link rel="stylesheet" href="{% static 'accounts/user_settings.css' %}">
+
+<div class="settings-page">
+    <div class="settings-container">
+        <h2>Настройки пользователя</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Сохранить изменения</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

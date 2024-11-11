@@ -79,3 +79,77 @@ form label {
 .btn-success:hover {
     background-color: #3700b3;
 }
+
+/* Дополнительные стили */
+
+/* Кнопка "Читать дальше" */
+.btn-read-more {
+    background-color: #ff914d; /* Новый цвет */
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.btn-read-more:hover {
+    background-color: #ff6d1a; /* Цвет при наведении */
+}
+
+/* Кнопка "Добавить проект" */
+.btn-success {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block;
+    margin: 20px auto 0; /* Центрирование и отступ сверху */
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Контейнер фильтров */
+.filter-container {
+    background-color: #2c2c2e;
+    padding: 20px;
+    border: 2px solid #444;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Поля фильтров */
+.filter-item label {
+    color: #e5e5e5;
+    margin-bottom: 5px;
+}
+
+.filter-select, .filter-input {
+    background-color: #333;
+    color: #e5e5e5;
+    border: 1px solid #555;
+    padding: 8px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+/* Кнопка фильтра */
+.filter-form .btn-primary {
+    background-color: #0069d9;
+    border-color: #0062cc;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.filter-form .btn-primary:hover {
+    background-color: #0056b3;
+}
