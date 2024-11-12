@@ -6,8 +6,45 @@
 
 {% block content%}
 {% load static %}
-    <link rel="stylesheet" href="{% static 'main/index.css' %}">
+<link rel="stylesheet" href="{% static 'main/index.css' %}">
 
-<h1>Привет, пока что переход по сайту выполняется через навигационную панель</h1>
+<div class="hero-section">
+    <div class="container">
+        <div class="uptext">
+            <h1 class="h1-text">Загружайте свои проекты и вступайте в другм в команду</h1>
+            <p class="p-text">Создавайте, делитесь, вдохновляйтесь! У нас на сайте можно загрузить свои проекты, посмотреть идеи других, найти новых коллег и друзей. Воспользуйтесь всеми возможностями нашей платформы, чтобы ваш проект засиял ярче!</p>
+            <div class="btn-hero">
+                <button class="btn1">Добавить проект</button>
+                <button class="btn2">Узнать больше</button>
+            </div>
+        </div>
+        <!-- Фон видео или изображение -->
+        <video autoplay loop muted class="background-video">
+            <source src="{% static 'main/code-1_desktop-7ab52aea335.mp4' %}" type="video/mp4">
+            <!-- Резервное изображение, если видео недоступно -->
+            <img src="{% static 'images/your-background-image.jpg' %}" class="background-image" alt="Background Image">
+        </video>
+    </div>
+</div>
+
+<div class="main-section">
+    <div class="container">
+        <div class="btn-col">
+            <ul class="bcol">
+                <li><a href="#"></a>Прокты</li>
+                <li><a href="#"></a>Главаня страничка</li>
+                <li><a href="#"></a>Главаня</li>
+                <li><a href="#"></a>Помощь</li>
+                <li><a href="#"></a>Соцсети</li>
+            </ul>
+        </div>
+        <p class="btn-p">"Платформа для тех, кто хочет больше!" Не просто смотри, а действуй! Найди проект, предложи свою идею или вступи в команду — всё это прямо здесь.</p>
+
+    </div>
+
+    </p>
+</div>
+
+
 
 {% endblock %}
