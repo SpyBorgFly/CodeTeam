@@ -358,3 +358,8 @@ input[type="date"] {
 .project-info tr:hover {
     background-color: #444; /* Цвет при наведении */
 }
+
+.btn-success{
+    margin-top: 20px; 
+
+}
