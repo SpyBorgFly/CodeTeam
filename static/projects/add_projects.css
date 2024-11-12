@@ -132,7 +132,7 @@ form label {
 }
 
 .filter-select, .filter-input {
-    background-color: #333;
+    background-color: #333;  
     color: #e5e5e5;
     border: 1px solid #555;
     padding: 8px;
