@@ -81,24 +81,45 @@ input[type="email"]::placeholder {
     margin-top: 20px;
 }
 
-/* Стили для Select2 */
-.select2-container--default .select2-selection--multiple {
-    border: 1px solid #555; /* Более темная рамка */
+/* Стили для Chosen */
+.chosen-container {
+    width: 100% !important;
+    background-color: #1c1c1e; /* Темный фон */
+    color: #e5e5e5; /* Белый текст */
+    border: 1px solid #555; /* Темная рамка */
+    border-radius: 4px;
+}
+
+.chosen-container .chosen-choices {
+    background-color: #1c1c1e; /* Темный фон для выбранных элементов */
+    border: 1px solid #555; /* Темная рамка */
+    color: #e5e5e5; /* Белый текст */
+}
+
+.chosen-container .chosen-choices .search-field input[type="text"] {
     background-color: #1c1c1e; /* Темный фон */
     color: #e5e5e5; /* Белый текст */
 }
 
-.select2-container--default .select2-selection--multiple .select2-selection__placeholder {
-    color: #aaa; /* Светло-серый текст для placeholder */
+.chosen-container .chosen-choices .search-choice {
+    background-color: #6200ea; /* Фиолетовый фон для выбранных элементов */
+    color: #fff; /* Белый текст */
 }
 
-.select2-container--default .select2-results__option {
-    padding: 10px; /* Отступы для опций */
+.chosen-container .chosen-drop {
+    background-color: #2c2c2e; /* Серый фон для списка */
+    border: 1px solid #555; /* Темная рамка */
+    color: #e5e5e5; /* Белый текст */
 }
 
-.select2-container--default .select2-results__option--highlighted {
-    background-color: #6200ea; /* Фиолетовый при наведении */
-    color: white; /* Белый текст при наведении */
+.chosen-container .chosen-results li {
+    background-color: #2c2c2e; /* Серый фон */
+    color: #e5e5e5; /* Белый текст */
+}
+
+.chosen-container .chosen-results li.highlighted {
+    background-color: #6200ea; /* Фиолетовый фон при наведении */
+    color: #fff; /* Белый текст */
 }
 
 /* Стиль для маленьких экранов */
@@ -107,34 +128,3 @@ input[type="email"]::placeholder {
         padding: 20px;
     }
 }
-
-/* Стиль для кнопки загрузки файла */
-input[type="file"] {
-    display: block;
-    margin-top: 10px;
-    color: #e5e5e5;
-    font-size: 16px;
-    background-color: #2c2c2e;
-    border: 1px solid #555;
-    padding: 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    opacity: 0.5;
-    transition: background-color 0.3s ease;
-}
-
-input[type="file"]:hover {
-    background-color: #3c3c3e;
-}
-
-/* Стиль для аватара */
-/* .img-thumbnail {
-    border-radius: 50%;
-    border: 3px solid #6200ea;
-    width: 150px;
-    height: 150px;
-    object-fit: cover; /* Подгоняет изображение по размеру 
-    margin-bottom: 15px; /* Отступ снизу 
-} */
-
-
