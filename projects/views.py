@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Projects
-from .forms import ProjectsForm, ProjectFilterForm
-from django.views.generic import DetailView, UpdateView
+from .forms import ProjectsForm, ProjectFilterForm, ProjectSettingsForm
+from django.views.generic import DetailView, UpdateView, View
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.http import JsonResponse
@@ -9,6 +9,9 @@ from django.core.files.storage import FileSystemStorage
 import bleach
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.decorators import method_decorator
+
 
 def clean_html(description):
     allowed_tags = [
@@ -109,3 +112,22 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
         if obj.creator != self.request.user:
             return redirect('project-details', pk=obj.pk)
         return obj
+
+@method_decorator(login_required, name='dispatch')
+class ProjectSettingsView(View):
+    def get(self, request, pk):
+        project = get_object_or_404(Projects, pk=pk)
+        if request.user != project.creator:
+            return redirect('project_details', pk=project.pk)
+        form = ProjectSettingsForm(instance=project)
+        return render(request, 'projects/project_settings.html', {'form': form, 'project': project})
+
+    def post(self, request, pk):
+        project = get_object_or_404(Projects, pk=pk)
+        if request.user != project.creator:
+            return redirect('project_details', pk=project.pk)
+        form = ProjectSettingsForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return redirect('project-details', pk=project.pk)
+        return render(request, 'projects/project_settings.html', {'form': form, 'project': project})

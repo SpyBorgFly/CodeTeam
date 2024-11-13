@@ -52,4 +52,11 @@ class ProjectFilterForm(forms.Form):
 
     date = forms.ChoiceField(choices=date_choices, required=False)
     stack = forms.ChoiceField(choices=stack_choices, required=False)
-    
+
+class ProjectSettingsForm(forms.ModelForm):
+    class Meta:
+        model = Projects
+        fields = ['is_private', 'allowed_users']
+        widgets = {
+            'allowed_users': forms.SelectMultiple(attrs={'class': 'chosen-select'}),
+        }

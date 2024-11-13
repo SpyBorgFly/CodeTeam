@@ -25,8 +25,13 @@
                             <li><i class="fas fa-calendar-alt"></i> Дата создания: {{ project.date_t }}</li>
                         </ul>
                     </div>
-                    <div class="edit-button">
-                        <a href="{% url 'edit_project' project.pk %}" class="btn btn-primary">Редактировать</a>
+                    <div class="button-group">
+                        <div class="edit-button">
+                            <a href="{% url 'edit_project' project.pk %}" class="btn btn-primary">Редактировать</a>
+                        </div>
+                        <div class="settings-button">
+                            <a href="{% url 'project_settings' project.pk %}" class="btn btn-secondary">Настройки проекта</a>
+                        </div>
                     </div>
                     <div class="delete-button">
                         <!-- Кнопка для вызова модального окна -->

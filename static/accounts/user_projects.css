@@ -42,9 +42,15 @@ body {
     margin-right: 5px;
 }
 
-.edit-button a,
-.delete-button button {
+.button-group {
+    display: flex;
+    gap: 10px;
     margin-top: 10px;
+}
+
+.edit-button a,
+.delete-button button,
+.settings-button a {
     width: 100%;
 }
 
@@ -56,6 +62,16 @@ body {
 
 .edit-button a:hover {
     background-color: #5a49d6;
+}
+
+.settings-button a {
+    background-color: #8e44ad;
+    border: none;
+    color: #e5e5e5;
+}
+
+.settings-button a:hover {
+    background-color: #7d3c98;
 }
 
 .delete-button button {
