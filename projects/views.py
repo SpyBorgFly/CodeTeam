@@ -61,6 +61,13 @@ class ProjectsDetailView(DetailView):
     model = Projects
     template_name = 'projects/details_view.html'
     context_object_name = 'project'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        project = self.get_object()
+        user = self.request.user
+        context['has_access'] = not project.is_private or user == project.creator or user in project.allowed_users.all()
+        return context
 
 
 @login_required
@@ -131,3 +138,4 @@ class ProjectSettingsView(View):
             form.save()
             return redirect('project-details', pk=project.pk)
         return render(request, 'projects/project_settings.html', {'form': form, 'project': project})
+    
