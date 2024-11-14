@@ -57,6 +57,7 @@ class ProfileView(View):
                                                          'user_profile': user_profile})
 
 
+
 @method_decorator(login_required, name='dispatch')
 class EditProfileView(View):
     def get(self, request, username):
@@ -75,7 +76,6 @@ class EditProfileView(View):
         else:
             print(form.errors)  # Добавляем вывод ошибок
             return render(request, 'accounts/edit_profile.html', {'form': form, 'user_profile': user_profile, 'user': user})
-
         
 def user_projects(request, username):
     user = get_object_or_404(User, username=username)

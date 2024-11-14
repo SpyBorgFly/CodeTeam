@@ -120,3 +120,16 @@ body {
 .project-info tr:hover {
     background-color: #444; /* Цвет при наведении */
 }
+
+.project-card.blurred {
+    filter: blur(8px);
+    pointer-events: none;
+}
+
+.private-message {
+    color: #ff3333;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
