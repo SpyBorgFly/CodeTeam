@@ -1,7 +1,7 @@
 # forms.py
 from django import forms
 from django.forms import ModelForm, TextInput, Textarea, CheckboxInput, SelectMultiple
-from .models import Projects
+from .models import Projects, Comment
 
 class ProjectsForm(ModelForm):
     class Meta:
@@ -31,3 +31,8 @@ class ProjectSettingsForm(forms.ModelForm):
         widgets = {
             'allowed_users': forms.SelectMultiple(attrs={'class': 'chosen-select'}),
         }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text', ]

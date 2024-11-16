@@ -39,6 +39,30 @@
     </div>
 </section>
 
-<span class="error-message">{{ error }}</span>
+{% if has_access %}
+<section class="comments-section">
+    <h2>Комментарии</h2>
+    <div id="comments">
+        {% for comment in comments %}
+        <div class="comment">
+            <p><strong>{{ comment.author }}</strong> ({{ comment.created_date|date:"d M Y H:i" }}):</p>
+            <p>{{ comment.text }}</p>
+        </div>
+        {% endfor %}
+    </div>
 
+    {% if user.is_authenticated %}
+    <h2>Добавить комментарий</h2>
+    <form method="post" action="{% url 'add_comment' project.pk %}">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit">Отправить</button>
+    </form>
+    {% else %}
+    <p>Пожалуйста, <a href="{% url 'login' %}">войдите</a>, чтобы оставить комментарий.</p>
+    {% endif %}
+</section>
+{% endif %}
+
+<span class="error-message">{{ error }}</span>
 {% endblock %}

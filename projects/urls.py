@@ -12,5 +12,6 @@ urlpatterns = [
     path('upload_image/', views.upload_image, name='upload_image'),
     path('<int:pk>/edit/', ProjectUpdateView.as_view(), name='edit_project'),
     path('project/<int:pk>/settings/', ProjectSettingsView.as_view(), name='project_settings'),
+     path('project/<int:pk>/add_comment/', views.add_comment, name='add_comment'),
     
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

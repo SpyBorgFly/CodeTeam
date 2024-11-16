@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Projects
-from .forms import ProjectsForm, ProjectFilterForm, ProjectSettingsForm
+from .forms import ProjectsForm, ProjectFilterForm, ProjectSettingsForm, CommentForm
 from django.views.generic import DetailView, UpdateView, View
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -77,8 +77,26 @@ class ProjectsDetailView(DetailView):
         project = self.get_object()
         user = self.request.user
         context['has_access'] = not project.is_private or user == project.creator or user in project.allowed_users.all()
+        context['comments'] = project.comments.all().order_by('-created_date')
+        context['comment_form'] = CommentForm()
         return context
 
+    
+@login_required
+def add_comment(request, pk):
+    project = get_object_or_404(Projects, pk=pk)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.project = project
+            comment.author = request.user
+            comment.created_date = timezone.now()
+            comment.save()
+            return redirect('project-details', pk=project.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'projects/details_view.html', {'form': form, 'project': project})
 
 @login_required
 def add_projects(request):
