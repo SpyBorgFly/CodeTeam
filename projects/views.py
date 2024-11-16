@@ -29,6 +29,16 @@ def clean_html(description):
 
 def all_projects(request):
     projects = Projects.objects.all()
+    user = request.user
+
+    # Добавляем информацию о доступе к проектам
+    projects_with_access = []
+    for project in projects:
+        has_access = not project.is_private or project.creator == user or user in project.allowed_users.all()
+        projects_with_access.append({
+            'project': project,
+            'has_access': has_access
+        })
     
     # Фильтрация по хештегам
     hashtag = request.GET.get('hashtag')
@@ -55,8 +65,7 @@ def all_projects(request):
     elif date_filter == 'old':
         projects = projects.order_by('date_t')
 
-    return render(request, 'projects/all_projects.html', {'projects': projects})
-
+    return render(request, 'projects/all_projects.html', {'projects_with_access': projects_with_access})
 class ProjectsDetailView(DetailView):
     model = Projects
     template_name = 'projects/details_view.html'

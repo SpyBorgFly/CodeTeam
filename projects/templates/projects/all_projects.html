@@ -76,25 +76,37 @@
 
     <div class="content_site">
         <div class="projects-grid">
-            {% for el in projects %}
+            {% for project_info in projects_with_access %}
             <div class="project-card">
-                <a href="{% url 'project-details' el.id %}">
-                    <h3 class="project-title">{{ el.title }}</h3>
+                <a href="{% url 'project-details' project_info.project.id %}">
+                    <h3 class="project-title" {% if not project_info.has_access %}style="color: black;"{% endif %}>
+                        {% if not project_info.has_access %}
+                            <img src="{% static 'projects/img/lock.png' %}" alt="locked" style="width: 32px; height: 32px;">
+                            {{ project_info.project.title }}
+                            <img src="{% static 'projects/img/lock.png' %}" alt="locked" style="width: 32px; height: 32px;">
+                        {% else %}
+                            {{ project_info.project.title }}
+                        {% endif %}
+                    </h3>
                 </a>
-                <p class="project-stack">{{ el.stack|safe }}</p>
-                <p class="project-date">{{ el.date_t|date:"d/m/Y H:i" }}</p>
-                <p class="project-type">{{ el.type|safe }}</p>
-                <p class="project-hashtag">{{ el.hashtag|safe }}</p>
+                <p class="project-stack">{{ project_info.project.stack|safe }}</p>
+                <p class="project-date">{{ project_info.project.date_t|date:"d/m/Y H:i" }}</p>
+                <p class="project-type">{{ project_info.project.type|safe }}</p>
+                <p class="project-hashtag">{{ project_info.project.hashtag|safe }}</p>
                 <p class="project-description">
-                    {{ el.description|truncatechars:400 |safe }}
-                    {% if el.description|length > 400 %}
-                    <span class="more-text" style="display:none;">{{ el.description|safe }}</span>
-                    <button class="btn-read-more" onclick="toggleDescription(this)">Читать дальше</button>
+                    {% if project_info.has_access %}
+                        {{ project_info.project.description|truncatechars:400 |safe }}
+                        {% if project_info.project.description|length > 400 %}
+                            <span class="more-text" style="display:none;">{{ project_info.project.description|safe }}</span>
+                            <button class="btn-read-more" onclick="toggleDescription(this)">Читать дальше</button>
+                        {% endif %}
+                    {% else %}
+                        Проект приватный, вы не имеете к нему доступа.
                     {% endif %}
                 </p>
                 <p class="project-creator">
-                    <a href="{% url 'profile' el.creator.username %}" class="creator-link">
-                        {{ el.creator.username }}
+                    <a href="{% url 'profile' project_info.project.creator.username %}" class="creator-link">
+                        {{ project_info.project.creator.username }}
                     </a>
                 </p>
             </div>
