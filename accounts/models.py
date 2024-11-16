@@ -65,4 +65,4 @@ class UserProfile(models.Model):
     location = models.CharField(max_length=30, blank=True)
     programming_languages = MultiSelectField(choices=PROGRAMMING_LANGUAGES_CHOICES, blank=True, null=True)
     github = models.URLField(max_length=200, blank=True, null=True)
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)  
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True,  default='avatars/default_avatar.jpg' )  
