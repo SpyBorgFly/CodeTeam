@@ -11,7 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.decorators import method_decorator
-
+from django.db.models import Q
 
 def clean_html(description):
     allowed_tags = [
@@ -29,43 +29,44 @@ def clean_html(description):
 
 def all_projects(request):
     projects = Projects.objects.all()
-    user = request.user
-
-    # Добавляем информацию о доступе к проектам
     projects_with_access = []
+
+    # Фильтрация доступных проектов, включая скрытые
+    projects = projects.filter(Q(is_hidden=False) | Q(creator=request.user) | Q(allowed_users=request.user))
+
     for project in projects:
-        has_access = not project.is_private or project.creator == user or user in project.allowed_users.all()
+        has_access = not project.is_private or project.creator == request.user or request.user in project.allowed_users.all()
         projects_with_access.append({
             'project': project,
             'has_access': has_access
         })
-    
-    # Фильтрация по хештегам
-    hashtag = request.GET.get('hashtag')
-    if hashtag:
-        projects = projects.filter(hashtag__icontains=hashtag)
 
-    # Фильтрация по языку программирования
+    # Фильтрация по GET-параметрам
+    hashtag = request.GET.get('hashtag')
     stack = request.GET.get('stack')
     custom_stack = request.GET.get('custom_stack')
-    if stack and stack != 'Other':
-        projects = projects.filter(stack__icontains=stack)
-    elif custom_stack:
-        projects = projects.filter(stack__icontains=custom_stack)
+    type_dev = request.GET.get('type')
+    date = request.GET.get('date')
 
-    # Фильтрация по типу разработки
-    project_type = request.GET.get('type')
-    if project_type:
-        projects = projects.filter(type__icontains=project_type)
+    if hashtag:
+        projects = projects.filter(hashtag__icontains=hashtag)
+    if stack:
+        projects = projects.filter(stack__iexact=stack)
+    if custom_stack:
+        projects = projects.filter(stack__iexact=custom_stack)
+    if type_dev:
+        projects = projects.filter(type__icontains=type_dev)
+    if date:
+        if date == 'recent':
+            projects = projects.order_by('-date_t')
+        elif date == 'old':
+            projects = projects.order_by('date_t')
 
-    # Фильтрация по дате
-    date_filter = request.GET.get('date')
-    if date_filter == 'recent':
-        projects = projects.order_by('-date_t')
-    elif date_filter == 'old':
-        projects = projects.order_by('date_t')
+    context = {
+        'projects_with_access': projects_with_access
+    }
+    return render(request, 'projects/all_projects.html', context)
 
-    return render(request, 'projects/all_projects.html', {'projects_with_access': projects_with_access})
 class ProjectsDetailView(DetailView):
     model = Projects
     template_name = 'projects/details_view.html'

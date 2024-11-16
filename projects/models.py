@@ -12,7 +12,8 @@ class Projects(models.Model):
     hashtag = models.CharField('Hashtag', max_length=50, blank=True, null=True)
     is_private = models.BooleanField(default=False)
     allowed_users = models.ManyToManyField(User, related_name='allowed_projects', blank=True)
-
+    is_hidden = models.BooleanField(default=False)
+    
     def __str__(self):
         return self.title
 
