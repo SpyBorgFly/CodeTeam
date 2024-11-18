@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Projects
+from .models import Projects, Comment
 from .forms import ProjectsForm, ProjectFilterForm, ProjectSettingsForm, CommentForm
 from django.views.generic import DetailView, UpdateView, View
 from django.contrib.auth.decorators import login_required
@@ -85,18 +85,32 @@ class ProjectsDetailView(DetailView):
 @login_required
 def add_comment(request, pk):
     project = get_object_or_404(Projects, pk=pk)
-    if request.method == 'POST':
+    if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.project = project
             comment.author = request.user
-            comment.created_date = timezone.now()
             comment.save()
             return redirect('project-details', pk=project.pk)
     else:
         form = CommentForm()
-    return render(request, 'projects/details_view.html', {'form': form, 'project': project})
+    return render(request, 'projects/details_view.html', {'form': form})
+
+@login_required
+def add_reply(request, pk):
+    parent_comment = get_object_or_404(Comment, pk=pk)
+    if request.method == "POST":
+        reply_text = request.POST.get('reply_text')
+        if reply_text:
+            reply = Comment.objects.create(
+                project=parent_comment.project,
+                author=request.user,
+                text=reply_text,
+                parent=parent_comment
+            )
+            return redirect('project-details', pk=parent_comment.project.pk)
+    return redirect('project-details', pk=parent_comment.project.pk)
 
 @login_required
 def add_projects(request):

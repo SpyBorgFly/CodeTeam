@@ -44,12 +44,34 @@
     <h2 class="section-title">Комментарии</h2>
     <div id="comments">
         {% for comment in comments %}
-        <div class="comment">
+        <div class="comment {% if comment.author == project.creator %}author-comment{% endif %}">
             <p class="comment-author">
                 <strong>{{ comment.author }}</strong> 
                 <span class="comment-date">({{ comment.created_date|date:"d M Y H:i" }})</span>:
             </p>
             <p class="comment-text">{{ comment.text }}</p>
+
+            <!-- Добавляем раздел для ответов -->
+            <div class="comment-replies">
+                {% for reply in comment.replies.all %}
+                <div class="reply">
+                    <p class="comment-author">
+                        <strong>{{ reply.author }}</strong>
+                        <span class="comment-date">({{ reply.created_date|date:"d M Y H:i" }})</span>:
+                    </p>
+                    <p class="comment-text">{{ reply.text }}</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if user.is_authenticated %}
+            <!-- Форма для добавления ответа на комментарий -->
+            <form method="post" action="{% url 'add_reply' comment.pk %}" class="reply-form">
+                {% csrf_token %}
+                <textarea name="reply_text" rows="2" placeholder="Ответить на комментарий..."></textarea>
+                <button type="submit" class="submit-button">Ответить</button>
+            </form>
+            {% endif %}
         </div>
         {% endfor %}
     </div>
@@ -68,7 +90,6 @@
     {% endif %}
 </section>
 {% endif %}
-
 
 <span class="error-message">{{ error }}</span>
 {% endblock %}

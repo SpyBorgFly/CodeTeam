@@ -26,6 +26,7 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'Comment by {self.author} on {self.project}'
