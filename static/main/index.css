@@ -116,3 +116,52 @@ body {
     text-align: center;
 
 }
+
+a {
+    color: inherit; /* Наследовать цвет от родителя */
+    text-decoration: none; /* Убрать подчеркивание */
+}
+
+a:hover {
+    color: #007bff; /* Цвет при наведении */
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
+
+.btn-hero a {
+    display: inline-block;
+    padding: 10px 10px;
+    margin: 8px;
+    border: 2px solid white; /* Белая рамка */
+    background-color: transparent; /* Прозрачный фон */
+    color: white; /* Белый текст */
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Плавный переход */
+}
+
+.btn-hero a:hover {
+    background-color: white; /* Белый фон при наведении */
+    color: #007bff; /* Синий текст при наведении */
+}
+
+/* Индивидуальные стили для каждой кнопки */
+.btn-hero a.btn1 {
+    color: white;
+    border-color: white;
+}
+
+.btn-hero a.btn1:hover {
+    background-color: white;
+    color: #007bff;
+}
+
+.btn-hero a.btn2 {
+    color: white;
+    border-color: white;
+}
+
+.btn-hero a.btn2:hover {
+    background-color: white;
+    color: #007bff;
+}
