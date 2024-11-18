@@ -41,28 +41,34 @@
 
 {% if has_access %}
 <section class="comments-section">
-    <h2>Комментарии</h2>
+    <h2 class="section-title">Комментарии</h2>
     <div id="comments">
         {% for comment in comments %}
         <div class="comment">
-            <p><strong>{{ comment.author }}</strong> ({{ comment.created_date|date:"d M Y H:i" }}):</p>
-            <p>{{ comment.text }}</p>
+            <p class="comment-author">
+                <strong>{{ comment.author }}</strong> 
+                <span class="comment-date">({{ comment.created_date|date:"d M Y H:i" }})</span>:
+            </p>
+            <p class="comment-text">{{ comment.text }}</p>
         </div>
         {% endfor %}
     </div>
 
     {% if user.is_authenticated %}
-    <h2>Добавить комментарий</h2>
-    <form method="post" action="{% url 'add_comment' project.pk %}">
+    <h2 class="section-title">Добавить комментарий</h2>
+    <form method="post" action="{% url 'add_comment' project.pk %}" class="comment-form">
         {% csrf_token %}
         {{ comment_form.as_p }}
-        <button type="submit">Отправить</button>
+        <button type="submit" class="submit-button">Отправить</button>
     </form>
     {% else %}
-    <p>Пожалуйста, <a href="{% url 'login' %}">войдите</a>, чтобы оставить комментарий.</p>
+    <p class="login-message">
+        Пожалуйста, <a href="{% url 'login' %}" class="login-link">войдите</a>, чтобы оставить комментарий.
+    </p>
     {% endif %}
 </section>
 {% endif %}
+
 
 <span class="error-message">{{ error }}</span>
 {% endblock %}
