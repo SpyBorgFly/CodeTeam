@@ -129,7 +129,7 @@ a:hover {
 
 .btn-hero a {
     display: inline-block;
-    padding: 10px 12px;
+    padding: 10px 10px;
     margin: 8px;
     border: 2px solid white; /* Белая рамка */
     background-color: transparent; /* Прозрачный фон */
