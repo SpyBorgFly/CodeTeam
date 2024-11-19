@@ -27,15 +27,30 @@ def clean_html(description):
     return bleach.clean(description, tags=allowed_tags, attributes=allowed_attributes)
 
 
+
+
 def all_projects(request):
     projects = Projects.objects.all()
+
+    if request.user.is_authenticated:
+        projects = projects.filter(
+            Q(is_hidden=False) | 
+            Q(creator=request.user) | 
+            Q(allowed_users=request.user)
+        )
+    else:
+        projects = projects.filter(is_hidden=False)
+
     projects_with_access = []
 
-    # Фильтрация доступных проектов, включая скрытые
-    projects = projects.filter(Q(is_hidden=False) | Q(creator=request.user) | Q(allowed_users=request.user))
-
     for project in projects:
-        has_access = not project.is_private or project.creator == request.user or request.user in project.allowed_users.all()
+        has_access = (
+            not project.is_private or 
+            (request.user.is_authenticated and (
+                project.creator == request.user or 
+                request.user in project.allowed_users.all()
+            ))
+        )
         projects_with_access.append({
             'project': project,
             'has_access': has_access
