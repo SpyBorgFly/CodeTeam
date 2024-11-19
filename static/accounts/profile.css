@@ -1,36 +1,130 @@
 /* Основные стили для контейнера профиля */
 .profile-container {
-    background-color: #2c2c2e;
+    font-family: Arial, Helvetica, sans-serif;
     color: #e5e5e5;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     margin: 20px auto;
-    max-width: 600px;
+    max-width: 1200px;
 }
 
+
+.avatar-container img{
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-shrink: 1;
+
+}
+
+.profile-title{
+    opacity: 0.5;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.prof-img{
+    display: inline-block;
+    padding-right: 30px;
+    border-right: 0.5px solid gray;
+    padding-bottom: 20px;
+}
+
+.prof-img a{
+    display: block;
+    margin: 0 auto;
+}
+
+.user-inf{
+    display: flex;
+    margin-bottom: 100px;
+
+}
+
+.inf{
+    margin-left: 90px;
+    padding: 20px;
+    background: rgb(43, 41, 41, 0.5);
+    width: 50%;
+    border-radius: 20px;
+    height: 300px;
+}
+
+
+.inf a{
+    text-decoration: none;
+    color: #e5e5e5;
+    opacity: 0.6;
+}
+
+
+
+.projects-list li{
+    list-style: none;
+    padding-left: 0;
+    display: inline-block;
+    margin-right: 20px;
+    padding: 10px 20px ;
+    background: rgba(104, 98, 98, 0.5);
+    border-radius: 10px;
+}
+
+.projects-list li a{
+    color: white;
+    text-decoration: none;
+    
+    padding: 4px 10px ;
+
+}
+
+.projects-list li::before{
+    content: "🙂";
+}
+
+.projects-list li::after{
+    content: "🙂";
+}
+
+
+
+.projects-list{
+    padding-left: 0;
+}
+
+.projects-title{
+    border: none;
+    border-radius: 10px;
+    background: rgb(56, 56, 216);
+    padding: 10px 28px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+
+
 /* Заголовок профиля */
-.profile-title {
+/* .profile-title {
     text-align: center;
     margin-bottom: 20px;
     color: #bb86fc;
-}
+} */
 
 /* Информация профиля */
-.profile-info {
+/* .profile-info {
     margin-bottom: 20px;
     font-size: 1.1rem;
-}
+} */
 
 /* Заголовок для проектов */
-.projects-title {
+/* .projects-title {
     margin-top: 30px;
     margin-bottom: 10px;
     color: #bb86fc;
-}
+} */
 
 /* Список проектов */
-.projects-list {
+/* .projects-list {
     list-style-type: none;
     padding: 0;
 }
@@ -45,10 +139,10 @@
 
 .projects-list li:hover {
     background-color: #444;
-}
+} */
 
 /* Кнопка редактирования профиля */
-.btn-edit {
+/* .btn-edit {
     display: inline-block;
     background-color: #6200ea;
     color: white;
@@ -61,4 +155,4 @@
 
 .btn-edit:hover {
     background-color: #3700b3;
-}
+} */

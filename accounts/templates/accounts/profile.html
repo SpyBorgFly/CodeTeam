@@ -7,27 +7,38 @@
 <link rel="stylesheet" href="{% static 'accounts/profile.css' %}">
 
 <div class="profile-container">
-    <h2 class="profile-title">Профиль: {{ user.username }}</h2>
-    
-    
-    
+
+
+
     <div class="profile-info">
         <!-- Отображение аватара -->
-        <div class="avatar-container">
-            {% if user.userprofile.avatar %}
-                <img src="{{ user.userprofile.avatar.url }}" alt="Аватар" class="img-thumbnail" width="150" height="150">
-            {% else %}
-                <img src="{% static 'default-avatar.png' %}" alt="Аватар" class="img-thumbnail" width="150" height="150">
-            {% endif %}
+        <div class="user-inf">
+            <div class="prof-img">
+                <div class="avatar-container">
+                    {% if user.userprofile.avatar %}
+                    <img src="{{ user.userprofile.avatar.url }}" alt="Аватар" class="img-thumbnail" width="150"
+                        height="150">
+                    {% else %}
+                    <img src="{% static 'default-avatar.png' %}" alt="Аватар" class="img-thumbnail" width="150"
+                        height="150">
+                    {% endif %}
+                </div>
+                <h2 class="profile-title">{{ user.username }}</h2>
+                <a href="{% url 'edit_profile' user.username %}" class="btn btn-edit">Редактировать профиль</a>
+            </div>
+            <div class="inf">
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Github Link:</strong> <a href="{{ user_profile.github }}" target="_blank">{{
+                        user_profile.github }}</a></p>
+                <p><strong>Bio:</strong> {{ user_profile.bio }}</p>
+                <p><strong>Location:</strong> {{ user_profile.location }}</p>
+                <p><strong>Programming Languages:</strong> {{ user_profile.programming_languages }}</p>
+            </div>
         </div>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Github Link:</strong> <a href="{{ user_profile.github }}" target="_blank">{{ user_profile.github }}</a></p>
-        <p><strong>Bio:</strong> {{ user_profile.bio }}</p>
-        <p><strong>Location:</strong> {{ user_profile.location }}</p>
-        <p><strong>Programming Languages:</strong> {{ user_profile.programming_languages }}</p>
     </div>
 
-    <h3 class="projects-title">Текущие проекты:</h3>
+
+    <button class="projects-title">Текущие проекты:</button>
     <ul class="projects-list">
         {% for project in projects %}
         <li>
@@ -38,8 +49,9 @@
         {% endfor %}
     </ul>
 
+
     {% if is_owner %}
-    <a href="{% url 'edit_profile' user.username %}" class="btn btn-edit">Редактировать профиль</a>
+
     {% endif %}
 </div>
 {% endblock %}
