@@ -24,7 +24,9 @@
                 {% for project in projects %}
                 <div class="col-md-4">
                     <div class="project-card">
-                        <h5 class="project-title">{{ project.title }}</h5>
+                        <h5 class="project-title">
+                            <a href="{% url 'project-details' project.pk %}">{{ project.title }}</a>
+                        </h5>
                         <p class="project-stack">{{ project.stack }}</p>
                         <div class="project-details">
                             <ul>

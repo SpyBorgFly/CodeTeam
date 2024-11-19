@@ -68,7 +68,7 @@
             <!-- Форма для добавления ответа на комментарий -->
             <form method="post" action="{% url 'add_reply' comment.pk %}" class="reply-form">
                 {% csrf_token %}
-                <textarea name="reply_text" rows="2" placeholder="Ответить на комментарий..."></textarea>
+                <textarea name="text" rows="2" placeholder="Ответить на комментарий..."></textarea>
                 <button type="submit" class="submit-button">Ответить</button>
             </form>
             {% endif %}

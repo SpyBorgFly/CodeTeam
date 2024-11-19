@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Projects, Comment
-from .forms import ProjectsForm, ProjectFilterForm, ProjectSettingsForm, CommentForm
+from .forms import ProjectsForm, ProjectFilterForm, ProjectSettingsForm, CommentForm, ReplyForm
 from django.views.generic import DetailView, UpdateView, View
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -75,13 +75,12 @@ class ProjectsDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         project = self.get_object()
-        user = self.request.user
-        context['has_access'] = not project.is_private or user == project.creator or user in project.allowed_users.all()
-        context['comments'] = project.comments.all().order_by('-created_date')
+        context['comments'] = Comment.objects.filter(project=project, parent__isnull=True)
         context['comment_form'] = CommentForm()
+        context['reply_form'] = ReplyForm()
+        context['has_access'] = self.request.user == project.creator or not(project.is_private)
         return context
 
-    
 @login_required
 def add_comment(request, pk):
     project = get_object_or_404(Projects, pk=pk)
@@ -93,22 +92,19 @@ def add_comment(request, pk):
             comment.author = request.user
             comment.save()
             return redirect('project-details', pk=project.pk)
-    else:
-        form = CommentForm()
-    return render(request, 'projects/details_view.html', {'form': form})
+    return redirect('project-details', pk=project.pk)
 
 @login_required
 def add_reply(request, pk):
     parent_comment = get_object_or_404(Comment, pk=pk)
     if request.method == "POST":
-        reply_text = request.POST.get('reply_text')
-        if reply_text:
-            reply = Comment.objects.create(
-                project=parent_comment.project,
-                author=request.user,
-                text=reply_text,
-                parent=parent_comment
-            )
+        form = ReplyForm(request.POST)
+        if form.is_valid():
+            reply = form.save(commit=False)
+            reply.project = parent_comment.project
+            reply.author = request.user
+            reply.parent = parent_comment
+            reply.save()
             return redirect('project-details', pk=parent_comment.project.pk)
     return redirect('project-details', pk=parent_comment.project.pk)
 

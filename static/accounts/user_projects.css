@@ -112,3 +112,13 @@ body {
     opacity: 0.8;
     background-color: #1c1c1e;
 }
+
+a {
+    color: inherit; /* Наследовать цвет от родителя */
+    text-decoration: none; /* Убрать подчеркивание */
+}
+
+a:hover {
+    color: #a21c93; /* Цвет при наведении */
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
