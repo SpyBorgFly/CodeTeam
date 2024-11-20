@@ -26,7 +26,31 @@
                 <h2 class="profile-title">{{ user.username }}</h2>
                 <a href="{% url 'edit_profile' user.username %}" class="btn btn-edit">Редактировать профиль</a>
             </div>
-            <div class="inf">
+
+            <div class="block-title">
+                <div class=".inf-n inf">
+                    <button class="projects-title">Текущие проекты:</button>
+                    <ul class="projects-list">
+                        {% for project in projects %}
+                        <li>
+                            <a href="{% url 'project-details' project.pk %}">{{ project.title }}</a>
+                        </li>
+                        {% empty %}
+                        <li>Нет проектов</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="block-btn">
+                    <ul class="btn-title">
+                        <li class="btn-list"><a href="#">Проекты</a></li>
+                        <li class="btn-list"><a href="#">Комментарии</a></li>
+                        <li class="btn-list"><a href="#">Заявки</a></li>
+                        <li class="btn-list"><a href="#">активные проекты</a></li>
+                        <li class="btn-list"><a href="#" class="my-proj">Мои проекты</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="r-nav">
                 <p><strong>Email:</strong> {{ user.email }}</p>
                 <p><strong>Github Link:</strong> <a href="{{ user_profile.github }}" target="_blank">{{
                         user_profile.github }}</a></p>
@@ -38,16 +62,14 @@
     </div>
 
 
-    <button class="projects-title">Текущие проекты:</button>
-    <ul class="projects-list">
-        {% for project in projects %}
-        <li>
-            <a href="{% url 'project-details' project.pk %}">{{ project.title }}</a>
-        </li>
-        {% empty %}
-        <li>Нет проектов</li>
-        {% endfor %}
-    </ul>
+    <script>
+        const getMyproj = document.querySelector('.my-proj');
+        const infd = document.querySelector('.inf');
+    
+        getMyproj.addEventListener('click', function () {
+            infd.classList.toggle('inf-n');
+        });
+    </script>
 
 
     {% if is_owner %}
