@@ -35,7 +35,7 @@
             </li>
           </ul>
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            {% if user.is_authenticated %}
+            {% if request.user.is_authenticated %}
             <style>
               .prof {
                   border-radius: 50% !important;
@@ -45,24 +45,23 @@
                   border: none !important;
                   padding-top: 5px !important;
               }
-              </style>
+            </style>
             <div class="avatar-container">
-              {% if user.userprofile.avatar %}
-              <img src="{{ user.userprofile.avatar.url }}" alt="Аватар" width="35" class="prof">
+              {% if request.user.userprofile.avatar %}
+              <img src="{{ request.user.userprofile.avatar.url }}" alt="Аватар" width="35" class="prof">
               {% else %}
               <img src="{% static 'default-avatar.png' %}" alt="Аватар" width="35" class="prof">
               {% endif %}
-          </div>
-          
+            </div>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarProfileDropdown" role="button"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 Профиль
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarProfileDropdown">
-                <li><a class="dropdown-item" href="{% url 'profile' user.username %}">Профиль</a></li>
-                <li><a class="dropdown-item" href="{% url 'edit_profile' user.username %}">Редактирование профиля</a></li>
-                <li><a class="dropdown-item" href="{% url 'user_projects' user.username %}">Мои проекты</a></li>
+                <li><a class="dropdown-item" href="{% url 'profile' request.user.username %}">Профиль</a></li>
+                <li><a class="dropdown-item" href="{% url 'edit_profile' request.user.username %}">Редактирование профиля</a></li>
+                <li><a class="dropdown-item" href="{% url 'user_projects' request.user.username %}">Мои проекты</a></li>
                 <li><a class="dropdown-item" href="{% url 'user_settings' %}">Настройки</a></li> <!-- Новая ссылка -->
                 <li>
                   <a class="dropdown-item" href="{% url 'logout' %}"
@@ -72,7 +71,6 @@
                   </form>
                 </li>
               </ul>
-
             </li>
             {% else %}
             <div class="d-flex">
