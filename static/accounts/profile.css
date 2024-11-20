@@ -1,4 +1,3 @@
-/* Основные стили для контейнера профиля */
 .profile-container {
     font-family: Arial, Helvetica, sans-serif;
     color: #e5e5e5;
@@ -7,24 +6,22 @@
     max-width: 1400px;
 }
 
-
-.avatar-container img{
+.avatar-container img {
     border-radius: 50%;
-    width: 250px;
-    height: 250px;
+    width: 150px;
+    height: 150px;
     margin-bottom: 20px;
     display: flex;
     flex-shrink: 1;
-
 }
 
-.profile-title{
+.profile-title {
     opacity: 0.5;
     font-size: 24px;
     margin-bottom: 20px;
 }
 
-.prof-img{
+.prof-img {
     display: inline-block;
     padding-right: 30px;
     border-right: 0.5px solid gray;
@@ -32,74 +29,65 @@
     max-height: 400px;
 }
 
-.prof-img a{
+.prof-img a {
     display: block;
     margin: 0 auto;
 }
 
-.user-inf{
+.user-inf {
     display: flex;
     margin-bottom: 100px;
-
 }
 
-.inf-n{
+.content {
     display: none;
-}
-
-
-.inf{
     margin-left: 30px;
     padding: 20px;
     background: rgb(43, 41, 41, 0.5);
     width: 50%;
     border-radius: 20px;
-    height: 200px;
     margin-bottom: 70px;
-
 }
 
+.content h3 {
+    margin-top: 0;
+}
 
-.inf a{
+.content a {
     text-decoration: none;
     color: #e5e5e5;
     opacity: 0.6;
 }
 
-
-
-.projects-list li{
+.projects-list li {
     list-style: none;
     padding-left: 0;
     display: inline-block;
     margin-right: 20px;
-    padding: 10px 20px ;
+    padding: 10px 20px;
     background: rgba(104, 98, 98, 0.5);
     border-radius: 10px;
 }
 
-.projects-list li a{
+.projects-list li a {
     color: white;
     text-decoration: none;
-    padding: 4px 10px ;
-
+    padding: 4px 10px;
 }
 
-.projects-list li::before{
+.projects-list li::before {
     content: "🙂";
 }
 
-.projects-list li::after{
+.projects-list li::after {
     content: "🙂";
 }
 
-
-
-.projects-list{
+.projects-list {
     padding-left: 0;
 }
 
-.projects-title{
+.projects-title {
     border: none;
     border-radius: 10px;
     background: rgb(56, 56, 216);
@@ -108,18 +96,18 @@
     margin-bottom: 20px;
 }
 
-.block-btn{
+.block-btn {
     margin-left: 10px;
     padding-bottom: 4px;
     border-bottom: 0.5px solid rgb(156, 154, 154, 0.4);
 }
 
-.btn-list a{
+.btn-list a {
     text-decoration: none;
     color: white;
 }
 
-.btn-list{
+.btn-list {
     list-style: none;
     padding-left: 0;
     padding: 10px 20px;
@@ -127,20 +115,18 @@
     transition: all 500ms ease;
 }
 
-.btn-list:hover{
+.btn-list:hover {
     background: rgb(156, 154, 154, 0.2);
 }
 
-
-
-.btn-title{
+.btn-title {
     display: flex;
     justify-content: space-between;
 }
 
-.r-nav{
-    background: rgb(2,0,36);
-    background: linear-gradient(0deg, rgba(2,0,36,1) 77%, rgba(36,9,119,1) 100%);
+.r-nav {
+    background: rgb(2, 0, 36);
+    background: linear-gradient(0deg, rgba(2, 0, 36, 1) 77%, rgba(36, 9, 119, 1) 100%);
     width: 350px;
     margin-left: 30px;
     border-radius: 40px;
@@ -148,4 +134,21 @@
     padding: 100px 20px;
 }
 
+.comments-list {
+    list-style: none;
+    padding-left: 0;
+}
 
+.comments-list li {
+    margin-bottom: 10px;
+}
+
+.comments-list li a {
+    color: #e5e5e5;
+    text-decoration: none;
+    opacity: 0.6;
+}
+
+.comments-list li a:hover {
+    opacity: 1;
+}

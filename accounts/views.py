@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from projects.models import Projects
+from projects.models import Projects, Comment
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
@@ -51,10 +51,17 @@ class ProfileView(View):
         user = get_object_or_404(User, username=username)
         user_profile = get_object_or_404(UserProfile, user=user)
         projects = user.projects.all()
+        comments = Comment.objects.filter(author=user).order_by('-created_date')
         is_owner = request.user == user
 
-        return render(request, 'accounts/profile.html', {'user': user, 'projects': projects, 'is_owner': is_owner,
-                                                         'user_profile': user_profile})
+        return render(request, 'accounts/profile.html', {
+            'user': user,
+            'projects': projects,
+            'comments': comments,
+            'is_owner': is_owner,
+            'user_profile': user_profile
+        })
+
 
 
 

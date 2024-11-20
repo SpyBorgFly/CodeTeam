@@ -7,20 +7,15 @@
 <link rel="stylesheet" href="{% static 'accounts/profile.css' %}">
 
 <div class="profile-container">
-
-
-
     <div class="profile-info">
         <!-- Отображение аватара -->
         <div class="user-inf">
             <div class="prof-img">
                 <div class="avatar-container">
                     {% if user.userprofile.avatar %}
-                    <img src="{{ user.userprofile.avatar.url }}" alt="Аватар" class="img-thumbnail" width="150"
-                        height="150">
+                    <img src="{{ user.userprofile.avatar.url }}" alt="Аватар" class="img-thumbnail" width="150" height="150">
                     {% else %}
-                    <img src="{% static 'default-avatar.png' %}" alt="Аватар" class="img-thumbnail" width="150"
-                        height="150">
+                    <img src="{% static 'default-avatar.png' %}" alt="Аватар" class="img-thumbnail" width="150" height="150">
                     {% endif %}
                 </div>
                 <h2 class="profile-title">{{ user.username }}</h2>
@@ -28,32 +23,60 @@
             </div>
 
             <div class="block-title">
-                <div class=".inf-n inf">
-                    <button class="projects-title">Текущие проекты:</button>
-                    <ul class="projects-list">
-                        {% for project in projects %}
-                        <li>
-                            <a href="{% url 'project-details' project.pk %}">{{ project.title }}</a>
-                        </li>
-                        {% empty %}
-                        <li>Нет проектов</li>
-                        {% endfor %}
-                    </ul>
-                </div>
                 <div class="block-btn">
                     <ul class="btn-title">
-                        <li class="btn-list"><a href="#">Проекты</a></li>
-                        <li class="btn-list"><a href="#">Комментарии</a></li>
-                        <li class="btn-list"><a href="#">Заявки</a></li>
-                        <li class="btn-list"><a href="#">активные проекты</a></li>
-                        <li class="btn-list"><a href="#" class="my-proj">Мои проекты</a></li>
+                        <li class="btn-list"><a href="#" class="my-proj" data-target="projects">Мои проекты</a></li>
+                        <li class="btn-list"><a href="#" class="my-proj" data-target="requests">Завяки</a></li>
+                        <li class="btn-list"><a href="#" class="my-proj" data-target="active-projects">Активные проекты</a></li>
+                        <li class="btn-list"><a href="#" class="my-proj" data-target="comments">Комментарии</a></li>
+                        <li class="btn-list"><a href="#" class="my-proj" data-target="chats">Чаты</a></li>
                     </ul>
+                </div>
+
+                <div class="content-blocks">
+                    <div class="content" id="projects">
+                        <h3>Мои проекты</h3>
+                        <ul class="projects-list">
+                            {% for project in projects %}
+                            <li>
+                                <a href="{% url 'project-details' project.pk %}">{{ project.title }}</a>
+                            </li>
+                            {% empty %}
+                            <li>Нет проектов</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="content" id="requests">
+                        <h3>Завяки</h3>
+                        <p>Здесь будет информация о завяках</p>
+                    </div>
+                    <div class="content" id="active-projects">
+                        <h3>Активные проекты</h3>
+                        <p>Здесь будет информация об активных проектах</p>
+                    </div>
+                    <div class="content" id="comments">
+                        <h3>Комментарии</h3>
+                        {% if comments %}
+                        <ul class="comments-list">
+                            {% for comment in comments %}
+                            <li>
+                                <a href="{% url 'project-details' comment.project.pk %}#comment-{{ comment.pk }}">{{ comment.project.title }}</a>: {{ comment.text }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>Нет комментариев</p>
+                        {% endif %}
+                    </div>
+                    <div class="content" id="chats">
+                        <h3>Чаты</h3>
+                        <p>Здесь будут чаты</p>
+                    </div>
                 </div>
             </div>
             <div class="r-nav">
                 <p><strong>Email:</strong> {{ user.email }}</p>
-                <p><strong>Github Link:</strong> <a href="{{ user_profile.github }}" target="_blank">{{
-                        user_profile.github }}</a></p>
+                <p><strong>Github Link:</strong> <a href="{{ user_profile.github }}" target="_blank">{{ user_profile.github }}</a></p>
                 <p><strong>Bio:</strong> {{ user_profile.bio }}</p>
                 <p><strong>Location:</strong> {{ user_profile.location }}</p>
                 <p><strong>Programming Languages:</strong> {{ user_profile.programming_languages }}</p>
@@ -61,19 +84,24 @@
         </div>
     </div>
 
-
     <script>
-        const getMyproj = document.querySelector('.my-proj');
-        const infd = document.querySelector('.inf');
-    
-        getMyproj.addEventListener('click', function () {
-            infd.classList.toggle('inf-n');
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('projects').style.display = 'block';
+        });
+
+        document.querySelectorAll('.my-proj').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                const targetId = this.getAttribute('data-target');
+                document.querySelectorAll('.content').forEach(content => {
+                    content.style.display = 'none';
+                });
+                document.getElementById(targetId).style.display = 'block';
+            });
         });
     </script>
 
-
     {% if is_owner %}
-
     {% endif %}
 </div>
 {% endblock %}
