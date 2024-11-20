@@ -5,6 +5,7 @@
     padding: 20px;
     margin: 20px auto;
     max-width: 1400px;
+
 }
 
 
@@ -15,7 +16,6 @@
     margin-bottom: 20px;
     display: flex;
     flex-shrink: 1;
-
 }
 
 .profile-title{

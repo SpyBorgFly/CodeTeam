@@ -16,10 +16,10 @@
             <div class="prof-img">
                 <div class="avatar-container">
                     {% if user.userprofile.avatar %}
-                    <img src="{{ user.userprofile.avatar.url }}" alt="Аватар" class="img-thumbnail" width="150"
+                    <img src="{{ user.userprofile.avatar.url }}" alt="Аватар"  width="150"
                         height="150">
                     {% else %}
-                    <img src="{% static 'default-avatar.png' %}" alt="Аватар" class="img-thumbnail" width="150"
+                    <img src="{% static 'default-avatar.png' %}" alt="Аватар"  width="150"
                         height="150">
                     {% endif %}
                 </div>

@@ -1,4 +1,5 @@
 /* Основной фон и цвет текста */
+
 body {
     background-color: #1c1c1e !important; /* Черный фон */
     color: #e5e5e5 !important; /* Белый текст */
@@ -13,6 +14,7 @@ body {
 
 .navbar-brand {
     color: #bb86fc !important; /* Легкий фиолетовый для бренда */
+    text-decoration: none !important;
 }
 
 .nav-link {
@@ -67,6 +69,7 @@ footer a {
 
 footer a:hover {
     color: #e5e5e5 !important; /* Белый при наведении */
+    text-decoration: none !important;
 }
 
 /* Социальные кнопки в подвале */
@@ -84,6 +87,7 @@ footer a:hover {
 
 .text-body:hover {
     color: #e5e5e5 !important; /* Белый при наведении */
+    text-decoration: none !important;
 }
 
 /* Кнопка с текстом "Выйти" */
@@ -95,6 +99,7 @@ footer a:hover {
 .dropdown-item a:hover {
     color: #bb86fc !important; /* Фиолетовый при наведении */
     background-color: #333 !important;
+    text-decoration: none !important;
 }
 
 /* Убедитесь, что Bootstrap не перекрывает стили */
@@ -106,6 +111,7 @@ footer a:hover {
 
 .btn:hover {
     background-color: #444 !important; /* Более темный при наведении */
+    text-decoration: none !important;
 }
 
 /* Для секций, таких как footer */
@@ -113,3 +119,6 @@ footer a:hover {
     background-color: #1c1c1e !important; /* Заменяем белый фон Bootstrap */
     color: #e5e5e5 !important;
 }
+
+
+
