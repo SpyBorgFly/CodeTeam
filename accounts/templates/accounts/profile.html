@@ -13,9 +13,17 @@
             <div class="prof-img">
                 <div class="avatar-container">
                     {% if user.userprofile.avatar %}
+<<<<<<< HEAD
                     <img src="{{ user.userprofile.avatar.url }}" alt="Аватар" class="img-thumbnail" width="150" height="150">
                     {% else %}
                     <img src="{% static 'default-avatar.png' %}" alt="Аватар" class="img-thumbnail" width="150" height="150">
+=======
+                    <img src="{{ user.userprofile.avatar.url }}" alt="Аватар"  width="150"
+                        height="150">
+                    {% else %}
+                    <img src="{% static 'default-avatar.png' %}" alt="Аватар"  width="150"
+                        height="150">
+>>>>>>> 68ee3b73e248dabe0203c4ae3ae9a7a8e4c3ac15
                     {% endif %}
                 </div>
                 <h2 class="profile-title">{{ user.username }}</h2>

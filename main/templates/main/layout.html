@@ -36,6 +36,24 @@
           </ul>
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             {% if user.is_authenticated %}
+            <style>
+              .prof {
+                  border-radius: 50% !important;
+                  width: 35px !important;
+                  height: 35px !important;
+                  object-fit: cover !important;
+                  border: none !important;
+                  padding-top: 5px !important;
+              }
+              </style>
+            <div class="avatar-container">
+              {% if user.userprofile.avatar %}
+              <img src="{{ user.userprofile.avatar.url }}" alt="Аватар" width="35" class="prof">
+              {% else %}
+              <img src="{% static 'default-avatar.png' %}" alt="Аватар" width="35" class="prof">
+              {% endif %}
+          </div>
+          
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarProfileDropdown" role="button"
                 data-bs-toggle="dropdown" aria-expanded="false">
