@@ -4,24 +4,110 @@
 
 {% block content %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'projects/manage_applications.css' %}">
+<link rel="stylesheet" href="{% static 'accounts/profile.css' %}">
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<div class="manage-applications-container">
-    <h2>Управление заявками на проект "{{ project.title }}"</h2>
-    <ul class="applications-list">
-        {% for application in applications %}
-        <li>
-            <p><strong>Пользователь:</strong> <a href="{% url 'profile' application.user.username %}">{{ application.user.username }}</a></p>
-            <p><strong>Комментарий:</strong> {{ application.comment }}</p>
-            <p><strong>Статус:</strong> {{ application.status }}</p>
-            {% if application.status == 'pending' %}
-            <a href="{% url 'accept_application' project.pk application.pk %}" class="btn btn-success">Принять</a>
-            <a href="{% url 'reject_application' project.pk application.pk %}" class="btn btn-danger">Отклонить</a>
-            {% endif %}
-        </li>
-        {% empty %}
-        <li>Нет заявок</li>
+<div class="profile-container">
+    <div class="profile-info">
+        <div class="user-inf">
+            <div class="prof-img">
+                <div class="avatar-container">
+                    {% if user.userprofile.avatar %}
+                    <img src="{{ user.userprofile.avatar.url }}" alt="Аватар" class="img-thumbnail" width="150" height="150">
+                    {% else %}
+                    <img src="{% static 'default-avatar.png' %}" alt="Аватар" class="img-thumbnail" width="150" height="150">
+                    {% endif %}
+                </div>
+                <h2 class="profile-title">{{ user.username }}</h2>
+                <a href="{% url 'edit_profile' user.username %}" class="btn btn-edit">Редактировать профиль</a>
+            </div>
+
+            <div class="block-title">
+                <div class="block-btn">
+                    <ul class="btn-title">
+                        <li class="btn-list"><a href="#" class="my-proj" data-target="projects">Мои проекты</a></li>
+                        <li class="btn-list"><a href="#" class="my-proj" data-target="incoming-requests">Входящие заявки</a></li>
+                        <li class="btn-list"><a href="#" class="my-proj" data-target="outgoing-requests">Исходящие заявки</a></li>
+                        <li class="btn-list"><a href="#" class="my-proj" data-target="active-projects">Активные проекты</a></li>
+                        <li class="btn-list"><a href="#" class="my-proj" data-target="comments">Комментарии</a></li>
+                        <li class="btn-list"><a href="#" class="my-proj" data-target="chats">Чаты</a></li>
+                    </ul>
+                </div>
+
+                <div class="content-blocks">
+                    <div class="content" id="manage-applications">
+                        <h3>Управление заявками</h3>
+                        {% if applications %}
+                        <ul class="requests-list">
+                            {% for application in applications %}
+                            <li>
+                                Проект: <a href="{% url 'project-details' application.project.pk %}">{{ application.project.title }}</a><br>
+                                Пользователь: <a href="{% url 'profile' application.user.username %}">{{ application.user.username }}</a><br>
+                                Комментарий: {{ application.comment }}<br>
+                                Статус: {{ application.status }}<br>
+                                {% if application.status == 'pending' %}
+                                <button class="btn btn-success accept-btn" data-url="{% url 'accept_application' application.project.pk application.pk %}">Принять</button>
+                                <button class="btn btn-danger reject-btn" data-url="{% url 'reject_application' application.project.pk application.pk %}">Отклонить</button>
+                                {% endif %}
+                            </li>
+                            {% empty %}
+                            <li>Нет заявок</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>Нет заявок</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="r-nav">
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Github Link:</strong> <a href="{{ user_profile.github }}" target="_blank">{{ user_profile.github }}</a></p>
+                <p><strong>Bio:</strong> {{ user_profile.bio }}</p>
+                <p><strong>Location:</strong> {{ user_profile.location }}</p>
+                <p><strong>Programming Languages:</strong> {{ user_profile.programming_languages }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Отображение сообщений -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
+    {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('manage-applications').style.display = 'block';
+
+            document.querySelectorAll('.my-proj').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const targetId = this.getAttribute('data-target');
+                    document.querySelectorAll('.content').forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    document.getElementById(targetId).style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+    {% if is_owner %}
+    {% endif %}
 </div>
+
 {% endblock %}

@@ -217,18 +217,18 @@ def manage_applications(request, pk):
 def accept_application(request, pk, app_id):
     application = get_object_or_404(Application, pk=app_id, project__pk=pk)
     if request.user != application.project.creator:
-        return redirect('project-details', pk=application.project.pk)
+        return JsonResponse({'success': False, 'message': 'Вы не можете принять эту заявку.'})
     application.status = 'accepted'
     application.save()
     project = application.project
     project.allowed_users.add(application.user)
-    return redirect('manage_applications', pk=project.pk)
+    return JsonResponse({'success': True, 'message': 'Заявка успешно принята.'})
 
 @login_required
 def reject_application(request, pk, app_id):
     application = get_object_or_404(Application, pk=app_id, project__pk=pk)
     if request.user != application.project.creator:
-        return redirect('project-details', pk=application.project.pk)
+        return JsonResponse({'success': False, 'message': 'Вы не можете отклонить эту заявку.'})
     application.status = 'rejected'
     application.save()
-    return redirect('manage_applications', pk=application.project.pk)
+    return JsonResponse({'success': True, 'message': 'Заявка успешно отклонена.'})
