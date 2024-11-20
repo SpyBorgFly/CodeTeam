@@ -1,0 +1,62 @@
+/* Стили для страницы управления заявками */
+.manage-applications-container {
+    background-color: #1c1c1e; /* Темный фон */
+    color: #e5e5e5; /* Светлый текст */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Тень */
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* Заголовки */
+.section-title {
+    font-size: 1.8rem;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+/* Стили для каждого заявки */
+.application-item {
+    background-color: #2c2c2e; /* Темный фон заявки */
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5); /* Внутренняя тень */
+}
+
+.application-item p {
+    margin: 5px 0;
+}
+
+/* Кнопки */
+.btn-success {
+    background-color: #4caf50;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: #388e3c;
+}
+
+.btn-danger {
+    background-color: #f44336;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #d32f2f;
+}

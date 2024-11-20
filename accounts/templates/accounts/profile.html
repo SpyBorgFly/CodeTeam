@@ -26,7 +26,8 @@
                 <div class="block-btn">
                     <ul class="btn-title">
                         <li class="btn-list"><a href="#" class="my-proj" data-target="projects">Мои проекты</a></li>
-                        <li class="btn-list"><a href="#" class="my-proj" data-target="requests">Завяки</a></li>
+                        <li class="btn-list"><a href="#" class="my-proj" data-target="incoming-requests">Входящие заявки</a></li>
+                        <li class="btn-list"><a href="#" class="my-proj" data-target="outgoing-requests">Исходящие заявки</a></li>
                         <li class="btn-list"><a href="#" class="my-proj" data-target="active-projects">Активные проекты</a></li>
                         <li class="btn-list"><a href="#" class="my-proj" data-target="comments">Комментарии</a></li>
                         <li class="btn-list"><a href="#" class="my-proj" data-target="chats">Чаты</a></li>
@@ -46,13 +47,62 @@
                             {% endfor %}
                         </ul>
                     </div>
-                    <div class="content" id="requests">
-                        <h3>Завяки</h3>
-                        <p>Здесь будет информация о завяках</p>
+                    <div class="content" id="incoming-requests">
+                        <h3>Входящие заявки</h3>
+                        {% if incoming_applications %}
+                        <ul class="requests-list">
+                            {% for application in incoming_applications %}
+                            <li>
+                                Проект: <a href="{% url 'project-details' application.project.pk %}">{{ application.project.title }}</a><br>
+                                Пользователь: <a href="{% url 'profile' application.user.username %}">{{ application.user.username }}</a><br>
+                                Комментарий: {{ application.comment }}<br>
+                                Статус: {{ application.status }}<br>
+                                {% if application.status == 'pending' %}
+                                <a href="{% url 'accept_application' application.project.pk application.pk %}" class="btn btn-success">Принять</a>
+                                <a href="{% url 'reject_application' application.project.pk application.pk %}" class="btn btn-danger">Отклонить</a>
+                                {% endif %}
+                            </li>
+                            {% empty %}
+                            <li>Нет входящих заявок</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>Нет входящих заявок</p>
+                        {% endif %}
+                    </div>
+                    <div class="content" id="outgoing-requests">
+                        <h3>Исходящие заявки</h3>
+                        {% if outgoing_applications %}
+                        <ul class="requests-list">
+                            {% for application in outgoing_applications %}
+                            <li>
+                                Проект: <a href="{% url 'project-details' application.project.pk %}">{{ application.project.title }}</a><br>
+                                Комментарий: {{ application.comment }}<br>
+                                Статус: {{ application.status }}
+                            </li>
+                            {% empty %}
+                            <li>Нет исходящих заявок</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>Нет исходящих заявок</p>
+                        {% endif %}
                     </div>
                     <div class="content" id="active-projects">
                         <h3>Активные проекты</h3>
-                        <p>Здесь будет информация об активных проектах</p>
+                        {% if active_projects %}
+                        <ul class="active-projects-list">
+                            {% for project in active_projects %}
+                            <li>
+                                <a href="{% url 'project-details' project.pk %}">{{ project.title }}</a>
+                            </li>
+                            {% empty %}
+                            <li>Нет активных проектов</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>Нет активных проектов</p>
+                        {% endif %}
                     </div>
                     <div class="content" id="comments">
                         <h3>Комментарии</h3>

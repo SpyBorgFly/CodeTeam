@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from projects.models import Projects, Comment
+from projects.models import Projects, Comment, Application
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
@@ -22,7 +22,6 @@ class RegisterView(View):
 
         return render(request, 'accounts/register.html', {'form': form})
 
-
 class LoginView(View):
     def get(self, request):
         return render(request, 'accounts/login.html')
@@ -36,14 +35,10 @@ class LoginView(View):
             return redirect('profile', username=user.username)
         return render(request, 'accounts/login.html', {'error': 'Неверное имя пользователя или пароль'})
 
-
-
-
 class LogoutView(View):
     def post(self, request):
         logout(request)
         return redirect('login')
-
 
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
@@ -52,18 +47,23 @@ class ProfileView(View):
         user_profile = get_object_or_404(UserProfile, user=user)
         projects = user.projects.all()
         comments = Comment.objects.filter(author=user).order_by('-created_date')
+        outgoing_applications = Application.objects.filter(user=user).order_by('-created_date')
+        active_projects = Projects.objects.filter(allowed_users=user)
         is_owner = request.user == user
+
+        # Входящие заявки для проектов пользователя
+        incoming_applications = Application.objects.filter(project__creator=user).order_by('-created_date')
 
         return render(request, 'accounts/profile.html', {
             'user': user,
             'projects': projects,
             'comments': comments,
+            'outgoing_applications': outgoing_applications,
+            'incoming_applications': incoming_applications,
+            'active_projects': active_projects,
             'is_owner': is_owner,
             'user_profile': user_profile
         })
-
-
-
 
 @method_decorator(login_required, name='dispatch')
 class EditProfileView(View):
@@ -83,7 +83,7 @@ class EditProfileView(View):
         else:
             print(form.errors)  # Добавляем вывод ошибок
             return render(request, 'accounts/edit_profile.html', {'form': form, 'user_profile': user_profile, 'user': user})
-        
+
 def user_projects(request, username):
     user = get_object_or_404(User, username=username)
     projects = Projects.objects.filter(creator=user)
@@ -97,7 +97,6 @@ def delete_project(request, username, project_id):
         project.delete()
         return redirect('user_projects', username=user.username)
     return render(request, 'accounts/delete_project_confirm.html', {'project': project, 'user': user})
-
 
 @login_required
 def user_settings(request):
@@ -123,4 +122,3 @@ def user_settings(request):
         form = UserSettingsForm(initial={'username': user.username, 'email': user.email})
 
     return render(request, 'accounts/user_settings.html', {'form': form})
-

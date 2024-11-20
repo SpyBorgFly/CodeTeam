@@ -1,10 +1,9 @@
-from django.shortcuts import render, redirect
-from .models import Projects, Comment
-from .forms import ProjectsForm, ProjectFilterForm, ProjectSettingsForm, CommentForm, ReplyForm
+from django.http import JsonResponse
+from .models import Projects, Comment, Application
+from .forms import ProjectsForm, ProjectFilterForm, ProjectSettingsForm, CommentForm, ReplyForm, ApplicationForm
 from django.views.generic import DetailView, UpdateView, View
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from django.http import JsonResponse
 from django.core.files.storage import FileSystemStorage
 import bleach
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -25,9 +24,6 @@ def clean_html(description):
         'col': ['style'],  # Разрешаем атрибут style для <col>
     }
     return bleach.clean(description, tags=allowed_tags, attributes=allowed_attributes)
-
-
-
 
 def all_projects(request):
     projects = Projects.objects.all()
@@ -93,6 +89,7 @@ class ProjectsDetailView(DetailView):
         context['comments'] = Comment.objects.filter(project=project, parent__isnull=True)
         context['comment_form'] = CommentForm()
         context['reply_form'] = ReplyForm()
+        context['application_form'] = ApplicationForm()  # Добавляем форму заявки
         context['has_access'] = self.request.user == project.creator or not(project.is_private)
         return context
 
@@ -164,7 +161,6 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     context_object_name = 'project'
 
     def get_success_url(self):
-        
         return reverse_lazy('project-details', kwargs={'pk': self.object.pk})
 
     def get_object(self, queryset=None):
@@ -191,4 +187,48 @@ class ProjectSettingsView(View):
             form.save()
             return redirect('project-details', pk=project.pk)
         return render(request, 'projects/project_settings.html', {'form': form, 'project': project})
-    
+
+@login_required
+def apply_to_project(request, pk):
+    project = get_object_or_404(Projects, pk=pk)
+    if request.method == "POST":
+        form = ApplicationForm(request.POST)
+        if form.is_valid():
+            application = form.save(commit=False)
+            application.project = project
+            application.user = request.user
+            application.save()
+            return JsonResponse({'success': True, 'message': 'Ваша заявка успешно подана!'})
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors})
+    else:
+        form = ApplicationForm()
+    return render(request, 'projects/apply_to_project.html', {'form': form, 'project': project})
+
+@login_required
+def manage_applications(request, pk):
+    project = get_object_or_404(Projects, pk=pk)
+    if request.user != project.creator:
+        return redirect('project-details', pk=project.pk)
+    applications = project.applications.all()
+    return render(request, 'projects/manage_applications.html', {'applications': applications, 'project': project})
+
+@login_required
+def accept_application(request, pk, app_id):
+    application = get_object_or_404(Application, pk=app_id, project__pk=pk)
+    if request.user != application.project.creator:
+        return redirect('project-details', pk=application.project.pk)
+    application.status = 'accepted'
+    application.save()
+    project = application.project
+    project.allowed_users.add(application.user)
+    return redirect('manage_applications', pk=project.pk)
+
+@login_required
+def reject_application(request, pk, app_id):
+    application = get_object_or_404(Application, pk=app_id, project__pk=pk)
+    if request.user != application.project.creator:
+        return redirect('project-details', pk=application.project.pk)
+    application.status = 'rejected'
+    application.save()
+    return redirect('manage_applications', pk=application.project.pk)

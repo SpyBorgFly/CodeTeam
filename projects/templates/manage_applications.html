@@ -1,0 +1,27 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Управление заявками{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'projects/manage_applications.css' %}">
+
+<div class="manage-applications-container">
+    <h2>Управление заявками на проект "{{ project.title }}"</h2>
+    <ul class="applications-list">
+        {% for application in applications %}
+        <li>
+            <p><strong>Пользователь:</strong> <a href="{% url 'profile' application.user.username %}">{{ application.user.username }}</a></p>
+            <p><strong>Комментарий:</strong> {{ application.comment }}</p>
+            <p><strong>Статус:</strong> {{ application.status }}</p>
+            {% if application.status == 'pending' %}
+            <a href="{% url 'accept_application' project.pk application.pk %}" class="btn btn-success">Принять</a>
+            <a href="{% url 'reject_application' project.pk application.pk %}" class="btn btn-danger">Отклонить</a>
+            {% endif %}
+        </li>
+        {% empty %}
+        <li>Нет заявок</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

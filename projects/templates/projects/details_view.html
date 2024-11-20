@@ -35,6 +35,11 @@
         </div>
         {% if not has_access %}
         <p class="private-message">Этот проект является приватным. У вас нет доступа для просмотра деталей.</p>
+        {% elif not project.is_private %}
+        <!-- Кнопка для открытия модального окна -->
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#applyModal">
+            Подать заявку
+        </button>
         {% endif %}
     </div>
 </section>
@@ -99,4 +104,79 @@
 {% endif %}
 
 <span class="error-message">{{ error }}</span>
+
+<!-- Модальное окно для подачи заявки -->
+<div class="modal fade" id="applyModal" tabindex="-1" aria-labelledby="applyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="applyModalLabel">Подать заявку на проект "{{ project.title }}"</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="applicationForm" method="post" action="{% url 'apply_to_project' project.pk %}" class="application-form">
+                {% csrf_token %}
+                <div class="modal-body">
+                    {{ application_form.comment.label_tag }}
+                    {{ application_form.comment }}
+                    {{ application_form.comment.errors }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-success">Подать заявку</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('applicationForm');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Проверяем наличие элемента #liveToast перед использованием
+                const toastLiveExample = document.getElementById('liveToast');
+                if (toastLiveExample) {
+                    toastLiveExample.querySelector('.toast-body').innerText = data.message;
+                    const toast = new bootstrap.Toast(toastLiveExample);
+                    toast.show();
+                }
+                $('#applyModal').modal('hide');
+            } else {
+                alert('Ошибка при подаче заявки: ' + JSON.stringify(data.errors));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Произошла ошибка при подаче заявки.');
+        });
+    });
+});
+</script>
+
+<!-- Toast для уведомлений -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto">Уведомление</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Ваша заявка успешно подана!
+    </div>
+  </div>
+</div>
+
 {% endblock %}

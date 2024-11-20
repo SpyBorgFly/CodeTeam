@@ -1,7 +1,6 @@
-# forms.py
 from django import forms
 from django.forms import ModelForm, TextInput, Textarea, CheckboxInput, SelectMultiple
-from .models import Projects, Comment
+from .models import Projects, Comment, Application
 
 class ProjectsForm(ModelForm):
     class Meta:
@@ -41,3 +40,11 @@ class ReplyForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['text', ]
+
+class ApplicationForm(forms.ModelForm):
+    class Meta:
+        model = Application
+        fields = ['comment']
+        widgets = {
+            'comment': Textarea(attrs={'class': "form-control", 'placeholder': 'Введите ваш комментарий'}),
+        }

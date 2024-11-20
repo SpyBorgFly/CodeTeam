@@ -1,7 +1,7 @@
 from django.db import models
-from  django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from django.utils import timezone
-# Create your models here.
+
 class Projects(models.Model):
     title = models.CharField('Название', max_length=50)
     description = models.TextField('Описание')
@@ -30,3 +30,13 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Comment by {self.author} on {self.project}'
+
+class Application(models.Model):
+    project = models.ForeignKey(Projects, related_name='applications', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField()
+    status = models.CharField(max_length=10, choices=[('pending', 'Pending'), ('accepted', 'Accepted'), ('rejected', 'Rejected')], default='pending')
+    created_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'Application by {self.user} for {self.project}'
