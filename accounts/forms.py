@@ -1,5 +1,3 @@
-# accounts/forms.py
-
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -13,9 +11,13 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 class UserProfileForm(forms.ModelForm):
-    bio = forms.CharField(required=False)
+    bio = forms.CharField(required=False, widget=forms.Textarea(attrs={'rows': 4}))
     location = forms.CharField(required=False)
-    programming_languages = forms.MultipleChoiceField(choices=UserProfile.PROGRAMMING_LANGUAGES_CHOICES, required=False)
+    programming_languages = forms.MultipleChoiceField(
+        choices=UserProfile.PROGRAMMING_LANGUAGES_CHOICES,
+        required=False,
+        widget=forms.SelectMultiple(attrs={'class': 'selectize-input'})
+    )
     avatar = forms.ImageField(required=False)
 
     # Социальные сети
@@ -30,10 +32,10 @@ class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['bio', 'location', 'programming_languages', 'avatar', 'facebook', 'instagram', 'twitter', 'linkedin', 'youtube', 'telegram', 'vk', 'tiktok']
-        widgets = {
-            'programming_languages': forms.SelectMultiple(attrs={'class': 'chosen-select'}),
-        }
+        fields = [
+            'bio', 'location', 'programming_languages', 'avatar',
+            'facebook', 'instagram', 'twitter', 'linkedin', 'youtube', 'telegram', 'vk', 'tiktok'
+        ]
 
 class UserSettingsForm(forms.ModelForm):
     class Meta:
