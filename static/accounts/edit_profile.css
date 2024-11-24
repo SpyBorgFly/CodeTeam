@@ -1,3 +1,5 @@
+/* accounts/static/accounts/edit_profile.css */
+
 html, body {
     margin: 0;
     padding: 0;
@@ -98,22 +100,42 @@ input[type="email"]::placeholder {
 .chosen-container .chosen-choices .search-field input[type="text"] {
     background-color: #1c1c1e; /* Темный фон */
     color: #e5e5e5; /* Белый текст */
+    border: none;
+    padding: 0;
+    outline: none;
 }
 
 .chosen-container .chosen-choices .search-choice {
     background-color: #6200ea; /* Фиолетовый фон для выбранных элементов */
     color: #fff; /* Белый текст */
+    border-radius: 4px;
+    margin-right: 5px;
+    padding: 5px 10px;
+    display: inline-block;
+    position: relative;
+}
+
+.chosen-container .chosen-choices .search-choice .search-choice-close {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    cursor: pointer;
 }
 
 .chosen-container .chosen-drop {
     background-color: #2c2c2e; /* Серый фон для списка */
     border: 1px solid #555; /* Темная рамка */
     color: #e5e5e5; /* Белый текст */
+    border-radius: 4px;
 }
 
 .chosen-container .chosen-results li {
     background-color: #2c2c2e; /* Серый фон */
     color: #e5e5e5; /* Белый текст */
+    padding: 10px;
+    cursor: pointer;
 }
 
 .chosen-container .chosen-results li.highlighted {
@@ -199,4 +221,84 @@ input[type="email"]::placeholder {
     content: '+';
     font-size: 24px;
     line-height: 40px;
+}
+
+/* Стили для модального окна социальных сетей */
+.modal-content {
+    background-color: #2c2c2e; /* Темный фон модального окна */
+    color: #e5e5e5; /* Светлый текст */
+    border-radius: 10px; /* Скругленные углы */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Тень */
+}
+
+.modal-header {
+    border-bottom: 1px solid #444; /* Серая граница в шапке */
+}
+
+.modal-title {
+    color: #ffffff; /* Белый цвет заголовка */
+}
+
+.modal-body {
+    padding: 20px; /* Увеличиваем отступы */
+}
+
+.modal-footer {
+    border-top: 1px solid #444; /* Серая граница в футере */
+}
+
+.modal-footer .btn {
+    margin: 0 5px; /* Отступы между кнопками */
+}
+
+.social-media-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.social-media-item {
+    background-color: #383838; /* Темный фон для элементов списка */
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.social-media-item:hover {
+    background-color: #444; /* Темнее при наведении */
+}
+
+.social-media-item i {
+    margin-right: 10px;
+    font-size: 1.5rem;
+}
+
+/* Стили для модального окна редактирования социальной сети */
+#editSocialMediaModal .form-group {
+    margin-bottom: 20px;
+}
+
+#editSocialMediaModal label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #e5e5e5; /* Белый текст для меток */
+}
+
+#editSocialMediaModal input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555; /* Более темная рамка */
+    background-color: #1c1c1e; /* Темный фон для полей */
+    color: #e5e5e5; /* Белый текст */
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+#editSocialMediaModal input[type="text"]::placeholder {
+    color: #aaa; /* Светло-серый текст для placeholder */
 }

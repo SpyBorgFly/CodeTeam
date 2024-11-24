@@ -324,3 +324,36 @@ body {
 .modal-footer .btn {
     margin: 0 5px; /* Отступы между кнопками */
 }
+
+/* Стили для Bootstrap Toast */
+.toast {
+    background-color: #2c2c2e; /* Темный фон уведомления */
+    color: #e5e5e5; /* Белый цвет текста */
+    border-radius: 10px; /* Скругленные углы */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Тень */
+    width: 300px; /* Ширина уведомления */
+    padding: 10px 15px; /* Отступы внутри уведомления */
+}
+
+.toast-header {
+    background-color: #444; /* Темный фон заголовка */
+    color: #ffffff; /* Белый цвет текста в заголовке */
+    border-bottom: 1px solid #333; /* Серая граница в заголовке */
+    padding: 10px 15px; /* Отступы внутри заголовка */
+}
+
+.toast-header .btn-close {
+    background-color: transparent; /* Прозрачный фон кнопки закрытия */
+    border: none; /* Без границ */
+    color: #ffffff; /* Белый цвет кнопки закрытия */
+    font-size: 1.2rem; /* Размер шрифта кнопки закрытия */
+}
+
+.toast-header .btn-close:hover {
+    color: #ff3333; /* Красный цвет при наведении */
+}
+
+.toast-body {
+    padding: 10px 15px; /* Отступы внутри основной части уведомления */
+    font-size: 1rem; /* Размер шрифта текста уведомления */
+}

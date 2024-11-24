@@ -4,7 +4,9 @@
 
 {% block content %}
 {% load static %}
+{% load social_media_filters custom_filters %}
 <link rel="stylesheet" href="{% static 'accounts/profile.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 <div class="profile-container">
     <div class="profile-info">
@@ -19,7 +21,9 @@
                     {% endif %}
                 </div>
                 <h2 class="profile-title">{{ user.username }}</h2>
+                {% if is_owner %}
                 <a href="{% url 'edit_profile' user.username %}" class="btn btn-edit">Редактировать профиль</a>
+                {% endif %}
             </div>
 
             <div class="block-title">
@@ -52,14 +56,14 @@
                         {% if incoming_applications %}
                         <ul class="requests-list">
                             {% for application in incoming_applications %}
-                            <li>
+                            <li id="application-{{ application.pk }}">
                                 Проект: <a href="{% url 'project-details' application.project.pk %}">{{ application.project.title }}</a><br>
                                 Пользователь: <a href="{% url 'profile' application.user.username %}">{{ application.user.username }}</a><br>
                                 Комментарий: {{ application.comment }}<br>
-                                Статус: {{ application.status }}<br>
+                                Статус: <span id="status-{{ application.pk }}">{{ application.status }}</span><br>
                                 {% if application.status == 'pending' %}
-                                <a href="{% url 'accept_application' application.project.pk application.pk %}" class="btn btn-success">Принять</a>
-                                <a href="{% url 'reject_application' application.project.pk application.pk %}" class="btn btn-danger">Отклонить</a>
+                                <button class="btn btn-success accept-btn" data-url="{% url 'accept_application' application.project.pk application.pk %}" data-id="{{ application.pk }}">Принять</button>
+                                <button class="btn btn-danger reject-btn" data-url="{% url 'reject_application' application.project.pk application.pk %}" data-id="{{ application.pk }}">Отклонить</button>
                                 {% endif %}
                             </li>
                             {% empty %}
@@ -126,10 +130,24 @@
             </div>
             <div class="r-nav">
                 <p><strong>Email:</strong> {{ user.email }}</p>
-                <p><strong>Github Link:</strong> <a href="{{ user_profile.github }}" target="_blank">{{ user_profile.github }}</a></p>
                 <p><strong>Bio:</strong> {{ user_profile.bio }}</p>
                 <p><strong>Location:</strong> {{ user_profile.location }}</p>
                 <p><strong>Programming Languages:</strong> {{ user_profile.programming_languages }}</p>
+
+                <!-- Отображение социальных сетей -->
+                <div class="social-media-display">
+                    <h3>Социальные сети:</h3>
+                    {% for code, name in user_profile.SOCIAL_MEDIA_CHOICES %}
+                    {% with value=user_profile|get_attr:code %}
+                    {% if value %}
+                    <div class="social-media-item">
+                        <i class="fab fa-{{ code }}"></i>
+                        <a href="{{ value|add_social_media_url:code }}" target="_blank" class="social-media-link">@{{ value }}</a>
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
@@ -137,16 +155,54 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('projects').style.display = 'block';
-        });
 
-        document.querySelectorAll('.my-proj').forEach(button => {
-            button.addEventListener('click', function(event) {
-                event.preventDefault();
-                const targetId = this.getAttribute('data-target');
-                document.querySelectorAll('.content').forEach(content => {
-                    content.style.display = 'none';
+            document.querySelectorAll('.my-proj').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const targetId = this.getAttribute('data-target');
+                    document.querySelectorAll('.content').forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    document.getElementById(targetId).style.display = 'block';
                 });
-                document.getElementById(targetId).style.display = 'block';
+            });
+
+            document.querySelectorAll('.accept-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const url = this.getAttribute('data-url');
+                    const appId = this.getAttribute('data-id');
+                    fetch(url, { method: 'POST', headers: { 'X-CSRFToken': '{{ csrf_token }}' } })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                document.getElementById(`status-${appId}`).textContent = 'accepted';
+                                this.remove();
+                                document.querySelector(`#application-${appId} .reject-btn`).remove();
+                            } else {
+                                alert(data.message);
+                            }
+                        });
+                });
+            });
+
+            document.querySelectorAll('.reject-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const url = this.getAttribute('data-url');
+                    const appId = this.getAttribute('data-id');
+                    fetch(url, { method: 'POST', headers: { 'X-CSRFToken': '{{ csrf_token }}' } })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                document.getElementById(`status-${appId}`).textContent = 'rejected';
+                                this.remove();
+                                document.querySelector(`#application-${appId} .accept-btn`).remove();
+                            } else {
+                                alert(data.message);
+                            }
+                        });
+                });
             });
         });
     </script>
@@ -154,4 +210,5 @@
     {% if is_owner %}
     {% endif %}
 </div>
+
 {% endblock %}

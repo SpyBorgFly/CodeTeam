@@ -86,11 +86,19 @@ class ProjectsDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         project = self.get_object()
+        user = self.request.user
+        
         context['comments'] = Comment.objects.filter(project=project, parent__isnull=True)
         context['comment_form'] = CommentForm()
         context['reply_form'] = ReplyForm()
         context['application_form'] = ApplicationForm()  # Добавляем форму заявки
         context['has_access'] = self.request.user == project.creator or not(project.is_private)
+        
+        # Добавляем проверки для кнопки подачи заявки
+        context['is_creator'] = user == project.creator
+        context['is_participant'] = project.allowed_users.filter(pk=user.pk).exists()
+        context['has_applied'] = Application.objects.filter(project=project, user=user).exists()
+        
         return context
 
 @login_required
@@ -191,12 +199,26 @@ class ProjectSettingsView(View):
 @login_required
 def apply_to_project(request, pk):
     project = get_object_or_404(Projects, pk=pk)
+    user = request.user
+    
+    # Проверяем, является ли пользователь создателем проекта
+    if user == project.creator:
+        return JsonResponse({'success': False, 'message': 'Вы не можете подать заявку на свой собственный проект.'})
+    
+    # Проверяем, уже подал ли пользователь заявку на этот проект
+    if Application.objects.filter(project=project, user=user).exists():
+        return JsonResponse({'success': False, 'message': 'Вы уже подали заявку на этот проект.'})
+    
+    # Проверяем, является ли пользователь уже участником проекта
+    if project.allowed_users.filter(pk=user.pk).exists():
+        return JsonResponse({'success': False, 'message': 'Вы уже являетесь участником этого проекта.'})
+    
     if request.method == "POST":
         form = ApplicationForm(request.POST)
         if form.is_valid():
             application = form.save(commit=False)
             application.project = project
-            application.user = request.user
+            application.user = user
             application.save()
             return JsonResponse({'success': True, 'message': 'Ваша заявка успешно подана!'})
         else:
@@ -217,18 +239,18 @@ def manage_applications(request, pk):
 def accept_application(request, pk, app_id):
     application = get_object_or_404(Application, pk=app_id, project__pk=pk)
     if request.user != application.project.creator:
-        return redirect('project-details', pk=application.project.pk)
+        return JsonResponse({'success': False, 'message': 'Вы не можете принять эту заявку.'})
     application.status = 'accepted'
     application.save()
     project = application.project
     project.allowed_users.add(application.user)
-    return redirect('manage_applications', pk=project.pk)
+    return JsonResponse({'success': True, 'message': 'Заявка успешно принята.'})
 
 @login_required
 def reject_application(request, pk, app_id):
     application = get_object_or_404(Application, pk=app_id, project__pk=pk)
     if request.user != application.project.creator:
-        return redirect('project-details', pk=application.project.pk)
+        return JsonResponse({'success': False, 'message': 'Вы не можете отклонить эту заявку.'})
     application.status = 'rejected'
     application.save()
-    return redirect('manage_applications', pk=application.project.pk)
+    return JsonResponse({'success': True, 'message': 'Заявка успешно отклонена.'})
