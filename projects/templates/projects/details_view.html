@@ -36,10 +36,18 @@
         {% if not has_access %}
         <p class="private-message">Этот проект является приватным. У вас нет доступа для просмотра деталей.</p>
         {% elif not project.is_private %}
-        <!-- Кнопка для открытия модального окна -->
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#applyModal">
-            Подать заявку
-        </button>
+            {% if is_creator %}
+            <p class="info-message">Вы не можете подать заявку на свой собственный проект.</p>
+            {% elif is_participant %}
+            <p class="info-message">Вы уже являетесь участником этого проекта.</p>
+            {% elif has_applied %}
+            <p class="info-message">Вы уже подали заявку на этот проект.</p>
+            {% else %}
+            <!-- Кнопка для открытия модального окна -->
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#applyModal">
+                Подать заявку
+            </button>
+            {% endif %}
         {% endif %}
     </div>
 </section>
