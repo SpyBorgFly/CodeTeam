@@ -4,14 +4,16 @@
 
 {% block content %}
 {% load static %}
+{% load custom_filters %}
 <link rel="stylesheet" href="{% static 'accounts/edit_profile.css' %}">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 <div class="login-container">
     <h2>Редактирование профиля</h2>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" id="profileForm">
         {% csrf_token %}
 
         <div class="avatar-upload">
@@ -26,11 +28,6 @@
                     <label for="avatarInput"></label>
                 </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            <label for="github">Github Link:</label>
-            <input type="text" id="github" name="github" value="{{ user_profile.github }}">
         </div>
 
         <div class="form-group">
@@ -51,9 +48,70 @@
                 {% endfor %}
             </select>
         </div>
-        
+
+        <div class="form-group">
+            <label for="social-media">Социальные сети:</label>
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#socialMediaModal">
+                Управление социальными сетями
+            </button>
+        </div>
+
+        <!-- Скрытые поля для социальных сетей -->
+        {% for code, name in user_profile.SOCIAL_MEDIA_CHOICES %}
+            <input type="hidden" id="{{ code }}" name="{{ code }}" value="{{ user_profile|get_attr:code }}">
+        {% endfor %}
+
         <button type="submit" class="login-btn">Сохранить изменения</button>
     </form>
+</div>
+
+<!-- Модальное окно для управления социальными сетями -->
+<div class="modal fade" id="socialMediaModal" tabindex="-1" aria-labelledby="socialMediaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="socialMediaModalLabel">Управление социальными сетями</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="social-media-list">
+                    {% for code, name in user_profile.SOCIAL_MEDIA_CHOICES %}
+                        <div class="social-media-item" data-social-media="{{ code }}">
+                            <i class="fab fa-{{ code }}"></i> {{ name }}
+                            {% if user_profile|get_attr:code %}
+                                <i class="fas fa-check check-icon"></i>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для редактирования социальной сети -->
+<div class="modal fade" id="editSocialMediaModal" tabindex="-1" aria-labelledby="editSocialMediaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editSocialMediaModalLabel">Редактирование социальной сети</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="social-media-input">User ID:</label>
+                    <input type="text" id="social-media-input" name="social-media-input" class="form-control" placeholder="Введите никнейм или ссылку">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" id="saveSocialMediaBtn">Сохранить и выйти</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -61,6 +119,68 @@
         $('.chosen-select').chosen({
             placeholder_text_multiple: "Выберите языки программирования",
             width: '100%'
+        });
+
+        // Обработка клика на социальную сеть
+        $('.social-media-item').on('click', function() {
+            const socialMedia = $(this).data('social-media');
+            const currentValue = $('#profileForm [name="' + socialMedia + '"]').val();
+            $('#editSocialMediaModalLabel').text('Редактирование ' + $(this).text().split(':')[0].trim());
+
+            // Устанавливаем placeholder в зависимости от социальной сети
+            let placeholder = "Введите никнейм или ссылку";
+            switch (socialMedia) {
+                case 'facebook':
+                    placeholder = "Введите никнейм (например: johndoe)";
+                    break;
+                case 'instagram':
+                    placeholder = "Введите никнейм (например: johndoe)";
+                    break;
+                case 'twitter':
+                    placeholder = "Введите никнейм (например: @johndoe)";
+                    break;
+                case 'linkedin':
+                    placeholder = "Введите никнейм (например: johndoe)";
+                    break;
+                case 'youtube':
+                    placeholder = "Введите никнейм канала (например: johndoe)";
+                    break;
+                case 'telegram':
+                    placeholder = "Введите никнейм (например: @johndoe)";
+                    break;
+                case 'vk':
+                    placeholder = "Введите никнейм (например: johndoe)";
+                    break;
+                case 'tiktok':
+                    placeholder = "Введите никнейм (например: @johndoe)";
+                    break;
+                default:
+                    placeholder = "Введите никнейм или ссылку";
+            }
+
+            $('#social-media-input').val(currentValue);
+            $('#social-media-input').attr('placeholder', placeholder);
+            $('#editSocialMediaModal').data('social-media', socialMedia);
+            $('#editSocialMediaModal').modal('show');
+        });
+
+        // Обработка сохранения социальной сети
+        $('#saveSocialMediaBtn').on('click', function() {
+            const socialMedia = $('#editSocialMediaModal').data('social-media');
+            const value = $('#social-media-input').val();
+            $('#profileForm [name="' + socialMedia + '"]').val(value);
+
+            // Обновление галочки
+            const socialMediaItem = $('.social-media-item[data-social-media="' + socialMedia + '"]');
+            if (value) {
+                socialMediaItem.find('.check-icon').remove();
+                socialMediaItem.append('<i class="fas fa-check check-icon"></i>');
+            } else {
+                socialMediaItem.find('.check-icon').remove();
+            }
+
+            // Закрываем модальное окно
+            $('#editSocialMediaModal').modal('hide');
         });
     });
 </script>

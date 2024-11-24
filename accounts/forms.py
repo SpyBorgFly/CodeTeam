@@ -1,3 +1,5 @@
+# accounts/forms.py
+
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -14,12 +16,21 @@ class UserProfileForm(forms.ModelForm):
     bio = forms.CharField(required=False)
     location = forms.CharField(required=False)
     programming_languages = forms.MultipleChoiceField(choices=UserProfile.PROGRAMMING_LANGUAGES_CHOICES, required=False)
-    github = forms.URLField(required=False)
     avatar = forms.ImageField(required=False)
+
+    # Социальные сети
+    facebook = forms.CharField(required=False)
+    instagram = forms.CharField(required=False)
+    twitter = forms.CharField(required=False)
+    linkedin = forms.CharField(required=False)
+    youtube = forms.CharField(required=False)
+    telegram = forms.CharField(required=False)
+    vk = forms.CharField(required=False)
+    tiktok = forms.CharField(required=False)
 
     class Meta:
         model = UserProfile
-        fields = ['bio', 'location', 'programming_languages', 'github', 'avatar']
+        fields = ['bio', 'location', 'programming_languages', 'avatar', 'facebook', 'instagram', 'twitter', 'linkedin', 'youtube', 'telegram', 'vk', 'tiktok']
         widgets = {
             'programming_languages': forms.SelectMultiple(attrs={'class': 'chosen-select'}),
         }
@@ -48,4 +59,3 @@ class UserSettingsForm(forms.ModelForm):
             raise forms.ValidationError("Введите текущий пароль для изменения пароля.")
         
         return cleaned_data
-    

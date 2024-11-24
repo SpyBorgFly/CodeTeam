@@ -4,7 +4,9 @@
 
 {% block content %}
 {% load static %}
+{% load social_media_filters custom_filters %}
 <link rel="stylesheet" href="{% static 'accounts/profile.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 <div class="profile-container">
     <div class="profile-info">
@@ -128,10 +130,24 @@
             </div>
             <div class="r-nav">
                 <p><strong>Email:</strong> {{ user.email }}</p>
-                <p><strong>Github Link:</strong> <a href="{{ user_profile.github }}" target="_blank">{{ user_profile.github }}</a></p>
                 <p><strong>Bio:</strong> {{ user_profile.bio }}</p>
                 <p><strong>Location:</strong> {{ user_profile.location }}</p>
                 <p><strong>Programming Languages:</strong> {{ user_profile.programming_languages }}</p>
+
+                <!-- Отображение социальных сетей -->
+                <div class="social-media-display">
+                    <h3>Социальные сети:</h3>
+                    {% for code, name in user_profile.SOCIAL_MEDIA_CHOICES %}
+                    {% with value=user_profile|get_attr:code %}
+                    {% if value %}
+                    <div class="social-media-item">
+                        <i class="fab fa-{{ code }}"></i>
+                        <a href="{{ value|add_social_media_url:code }}" target="_blank" class="social-media-link">@{{ value }}</a>
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
@@ -194,4 +210,5 @@
     {% if is_owner %}
     {% endif %}
 </div>
+
 {% endblock %}

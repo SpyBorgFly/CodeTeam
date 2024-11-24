@@ -60,9 +60,32 @@ class UserProfile(models.Model):
         ('scratch', 'Scratch')
     ]
 
+    SOCIAL_MEDIA_CHOICES = [
+        ('facebook', 'Facebook'),
+        ('instagram', 'Instagram'),
+        ('twitter', 'Twitter'),
+        ('linkedin', 'LinkedIn'),
+        ('youtube', 'YouTube'),
+        ('telegram', 'Telegram'),
+        ('vk', 'VKontakte'),
+        ('tiktok', 'TikTok'),
+    ]
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True)
     location = models.CharField(max_length=30, blank=True)
     programming_languages = MultiSelectField(choices=PROGRAMMING_LANGUAGES_CHOICES, blank=True, null=True)
-    github = models.URLField(max_length=200, blank=True, null=True)
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True,  default='avatars/default_avatar.jpg' )  
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True, default='avatars/default_avatar.jpg')
+
+    # Социальные сети
+    facebook = models.CharField(max_length=100, blank=True, null=True)
+    instagram = models.CharField(max_length=100, blank=True, null=True)
+    twitter = models.CharField(max_length=100, blank=True, null=True)
+    linkedin = models.CharField(max_length=100, blank=True, null=True)
+    youtube = models.CharField(max_length=100, blank=True, null=True)
+    telegram = models.CharField(max_length=100, blank=True, null=True)
+    vk = models.CharField(max_length=100, blank=True, null=True)
+    tiktok = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username
