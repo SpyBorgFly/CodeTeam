@@ -190,3 +190,31 @@ a:hover {
     opacity: 1;
     transform: translateY(0);
 }
+
+
+
+
+.list{
+    list-style: none;
+    border: 0.5px solid gray;
+    margin: 150px auto;
+    width: 650px;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+
+.list-block{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+    border-bottom: 1px solid gray;
+    padding: 20px 0;
+}
+
+.list-text{
+    padding: 10px 0;
+    display: none;
+
+}
