@@ -11,9 +11,9 @@
 <div class="hero-section">
     <div class="container">
         <div class="uptext">
-            <h1 class="h1-text">Загружайте свои проекты и вступайте в другие команды</h1>
-            <p class="p-text">Создавайте, делитесь, вдохновляйтесь! У нас на сайте можно загрузить свои проекты, посмотреть идеи других, найти новых коллег и друзей. Воспользуйтесь всеми возможностями нашей платформы, чтобы ваш проект засиял ярче!</p>
-            <div class="btn-hero">
+            <h1 class="h1-text scroll-animate">Загружайте свои проекты и вступайте в другие команды</h1>
+            <p class="p-text scroll-animate">Создавайте, делитесь, вдохновляйтесь! У нас на сайте можно загрузить свои проекты, посмотреть идеи других, найти новых коллег и друзей. Воспользуйтесь всеми возможностями нашей платформы, чтобы ваш проект засиял ярче!</p>
+            <div class="btn-hero scroll-animate">
                 <a href="{% url 'add_projects' %}" class="btn1">Добавить проект</a>
                 <a href="{% url 'about' %}" class="btn2">Узнать больше</a>
             </div>
@@ -47,7 +47,7 @@
 <HR>
 
 
-<div class="new-section">
+ <div class="new-section scroll-animate">
     <h2 class="h2-new">ЙОУ</h2>
     <p class="p-new">пойдет</p>
 </div>
@@ -61,6 +61,21 @@
 
 
 <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const animatedElements = document.querySelectorAll('.scroll-animate');
 
+        const onScroll = () => {
+            animatedElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    el.classList.add('active');
+                }
+            });
+        };
+
+        // Вызываем onScroll при прокрутке и после загрузки страницы
+        window.addEventListener('scroll', onScroll);
+        onScroll();
+    });
 </script>
 {% endblock %}
