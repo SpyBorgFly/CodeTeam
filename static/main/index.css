@@ -119,11 +119,11 @@ body {
 
 a {
     color: inherit; /* Наследовать цвет от родителя */
-    text-decoration: none; /* Убрать подчеркивание */
+    text-decoration: none !important; /* Убрать подчеркивание */
 }
 
 a:hover {
-    color: #007bff; /* Цвет при наведении */
+
     text-decoration: underline; /* Подчеркивание при наведении */
 }
 
