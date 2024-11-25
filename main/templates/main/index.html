@@ -11,9 +11,9 @@
 <div class="hero-section">
     <div class="container">
         <div class="uptext">
-            <h1 class="h1-text">Загружайте свои проекты и вступайте в другие команды</h1>
-            <p class="p-text">Создавайте, делитесь, вдохновляйтесь! У нас на сайте можно загрузить свои проекты, посмотреть идеи других, найти новых коллег и друзей. Воспользуйтесь всеми возможностями нашей платформы, чтобы ваш проект засиял ярче!</p>
-            <div class="btn-hero">
+            <h1 class="h1-text scroll-animate">Загружайте свои проекты и вступайте в другие команды</h1>
+            <p class="p-text scroll-animate">Создавайте, делитесь, вдохновляйтесь! У нас на сайте можно загрузить свои проекты, посмотреть идеи других, найти новых коллег и друзей. Воспользуйтесь всеми возможностями нашей платформы, чтобы ваш проект засиял ярче!</p>
+            <div class="btn-hero scroll-animate">
                 <a href="{% url 'add_projects' %}" class="btn1">Добавить проект</a>
                 <a href="{% url 'about' %}" class="btn2">Узнать больше</a>
             </div>
@@ -47,9 +47,90 @@
 <HR>
 
 
-<div class="new-section">
-    <h2 class="h2-new">ЙОУ</h2>
-    <p class="p-new">пойдет</p>
+ <div class="new-section scroll-animate">
+    <ul class="container list">
+        <li class="element-list">
+            <div class="list-block">
+                <h3 class="title-elemen">Загружать свои проекты</h3>
+                <button class="btn btn-list">+</button>
+            </div>
+            <div class="list-text">
+                <p>Покажите свои разработки всему сообществу! Добавляйте описания, изображения, видео и ссылки на репозитории, чтобы ваши идеи были заметны.</p>
+            </div>
+        </li>
+        <li class="element-list">
+            <div class="list-block">
+                <h3 class="title-elemen">Делиться идеями и вдохновлять других</h3>
+                <button class="btn btn-list">+</button>
+            </div>
+            <div class="list-text">
+                <p>Оставляйте комментарии, делитесь мыслями, предлагайте улучшения и поддерживайте участников. Ваша идея может стать началом чего-то грандиозного!</p>
+            </div>
+        </li>
+        <li class="element-list">
+            <div class="list-block">
+                <h3 class="title-elemen">Загружать свои проекты</h3>
+                <button class="btn btn-list">+</button>
+            </div>
+            <div class="list-text">
+                <p>Исследуйте галерею проектов, изучайте подходы и решения, применяемые другими пользователями, и вдохновляйтесь их достижениями.</p>
+            </div>
+        </li>
+        <li class="element-list">
+            <div class="list-block">
+                <h3 class="title-elemen">Просматривать проекты других участников</h3>
+                <button class="btn btn-list">+</button>
+            </div>
+            <div class="list-text">
+                <p>Исследуйте галерею проектов, изучайте подходы и решения, применяемые другими пользователями, и вдохновляйтесь их достижениями.</p>
+            </div>
+        </li>
+        <li class="element-list">
+            <div class="list-block">
+                <h3 class="title-elemen">Вступать в команды</h3>
+                <button class="btn btn-list">+</button>
+            </div>
+            <div class="list-text">
+                <p>Хотите работать над чем-то крупным? Присоединяйтесь к командам единомышленников или создавайте свои, чтобы вместе воплощать в жизнь самые амбициозные проекты.</p>
+            </div>
+        </li>
+        <li class="element-list">
+            <div class="list-block">
+                <h3 class="title-elemen">Искать единомышленников</h3>
+                <button class="btn btn-list">+</button>
+            </div>
+            <div class="list-text">
+                <p>Найдите людей, которые разделяют ваши интересы и готовы работать над общими целями. В разделе поиска команды вы легко сможете подобрать подходящих участников.</p>
+            </div>
+        </li>
+        <li class="element-list">
+            <div class="list-block">
+                <h3 class="title-elemen">Делиться своими достижениями</h3>
+                <button class="btn btn-list">+</button>
+            </div>
+            <div class="list-text">
+                <p>Получите признание за свои успехи. Наша платформа помогает собрать отзывы, лайки и отклики от сообщества, чтобы ваши труды не остались незамеченными.</p>
+            </div>
+        </li>
+        <li class="element-list">
+            <div class="list-block">
+                <h3 class="title-elemen">Учиться и развиваться</h3>
+                <button class="btn btn-list">+</button>
+            </div>
+            <div class="list-text">
+                <p>Изучайте лучшие практики, знакомьтесь с современными технологиями, смотрите, как работают другие, и повышайте свои навыки.</p>
+            </div>
+        </li>
+        <li class="element-list">
+            <div class="list-block">
+                <h3 class="title-elemen">Получать поддержку и вдохновение</h3>
+                <button class="btn btn-list">+</button>
+            </div>
+            <div class="list-text">
+                <p>Наша платформа — это не только работа, но и сообщество людей, готовых помогать, поддерживать и вдохновлять друг друга.</p>
+            </div>
+        </li>
+    </ul>
 </div>
 
 
@@ -61,6 +142,41 @@
 
 
 <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const animatedElements = document.querySelectorAll('.scroll-animate');
 
+        const onScroll = () => {
+            animatedElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    el.classList.add('active');
+                }
+            });
+        };
+
+        // Вызываем onScroll при прокрутке и после загрузки страницы
+        window.addEventListener('scroll', onScroll);
+        onScroll();
+    });
+
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const btnplus = document.querySelectorAll('.btn-list');
+
+    btnplus.forEach((button) => {
+        button.addEventListener('click', function () {
+            const listText = this.parentElement.nextElementSibling; // Ищем соседний `.list-text`
+
+            if (listText.style.display === 'block') {
+                listText.style.display = 'none'; // Сворачиваем
+                this.textContent = '+'; // Возвращаем кнопку в исходное состояние
+            } else {
+                listText.style.display = 'block'; // Разворачиваем
+                this.textContent = '-'; // Меняем знак на кнопке
+            }
+        });
+    });
+});
 </script>
 {% endblock %}

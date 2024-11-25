@@ -332,6 +332,7 @@ input[type="email"]::placeholder {
     color: #aaa; /* Светло-серый текст для placeholder */
 }
 
+<<<<<<< HEAD
 .selectize-input {
     background-color: #1c1c1e !important; /* Темный фон */
     border: 1px solid #555 !important; /* Темная рамка */
@@ -429,3 +430,5 @@ input[type="email"]::placeholder {
     color: #ffffff;
     border: 0 solid #dee2e6;
 }
+=======
+>>>>>>> f7506942cefd5388a604dad753dab1c07c655e57
