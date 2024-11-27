@@ -14,6 +14,7 @@ urlpatterns = [
     path('profile/<str:username>/projects/', views.user_projects, name='user_projects'),
     path('profile/<str:username>/projects/delete/<int:project_id>/', views.delete_project, name='delete_project'),
     path('settings/', views.user_settings, name='user_settings'),
+    path('review_applications/', views.review_applications, name='review_applications'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

@@ -14,7 +14,7 @@ urlpatterns = [
     path('project/<int:pk>/add_comment/', views.add_comment, name='add_comment'),
     path('comment/<int:pk>/reply/', views.add_reply, name='add_reply'),
     path('<int:pk>/apply/', views.apply_to_project, name='apply_to_project'),
-    path('<int:pk>/manage_applications/', views.manage_applications, name='manage_applications'),
+
     path('<int:pk>/accept/<int:app_id>/', views.accept_application, name='accept_application'),
     path('<int:pk>/reject/<int:app_id>/', views.reject_application, name='reject_application'),
     

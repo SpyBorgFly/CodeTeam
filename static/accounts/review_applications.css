@@ -1,0 +1,100 @@
+/* accounts/static/accounts/review_applications.css */
+
+.project-card {
+    margin-bottom: 20px;
+    background: rgba(43, 41, 41, 0.5);
+    padding: 20px;
+    border-radius: 20px;
+    width: 100%;
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-header h3 {
+    margin: 0;
+}
+
+.toggle-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.toggle-btn:hover {
+    background: #0056b3;
+}
+
+.show-reviewed-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+}
+
+.show-reviewed-btn:hover {
+    background: #218838;
+}
+
+.requests-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+}
+
+.requests-list li {
+    background: rgba(104, 98, 98, 0.5);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.requests-list li a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.6;
+}
+
+.requests-list li a:hover {
+    opacity: 1;
+}
+
+.btn {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-success {
+    background: #28a745;
+}
+
+.btn-success:hover {
+    background: #218838;
+}
+
+.btn-danger {
+    background: #dc3545;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}
+
+.reviewed-applications {
+    margin-top: 20px;
+}

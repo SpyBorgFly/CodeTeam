@@ -227,13 +227,6 @@ def apply_to_project(request, pk):
         form = ApplicationForm()
     return render(request, 'projects/apply_to_project.html', {'form': form, 'project': project})
 
-@login_required
-def manage_applications(request, pk):
-    project = get_object_or_404(Projects, pk=pk)
-    if request.user != project.creator:
-        return redirect('project-details', pk=project.pk)
-    applications = project.applications.all()
-    return render(request, 'projects/manage_applications.html', {'applications': applications, 'project': project})
 
 @login_required
 def accept_application(request, pk, app_id):

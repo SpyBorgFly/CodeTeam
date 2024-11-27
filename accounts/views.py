@@ -1,3 +1,4 @@
+import logging
 from django.contrib.auth.models import User
 from projects.models import Projects, Comment, Application
 from django.views import View
@@ -8,6 +9,10 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import UserProfile
 from django.http import Http404
+from collections import defaultdict
+
+# Настройка логирования
+logger = logging.getLogger(__name__)
 
 class RegisterView(View):
     def get(self, request):
@@ -53,7 +58,21 @@ class ProfileView(View):
         is_owner = request.user == user
 
         # Входящие заявки для проектов пользователя
-        incoming_applications = Application.objects.filter(project__creator=user).order_by('-created_date')
+        incoming_applications = Application.objects.filter(project__creator=user, status='pending').order_by('-created_date')
+
+        # Группировка заявок по проектам
+        grouped_apps = defaultdict(list)
+        for app in incoming_applications:
+            grouped_apps[app.project].append(app)
+
+        # Формируем список проектов с количеством нерассмотренных заявок
+        project_requests = []
+        for project, apps in grouped_apps.items():
+            project_requests.append({
+                'project': project,
+                'count': len(apps),
+                'applications': apps
+            })
 
         return render(request, 'accounts/profile.html', {
             'user': user,
@@ -63,7 +82,8 @@ class ProfileView(View):
             'incoming_applications': incoming_applications,
             'active_projects': active_projects,
             'is_owner': is_owner,
-            'user_profile': user_profile
+            'user_profile': user_profile,
+            'project_requests': project_requests
         })
 
 @method_decorator(login_required, name='dispatch')
@@ -127,3 +147,28 @@ def user_settings(request):
         form = UserSettingsForm(initial={'username': user.username, 'email': user.email})
 
     return render(request, 'accounts/user_settings.html', {'form': form})
+
+@login_required
+def review_applications(request):
+    user = request.user
+    incoming_applications = Application.objects.filter(project__creator=user, status='pending').order_by('-created_date')
+    
+    # Группировка заявок по проектам
+    grouped_apps = defaultdict(list)
+    for app in incoming_applications:
+        grouped_apps[app.project].append(app)
+    
+    # Формируем список проектов с количеством нерассмотренных заявок
+    project_requests = []
+    for project, apps in grouped_apps.items():
+        project_requests.append({
+            'project': project,
+            'count': len(apps),
+            'applications': apps
+        })
+    
+    # Логирование для проверки наличия входящих заявок
+    logger.info(f"Incoming applications count: {incoming_applications.count()}")
+    logger.info(f"Grouped applications: {grouped_apps}")
+    
+    return render(request, 'accounts/review_applications.html', {'project_requests': project_requests, 'user': user})

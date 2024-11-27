@@ -1,0 +1,83 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Рассмотрение заявок{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'accounts/profile.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+<div class="profile-container">
+    <div class="profile-info">
+        <h2>Рассмотрение заявок</h2>
+        {% if project_requests %}
+            <ul class="requests-list">
+                {% for request in project_requests %}
+                    <li>
+                        <h3>Проект: <a href="{% url 'project-details' request.project.pk %}">{{ request.project.title }}</a></h3>
+                        <p>Количество заявок для проекта: {{ request.count }}</p>
+                        <ul>
+                            {% for app in request.applications %}
+                                <li id="application-{{ app.pk }}">
+                                    Пользователь: <a href="{% url 'profile' app.user.username %}">{{ app.user.username }}</a><br>
+                                    Комментарий: {{ app.comment }}<br>
+                                    Статус: <span id="status-{{ app.pk }}">{{ app.status }}</span><br>
+                                    {% if app.status == 'pending' %}
+                                    <button class="btn btn-success accept-btn" data-url="{% url 'accept_application' request.project.pk app.pk %}" data-id="{{ app.pk }}">Принять</button>
+                                    <button class="btn btn-danger reject-btn" data-url="{% url 'reject_application' request.project.pk app.pk %}" data-id="{{ app.pk }}">Отклонить</button>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Нет заявок для рассмотрения</p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.accept-btn').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                const url = this.getAttribute('data-url');
+                const appId = this.getAttribute('data-id');
+                fetch(url, { method: 'POST', headers: { 'X-CSRFToken': '{{ csrf_token }}' } })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById(`status-${appId}`).textContent = 'accepted';
+                            this.remove();
+                            document.querySelector(`#application-${appId} .reject-btn`).remove();
+                        } else {
+                            alert(data.message);
+                        }
+                    });
+            });
+        });
+
+        document.querySelectorAll('.reject-btn').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                const url = this.getAttribute('data-url');
+                const appId = this.getAttribute('data-id');
+                fetch(url, { method: 'POST', headers: { 'X-CSRFToken': '{{ csrf_token }}' } })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById(`status-${appId}`).textContent = 'rejected';
+                            this.remove();
+                            document.querySelector(`#application-${appId} .accept-btn`).remove();
+                        } else {
+                            alert(data.message);
+                        }
+                    });
+            });
+        });
+    });
+</script>
+
+{% endblock %}

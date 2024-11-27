@@ -53,25 +53,18 @@
                     </div>
                     <div class="content" id="incoming-requests">
                         <h3>Входящие заявки</h3>
-                        {% if incoming_applications %}
-                        <ul class="requests-list">
-                            {% for application in incoming_applications %}
-                            <li id="application-{{ application.pk }}">
-                                Проект: <a href="{% url 'project-details' application.project.pk %}">{{ application.project.title }}</a><br>
-                                Пользователь: <a href="{% url 'profile' application.user.username %}">{{ application.user.username }}</a><br>
-                                Комментарий: {{ application.comment }}<br>
-                                Статус: <span id="status-{{ application.pk }}">{{ application.status }}</span><br>
-                                {% if application.status == 'pending' %}
-                                <button class="btn btn-success accept-btn" data-url="{% url 'accept_application' application.project.pk application.pk %}" data-id="{{ application.pk }}">Принять</button>
-                                <button class="btn btn-danger reject-btn" data-url="{% url 'reject_application' application.project.pk application.pk %}" data-id="{{ application.pk }}">Отклонить</button>
-                                {% endif %}
-                            </li>
-                            {% empty %}
-                            <li>Нет входящих заявок</li>
-                            {% endfor %}
-                        </ul>
+                        {% if project_requests %}
+                            <p>У вас есть нерассмотренные заявки:</p>
+                            <ul class="requests-list">
+                                {% for request in project_requests %}
+                                    <li>
+                                        Проект: <a href="{% url 'project-details' request.project.pk %}">{{ request.project.title }}</a> - {{ request.count }} заявок
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <a href="{% url 'review_applications' %}" class="btn btn-primary">Рассмотреть заявки</a>
                         {% else %}
-                        <p>Нет входящих заявок</p>
+                            <p>Нет входящих заявок</p>
                         {% endif %}
                     </div>
                     <div class="content" id="outgoing-requests">
