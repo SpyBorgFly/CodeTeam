@@ -218,3 +218,44 @@ a:hover {
     display: none;
 
 }
+
+
+.vote-sec{
+    margin-top: 150px;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+.vote-sec h3{
+    display: inline-block;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.vote-sec span{
+    font-size: 24px;
+    color: gray;
+    font-weight: bold;
+}
+.vote-sec div{
+    text-align: center;
+    
+}
+
+.work-list{
+    width: 400px;
+}
+
+
+.cards-tehnolg{
+    display: grid;
+    border: 0.5px solid gray;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.cards-tehnolg div{
+    border-right: 1px solid gray;
+}
+
