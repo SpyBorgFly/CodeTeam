@@ -10,9 +10,9 @@
 <link rel="stylesheet" href="{% static 'accounts/user_projects.css' %}">
 
 <section class="projects-section">
-    <div class="container">
-        <h2>Проекты пользователя {{ user.username }}</h2>
-
+    <div class="container projects">
+        <h2 class="tit">Проекты пользователя {{ user.username }}</h2>
+        <HR>
         <!-- Проверка, если нет проектов -->
         {% if projects.count == 0 %}
             <div class="no-projects-message">

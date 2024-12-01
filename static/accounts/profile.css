@@ -65,6 +65,11 @@
     opacity: 1;
 }
 
+
+
+
+
+
 .projects-list li {
     list-style: none;
     padding-left: 0;
@@ -73,6 +78,7 @@
     padding: 10px 20px;
     background: rgba(104, 98, 98, 0.5);
     border-radius: 10px;
+    margin: 10px 50px;
 }
 
 .projects-list li a {
@@ -91,6 +97,8 @@
 
 .projects-list {
     padding-left: 0;
+
+
 }
 
 .projects-title {
