@@ -17,7 +17,7 @@
                     {% if user.userprofile.avatar %}
                     <img src="{{ user.userprofile.avatar.url }}" alt="Аватар" class="img-thumbnail" width="150" height="150">
                     {% else %}
-                    <img src="{% static 'default-avatar.png' %}" alt="Аватар" class="img-thumbnail" width="150" height="150">
+                    <img src="{% static 'gdefault-avatar.png' %}" alt="Аватар" class="img-thumbnail" width="150" height="150">
                     {% endif %}
                 </div>
                 <h2 class="profile-title">{{ user.username }}</h2>
@@ -107,7 +107,20 @@
                         <ul class="comments-list">
                             {% for comment in comments %}
                             <li>
-                                <a href="{% url 'project-details' comment.project.pk %}#comment-{{ comment.pk }}">{{ comment.project.title }}</a>: {{ comment.text }}
+                                <div class="comment-item">
+                                    <span class="comment-author">
+                                        Пользователь: <a href="{% url 'profile' comment.author.username %}">{{ comment.author.username }}</a>
+                                    </span>
+                                    <span class="comment-project">
+                                        <a href="{% url 'project-details' comment.project.pk %}#comment-{{ comment.pk }}">{{ comment.project.title }}</a>
+                                    </span>
+                                    <span class="comment-date">
+                                        {{ comment.created_date|date:"d.m.Y H:i" }}
+                                    </span>
+                                    <span class="comment-text">
+                                        {{ comment.text }}
+                                    </span>
+                                </div>
                             </li>
                             {% endfor %}
                         </ul>
