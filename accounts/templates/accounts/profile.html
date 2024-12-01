@@ -17,7 +17,7 @@
                     {% if user.userprofile.avatar %}
                     <img src="{{ user.userprofile.avatar.url }}" alt="Аватар" class="img-thumbnail" width="150" height="150">
                     {% else %}
-                    <img src="{% static 'gdefault-avatar.png' %}" alt="Аватар" class="img-thumbnail" width="150" height="150">
+                    <img src="{% static 'default-avatar.png' %}" alt="Аватар" class="img-thumbnail" width="150" height="150">
                     {% endif %}
                 </div>
                 <h2 class="profile-title">{{ user.username }}</h2>
