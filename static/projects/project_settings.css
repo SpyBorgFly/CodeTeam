@@ -1,0 +1,135 @@
+/* projects/project_settings.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #181818;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.settings-section {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.settings-container {
+    background: #202020;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    padding: 30px 40px;
+    max-width: 700px;
+    width: 100%;
+}
+
+h2 {
+    font-size: 1.8em;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+label {
+    font-size: 1.2em;
+    color: #b0b0b0;
+    flex: 1; /* Текст занимает больше пространства */
+    margin-right: 20px;
+    white-space: nowrap; /* Текст не переносится */
+    text-align: left; /* Текст выравнен слева */
+}
+
+input[type="checkbox"] {
+    flex-shrink: 0; /* Чекбокс фиксированного размера */
+    transform: scale(1.3); /* Увеличен чекбокс */
+}
+
+button.btn {
+    display: block;
+    width: 100%;
+    padding: 12px 0;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(135deg, #3B82F6, #2563EB);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button.btn:hover {
+    background: linear-gradient(135deg, #2563EB, #3B82F6);
+    transform: scale(1.05);
+}
+
+button.btn:active {
+    transform: scale(1);
+}
+
+.settings-container input,
+.chosen-container {
+    font-size: 1em;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background-color: #282828;
+    color: #e0e0e0;
+    outline: none;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.settings-container input:focus,
+.chosen-container-active {
+    border-color: #3B82F6;
+    box-shadow: none;
+}
+
+.settings-container .chosen-container-single .chosen-single {
+    height: 40px;
+    line-height: 40px;
+    border-radius: 5px;
+    background-color: #282828;
+    color: #e0e0e0;
+}
+
+.settings-container .chosen-container-multi .chosen-choices {
+    min-height: 40px;
+    border-radius: 5px;
+    background-color: #282828;
+    color: #e0e0e0;
+}
+
+.settings-container .chosen-container .chosen-results {
+    background-color: #282828;
+    color: #e0e0e0;
+}
+
+.settings-container .chosen-container .chosen-results li {
+    border-bottom: 1px solid #333;
+}
+
+.settings-container .chosen-container .chosen-results li.highlighted {
+    background-color: #3B82F6;
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .settings-container {
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 1.6em;
+    }
+}

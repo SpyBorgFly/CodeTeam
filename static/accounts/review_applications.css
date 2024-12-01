@@ -1,110 +1,171 @@
 /* accounts/static/accounts/review_applications.css */
 
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #181818;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    min-height: 100vh;
+}
+
+.profile-info {
+    background: #202020;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    padding: 30px 40px;
+    max-width: 800px;
+    width: 100%;
+}
+
+h2 {
+    font-size: 1.8em;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
 .project-card {
     margin-bottom: 20px;
-    background-color: #2c2c2e;
+    background-color: #2a2a2a;
     padding: 20px;
-    border-radius: 20px;
-    width: 100%;
-    color: #e5e5e5;
+    border-radius: 12px;
+    color: #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
 }
 
 .project-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 15px;
 }
 
 .project-header h3 {
     margin: 0;
-    color: #bb86fc;
+    color: #4a90e2;
+    font-size: 1.4em;
 }
 
-.toggle-btn {
-    background-color: #333;
-    color: #e5e5e5;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.toggle-btn:hover {
-    background-color: #bb86fc;
-    color: #1c1c1e;
-}
-
+.toggle-btn,
 .show-reviewed-btn {
     background-color: #333;
     color: #e5e5e5;
     border: none;
-    padding: 5px 10px;
+    padding: 8px 12px;
     border-radius: 5px;
+    font-size: 0.9em;
     cursor: pointer;
-    transition: background 0.3s ease;
-    margin-top: 10px;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
+.toggle-btn:hover,
 .show-reviewed-btn:hover {
-    background-color: #bb86fc;
+    background-color: #4a90e2;
     color: #1c1c1e;
 }
 
 .requests-list {
     list-style: none;
     padding-left: 0;
-    margin-top: 10px;
+    margin: 0;
 }
 
 .requests-list li {
-    background-color: #1c1c1e;
-    padding: 10px;
+    padding: 15px;
     margin-bottom: 10px;
-    border-radius: 10px;
+    border-radius: 8px;
+    background-color: #292929;
 }
 
 .requests-list li a {
-    color: #bb86fc;
+    color: #4a90e2;
     text-decoration: none;
-    opacity: 0.6;
 }
 
 .requests-list li a:hover {
-    opacity: 1;
+    text-decoration: underline;
 }
 
 .btn {
-    padding: 5px 10px;
+    padding: 8px 12px;
     border-radius: 5px;
     color: #e5e5e5;
     border: none;
+    font-size: 0.9em;
     cursor: pointer;
     transition: background 0.3s ease;
 }
 
 .btn-outline-success {
-    border-color: #bb86fc;
-    color: #bb86fc;
-    background-color: transparent;
+    border: 2px solid #4caf50;
+    color: #4caf50;
+    background: transparent;
 }
 
 .btn-outline-success:hover {
-    background-color: #bb86fc;
+    background: #4caf50;
     color: #1c1c1e;
 }
 
 .btn-outline-danger {
-    border-color: #ff5252;
-    color: #ff5252;
-    background-color: transparent;
+    border: 2px solid #e53935;
+    color: #e53935;
+    background: transparent;
 }
 
 .btn-outline-danger:hover {
-    background-color: #ff5252;
+    background: #e53935;
     color: #1c1c1e;
 }
 
 .reviewed-applications {
     margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #333;
+}
+
+.reviewed-applications ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.reviewed-applications li {
+    margin-bottom: 10px;
+    color: #b0b0b0;
+}
+
+.reviewed-applications li span {
+    font-weight: bold;
+    color: #e0e0e0;
+}
+
+@media (max-width: 768px) {
+    .profile-info {
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    .btn {
+        font-size: 0.8em;
+    }
 }

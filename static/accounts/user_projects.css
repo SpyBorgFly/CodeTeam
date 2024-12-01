@@ -126,3 +126,14 @@ a:hover {
 .btn-danger{
     margin-top: 20px;
 }
+
+
+.projects{
+    background: #444;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.tit{
+    padding-top: 10px;
+}
