@@ -4,7 +4,7 @@
 
 {% block content %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'accounts/profile.css' %}">
+<link rel="stylesheet" href="{% static 'accounts/review_applications.css' %}">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 <div class="profile-container">
@@ -13,22 +13,42 @@
         {% if project_requests %}
             <ul class="requests-list">
                 {% for request in project_requests %}
-                    <li>
-                        <h3>Проект: <a href="{% url 'project-details' request.project.pk %}">{{ request.project.title }}</a></h3>
-                        <p>Количество заявок для проекта: {{ request.count }}</p>
-                        <ul>
-                            {% for app in request.applications %}
-                                <li id="application-{{ app.pk }}">
-                                    Пользователь: <a href="{% url 'profile' app.user.username %}">{{ app.user.username }}</a><br>
-                                    Комментарий: {{ app.comment }}<br>
-                                    Статус: <span id="status-{{ app.pk }}">{{ app.status }}</span><br>
-                                    {% if app.status == 'pending' %}
-                                    <button class="btn btn-success accept-btn" data-url="{% url 'accept_application' request.project.pk app.pk %}" data-id="{{ app.pk }}">Принять</button>
-                                    <button class="btn btn-danger reject-btn" data-url="{% url 'reject_application' request.project.pk app.pk %}" data-id="{{ app.pk }}">Отклонить</button>
+                    <li class="project-card">
+                        <div class="project-header">
+                            <h3>Проект: <a href="{% url 'project-details' request.project.pk %}">{{ request.project.title }}</a></h3>
+                            <button class="toggle-btn" data-target="#pending-{{ request.project.pk }}">Показать нерассмотренные заявки ({{ request.count }})</button>
+                        </div>
+                        <div id="pending-{{ request.project.pk }}" class="reviewed-applications" style="display: none;">
+                            <h4>Нерассмотренные заявки:</h4>
+                            <ul>
+                                {% for app in request.applications %}
+                                    <li id="application-{{ app.pk }}">
+                                        Пользователь: <a href="{% url 'profile' app.user.username %}">{{ app.user.username }}</a><br>
+                                        Комментарий: {{ app.comment }}<br>
+                                        Статус: <span id="status-{{ app.pk }}">{{ app.status }}</span><br>
+                                        {% if app.status == 'pending' %}
+                                        <button class="btn btn-outline-success accept-btn" data-url="{% url 'accept_application' request.project.pk app.pk %}" data-id="{{ app.pk }}">Принять</button>
+                                        <button class="btn btn-outline-danger reject-btn" data-url="{% url 'reject_application' request.project.pk app.pk %}" data-id="{{ app.pk }}">Отклонить</button>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <button class="show-reviewed-btn" data-target="#reviewed-{{ request.project.pk }}">Показать рассмотренные заявки</button>
+                        <div id="reviewed-{{ request.project.pk }}" class="reviewed-applications" style="display: none;">
+                            <h4>Рассмотренные заявки:</h4>
+                            <ul>
+                                {% for app in request.project.applications.all %}
+                                    {% if app.status != 'pending' %}
+                                    <li>
+                                        Пользователь: <a href="{% url 'profile' app.user.username %}">{{ app.user.username }}</a><br>
+                                        Комментарий: {{ app.comment }}<br>
+                                        Статус: <span>{{ app.status }}</span><br>
+                                    </li>
                                     {% endif %}
-                                </li>
-                            {% endfor %}
-                        </ul>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </li>
                 {% endfor %}
             </ul>
@@ -40,6 +60,22 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                const targetId = this.getAttribute('data-target');
+                document.querySelector(targetId).style.display = document.querySelector(targetId).style.display === 'none' ? 'block' : 'none';
+            });
+        });
+
+        document.querySelectorAll('.show-reviewed-btn').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                const targetId = this.getAttribute('data-target');
+                document.querySelector(targetId).style.display = document.querySelector(targetId).style.display === 'none' ? 'block' : 'none';
+            });
+        });
+
         document.querySelectorAll('.accept-btn').forEach(button => {
             button.addEventListener('click', function(event) {
                 event.preventDefault();

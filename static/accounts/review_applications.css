@@ -2,10 +2,11 @@
 
 .project-card {
     margin-bottom: 20px;
-    background: rgba(43, 41, 41, 0.5);
+    background-color: #2c2c2e;
     padding: 20px;
     border-radius: 20px;
     width: 100%;
+    color: #e5e5e5;
 }
 
 .project-header {
@@ -16,11 +17,12 @@
 
 .project-header h3 {
     margin: 0;
+    color: #bb86fc;
 }
 
 .toggle-btn {
-    background: #007bff;
-    color: white;
+    background-color: #333;
+    color: #e5e5e5;
     border: none;
     padding: 5px 10px;
     border-radius: 5px;
@@ -29,12 +31,13 @@
 }
 
 .toggle-btn:hover {
-    background: #0056b3;
+    background-color: #bb86fc;
+    color: #1c1c1e;
 }
 
 .show-reviewed-btn {
-    background: #28a745;
-    color: white;
+    background-color: #333;
+    color: #e5e5e5;
     border: none;
     padding: 5px 10px;
     border-radius: 5px;
@@ -44,7 +47,8 @@
 }
 
 .show-reviewed-btn:hover {
-    background: #218838;
+    background-color: #bb86fc;
+    color: #1c1c1e;
 }
 
 .requests-list {
@@ -54,14 +58,14 @@
 }
 
 .requests-list li {
-    background: rgba(104, 98, 98, 0.5);
+    background-color: #1c1c1e;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 10px;
 }
 
 .requests-list li a {
-    color: white;
+    color: #bb86fc;
     text-decoration: none;
     opacity: 0.6;
 }
@@ -73,26 +77,32 @@
 .btn {
     padding: 5px 10px;
     border-radius: 5px;
-    color: white;
+    color: #e5e5e5;
     border: none;
     cursor: pointer;
     transition: background 0.3s ease;
 }
 
-.btn-success {
-    background: #28a745;
+.btn-outline-success {
+    border-color: #bb86fc;
+    color: #bb86fc;
+    background-color: transparent;
 }
 
-.btn-success:hover {
-    background: #218838;
+.btn-outline-success:hover {
+    background-color: #bb86fc;
+    color: #1c1c1e;
 }
 
-.btn-danger {
-    background: #dc3545;
+.btn-outline-danger {
+    border-color: #ff5252;
+    color: #ff5252;
+    background-color: transparent;
 }
 
-.btn-danger:hover {
-    background: #c82333;
+.btn-outline-danger:hover {
+    background-color: #ff5252;
+    color: #1c1c1e;
 }
 
 .reviewed-applications {
