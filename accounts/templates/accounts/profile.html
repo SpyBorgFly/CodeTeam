@@ -43,11 +43,14 @@
                         <h3>Мои проекты</h3>
                         <ul class="projects-list">
                             {% for project in projects %}
-                            <li>
-                                <a href="{% url 'project-details' project.pk %}">{{ project.title }}</a>
+                            <li class="project-item">
+                                <a href="{% url 'project-details' project.pk %}">
+                                    <div class="project-title">{{ project.title }}</div>
+                                    <div class="project-stack">{{ project.stack }}</div>
+                                </a>
                             </li>
                             {% empty %}
-                            <li>Нет проектов</li>
+                            <li class="project-item">Нет проектов</li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -57,7 +60,7 @@
                             <p>У вас есть нерассмотренные заявки:</p>
                             <ul class="requests-list">
                                 {% for request in project_requests %}
-                                    <li>
+                                    <li class="request-item">
                                         Проект: <a href="{% url 'project-details' request.project.pk %}">{{ request.project.title }}</a> - {{ request.count }} заявок
                                     </li>
                                 {% endfor %}
@@ -72,13 +75,13 @@
                         {% if outgoing_applications %}
                         <ul class="requests-list">
                             {% for application in outgoing_applications %}
-                            <li>
+                            <li class="request-item">
                                 Проект: <a href="{% url 'project-details' application.project.pk %}">{{ application.project.title }}</a><br>
                                 Комментарий: {{ application.comment }}<br>
                                 Статус: {{ application.status }}
                             </li>
                             {% empty %}
-                            <li>Нет исходящих заявок</li>
+                            <li class="request-item">Нет исходящих заявок</li>
                             {% endfor %}
                         </ul>
                         {% else %}
@@ -90,11 +93,14 @@
                         {% if active_projects %}
                         <ul class="active-projects-list">
                             {% for project in active_projects %}
-                            <li>
-                                <a href="{% url 'project-details' project.pk %}">{{ project.title }}</a>
+                            <li class="project-item">
+                                <a href="{% url 'project-details' project.pk %}">
+                                    <div class="project-title">{{ project.title }}</div>
+                                    <div class="project-stack">{{ project.stack }}</div>
+                                </a>
                             </li>
                             {% empty %}
-                            <li>Нет активных проектов</li>
+                            <li class="project-item">Нет активных проектов</li>
                             {% endfor %}
                         </ul>
                         {% else %}
