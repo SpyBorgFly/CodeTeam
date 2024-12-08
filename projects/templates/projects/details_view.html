@@ -58,27 +58,31 @@
     <div id="comments">
         {% for comment in comments %}
         <div class="comment {% if comment.author == project.creator %}author-comment{% endif %}">
-            <p class="comment-author">
-                <strong>{{ comment.author }}</strong> 
-                {% if comment.author == project.creator %}
-                <span class="author-label">(Автор проекта)</span>
-                {% endif %}
-                <span class="comment-date">({{ comment.created_date|date:"d M Y H:i" }})</span>:
-            </p>
+            <div class="comment-header">
+                <p class="comment-author">
+                    <strong>{{ comment.author }}</strong> 
+                    {% if comment.author == project.creator %}
+                    <span class="author-label">(Автор проекта)</span>
+                    {% endif %}
+                    <span class="comment-date">({{ comment.created_date|date:"d M Y H:i" }})</span>:
+                </p>
+            </div>
             <p class="comment-text">{{ comment.text }}</p>
 
             <!-- Добавляем раздел для ответов -->
             <div class="comment-replies">
                 {% for reply in comment.replies.all %}
                 <div class="reply">
-                    <p class="comment-author">
-                        <strong>{{ reply.author }}</strong>
-                        {% if reply.author == project.creator %}
-                        <span class="author-label">(Автор проекта)</span>
-                        {% endif %}
-                        <span class="comment-date">({{ reply.created_date|date:"d M Y H:i" }})</span>:
-                        <span class="reply-to">в ответ на <strong>{{ reply.parent.author }}</strong></span>
-                    </p>
+                    <div class="comment-header">
+                        <p class="comment-author">
+                            <strong>{{ reply.author }}</strong>
+                            {% if reply.author == project.creator %}
+                            <span class="author-label">(Автор проекта)</span>
+                            {% endif %}
+                            <span class="comment-date">({{ reply.created_date|date:"d M Y H:i" }})</span>:
+                            <span class="reply-to">в ответ на <strong>{{ reply.parent.author }}</strong></span>
+                        </p>
+                    </div>
                     <p class="comment-text">{{ reply.text }}</p>
                 </div>
                 {% endfor %}
