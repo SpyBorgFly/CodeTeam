@@ -83,21 +83,34 @@
         <div class="projects-grid">
             {% for project_info in projects_with_access %}
             <div class="project-card">
-                <a href="{% url 'project-details' project_info.project.id %}">
-                    <h3 class="project-title" {% if not project_info.has_access %}style="color: black;"{% endif %}>
-                        {% if not project_info.has_access %}
-                            <img src="{% static 'projects/img/lock.png' %}" alt="locked" style="width: 32px; height: 32px;">
-                            {{ project_info.project.title }}
-                            <img src="{% static 'projects/img/lock.png' %}" alt="locked" style="width: 32px; height: 32px;">
-                        {% else %}
-                            {{ project_info.project.title }}
-                        {% endif %}
-                    </h3>
-                </a>
-                <p class="project-stack">{{ project_info.project.stack|safe }}</p>
-                <p class="project-date">{{ project_info.project.date_t|date:"d/m/Y H:i" }}</p>
-                <p class="project-type">{{ project_info.project.type|safe }}</p>
-                <p class="project-hashtag">{{ project_info.project.hashtag|safe }}</p>
+                <div class="right-sec">
+
+                    <div class="left-sec">
+                        <div class="title-and-stack">
+                            <a href="{% url 'project-details' project_info.project.id %}">
+                                <h3 class="project-title" {% if not project_info.has_access %}style="color: black;"{% endif %}>
+                                    {% if not project_info.has_access %}
+                                        <img src="{% static 'projects/img/lock.png' %}" alt="locked" style="width: 32px; height: 32px;">
+                                        {{ project_info.project.title }}
+                                        <img src="{% static 'projects/img/lock.png' %}" alt="locked" style="width: 32px; height: 32px;">
+                                    {% else %}
+                                        {{ project_info.project.title }}
+                                    {% endif %}
+                                </h3>
+                            </a>
+                            <p class="project-stack">{{ project_info.project.stack|safe }}</p>
+                        </div>
+                        <p class="project-date">{{ project_info.project.date_t|date:"d/m/Y H:i" }}</p>
+                        <p class="project-type">{{ project_info.project.type|safe }}</p>
+                        <p class="project-hashtag">{{ project_info.project.hashtag|safe }}</p>
+                    </div>
+                    <div class="rigth-sec-hero">
+                        <div class="star">
+                            <img class="imgStar" src="../../../static/projects/img/1345884-ffffff.svg" alt="" width="20" height="20">
+                            <button class="star-btn">Star</button>
+                        </div>
+                    </div>
+                </div>
                 <p class="project-description">
                     {% if project_info.has_access %}
                         {{ project_info.project.description|truncatechars:400 |safe }}
@@ -155,6 +168,32 @@
             button.textContent = 'Читать дальше';
         }
     }
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Выбираем все кнопки "Star" и соответствующие изображения
+        const starButtons = document.querySelectorAll('.star-btn');
+
+        starButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                // Ищем изображение, находящееся рядом с кнопкой
+                const imgStar = this.previousElementSibling;
+
+                // Получаем только имя файла из пути
+                const currentSrc = imgStar.src.split('/').pop();
+
+                if (currentSrc === "1345884-ffffff.svg") {
+                    imgStar.src = "../../../static/projects/img/1345884-ffeb3b.svg";
+                    this.innerText = 'Starred';
+                } else {
+                    imgStar.src = "../../../static/projects/img/1345884-ffffff.svg";
+                    this.innerText = 'Star';
+                }
+            });
+        });
+    });
+
+
 </script>
 
 {% endblock %}
