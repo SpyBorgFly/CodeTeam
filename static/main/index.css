@@ -374,4 +374,12 @@ a:hover {
 
 
 
+.background-video{
+    position: absolute;
+    z-index: 2;
+}
 
+.container{
+    position: relative;
+    z-index: 1;
+}

@@ -153,3 +153,7 @@ form label {
 .filter-form .btn-primary:hover {
     background-color: #0056b3;
 }
+
+.form-control::placeholder{
+    color: white;
+}

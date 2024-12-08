@@ -402,13 +402,3 @@ input[type="date"] {
 }
 
 
-.avatar-container{
-    display: flex;
-    align-items: center;
-    margin-top: 30px;
-    
-    margin-left: 10px;
-    border-bottom: 0.5px solid #ccc;
-    padding-bottom: 10px;
-}
-
