@@ -2,6 +2,10 @@ from django import template
 
 register = template.Library()
 
+from django import template
+
+register = template.Library()
+
 @register.filter(name='groupby')
 def groupby(value, arg):
     """Groups a list of objects by a specified attribute."""

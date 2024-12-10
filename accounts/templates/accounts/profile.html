@@ -34,7 +34,7 @@
                         <li class="btn-list"><a href="#" class="my-proj" data-target="outgoing-requests">Исходящие заявки</a></li>
                         <li class="btn-list"><a href="#" class="my-proj" data-target="active-projects">Активные проекты</a></li>
                         <li class="btn-list"><a href="#" class="my-proj" data-target="comments">Комментарии</a></li>
-                        <li class="btn-list"><a href="#" class="my-proj" data-target="chats">Чаты</a></li>
+                        <li class="btn-list"><a href="#" class="my-proj" data-target="starred-projects">Избранные проекты</a></li>
                     </ul>
                 </div>
 
@@ -134,9 +134,24 @@
                         <p>Нет комментариев</p>
                         {% endif %}
                     </div>
-                    <div class="content" id="chats">
-                        <h3>Чаты</h3>
-                        <p>Здесь будут чаты</p>
+                    <div class="content" id="starred-projects">
+                        <h3>Избранные проекты</h3>
+                        {% if starred_projects %}
+                        <ul class="starred-projects-list">
+                            {% for project in starred_projects %}
+                            <li class="project-item">
+                                <a href="{% url 'project-details' project.pk %}">
+                                    <div class="project-title">{{ project.title }}</div>
+                                    <div class="project-stack">{{ project.stack }}</div>
+                                </a>
+                            </li>
+                            {% empty %}
+                            <li class="project-item">Нет избранных проектов</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>Нет избранных проектов</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>

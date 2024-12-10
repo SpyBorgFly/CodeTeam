@@ -24,7 +24,7 @@ body {
 /* Стили карточки проекта */
 .project-card {
     position: relative; /* Относительное позиционирование для overlay */
-    background: linear-gradient(135deg, rgba(44, 44, 46, 0.9), rgba(34, 193, 195, 0.7)); /* Градиентный фон */
+    background-color: #333;
     border-radius: 20px; /* Скругленные углы */
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7); /* Тень для глубины */
     margin: 20px; /* Отступы между карточками */
@@ -134,6 +134,17 @@ body {
     text-align: center;
     margin-top: 20px;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 /* Общая секция комментариев */
 .comments-section {
@@ -411,10 +422,13 @@ body {
 }
 
 .info-message {
-    color: #ffcc00;
-    font-size: 1rem;
+    color: white;
+    font-size: 18px;
     text-align: center;
     margin-top: 20px;
+    border: 0.5px solid #a0a0a0;
+    border-radius: 20px;
+    padding: 5px 15px;
 }
 
 .author-label {
@@ -428,3 +442,15 @@ body {
     color: #a0a0a0;
     margin-left: 5px;
 }
+
+.hi-section{
+    display: flex;
+    justify-content: space-between;
+    gap:80px;
+    align-items: center;
+}
+
+.btn-success{
+    background: #6200ea !important;
+}
+

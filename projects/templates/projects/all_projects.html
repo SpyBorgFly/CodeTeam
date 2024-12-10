@@ -6,6 +6,7 @@
 
 {% block content %}
 {% load static %}
+{% load custom_filters %}
 <!-- Подключение стилей Select2 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -16,7 +17,6 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
 <link rel="stylesheet" href="{% static 'projects/all_projects.css' %}">
-
 
 <header class="header-section">
     <div class="parents">
@@ -106,8 +106,22 @@
                     </div>
                     <div class="rigth-sec-hero">
                         <div class="star">
-                            <img class="imgStar" src="../../../static/projects/img/1345884-ffffff.svg" alt="" width="20" height="20">
-                            <button class="star-btn">Star</button>
+                            <form method="post" action="." style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="project_id" value="{{ project_info.project.id }}">
+                                {% if project_info.project.starred_by.all|contains:request.user %}
+                                    <button type="submit" name="action" value="remove" class="star-btn">
+                                        <img class="imgStar" src="{% static 'projects/img/1345884-ffeb3b.svg' %}" alt="" width="20" height="20">
+                                        Starred
+                                    </button>
+                                {% else %}
+                                    <button type="submit" name="action" value="add" class="star-btn">
+                                        <img class="imgStar" src="{% static 'projects/img/1345884-ffffff.svg' %}" alt="" width="20" height="20">
+                                        Star
+                                    </button>
+                                {% endif %}
+                                <p class="star-count">{{ project_info.project.starred_by.count }} stars</p>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -139,13 +153,13 @@
 
 <script>
     $(document).ready(function() {
-    // Инициализация Select2 для полей выбора
-    $('.filter-select').select2({
-        placeholder: "Выберите или введите значение",
-        allowClear: true,
-        tags: true  // Разрешает ввод произвольных значений
+        // Инициализация Select2 для полей выбора
+        $('.filter-select').select2({
+            placeholder: "Выберите или введите значение",
+            allowClear: true,
+            tags: true  // Разрешает ввод произвольных значений
+        });
     });
-});
 
     // Показать/скрыть фильтры
     document.getElementById('filter-toggle-btn').addEventListener('click', function() {
@@ -168,32 +182,6 @@
             button.textContent = 'Читать дальше';
         }
     }
-
-
-    document.addEventListener('DOMContentLoaded', function () {
-        // Выбираем все кнопки "Star" и соответствующие изображения
-        const starButtons = document.querySelectorAll('.star-btn');
-
-        starButtons.forEach(function (button) {
-            button.addEventListener('click', function () {
-                // Ищем изображение, находящееся рядом с кнопкой
-                const imgStar = this.previousElementSibling;
-
-                // Получаем только имя файла из пути
-                const currentSrc = imgStar.src.split('/').pop();
-
-                if (currentSrc === "1345884-ffffff.svg") {
-                    imgStar.src = "../../../static/projects/img/1345884-ffeb3b.svg";
-                    this.innerText = 'Starred';
-                } else {
-                    imgStar.src = "../../../static/projects/img/1345884-ffffff.svg";
-                    this.innerText = 'Star';
-                }
-            });
-        });
-    });
-
-
 </script>
 
 {% endblock %}

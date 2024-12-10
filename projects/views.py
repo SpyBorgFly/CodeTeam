@@ -11,6 +11,12 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+from django.views.decorators.http import require_POST
+
+
 
 def clean_html(description):
     allowed_tags = [
@@ -25,6 +31,7 @@ def clean_html(description):
     }
     return bleach.clean(description, tags=allowed_tags, attributes=allowed_attributes)
 
+@login_required
 def all_projects(request):
     projects = Projects.objects.all()
 
@@ -72,6 +79,22 @@ def all_projects(request):
             projects = projects.order_by('-date_t')
         elif date == 'old':
             projects = projects.order_by('date_t')
+
+    # Обработка POST-запросов для добавления/удаления из избранного
+    if request.method == 'POST':
+        project_id = request.POST.get('project_id')
+        action = request.POST.get('action')
+
+        if project_id and action:
+            try:
+                project = Projects.objects.get(id=project_id)
+                if action == 'add':
+                    project.starred_by.add(request.user)
+                elif action == 'remove':
+                    project.starred_by.remove(request.user)
+                project.save()
+            except Projects.DoesNotExist:
+                pass
 
     context = {
         'projects_with_access': projects_with_access
@@ -247,3 +270,22 @@ def reject_application(request, pk, app_id):
     application.status = 'rejected'
     application.save()
     return JsonResponse({'success': True, 'message': 'Заявка успешно отклонена.'})
+
+
+
+@login_required
+@require_POST
+def update_star_count(request, project_id):
+    try:
+        project = Projects.objects.get(id=project_id)
+        user = request.user
+        if user in project.starred_by.all():
+            project.starred_by.remove(user)
+            starred = False
+        else:
+            project.starred_by.add(user)
+            starred = True
+        project.save()
+        return JsonResponse({'success': True, 'starred': starred, 'new_count': project.starred_by.count()})
+    except Projects.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Project does not exist.'})

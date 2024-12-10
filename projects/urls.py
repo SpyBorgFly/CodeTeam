@@ -16,6 +16,7 @@ urlpatterns = [
     path('<int:pk>/apply/', views.apply_to_project, name='apply_to_project'),
     path('<int:pk>/accept/<int:app_id>/', views.accept_application, name='accept_application'),
     path('<int:pk>/reject/<int:app_id>/', views.reject_application, name='reject_application'),
+    path('update_star_count/<int:project_id>/', views.update_star_count, name='update_star_count'),
     
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
