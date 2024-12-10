@@ -59,65 +59,63 @@
 
 {% if has_access %}
 <section class="comments-section">
-    <h2 class="section-title">Комментарии</h2>
-    <div id="comments">
+    <form method="post" action="{% url 'add_comment' project.pk %}" class="comment-form">
+        {% csrf_token %}
+        <textarea name="text" rows="3" placeholder="Добавьте ваш комментарий..." class="comment-input"></textarea>
+        <button type="submit" class="submit-button">Отправить</button>
+    </form>
+
+    <div id="comments" class="comments-container">
         {% for comment in comments %}
-        <div class="comment {% if comment.author == project.creator %}author-comment{% endif %}">
-            <div class="comment-header">
-                <p class="comment-author">
-                    <strong>{{ comment.author }}</strong> 
+        <div class="comment">
+            <div class="comment-content">
+                <div class="comment-header">
+                    <span class="comment-author">{{ comment.author }}</span>
                     {% if comment.author == project.creator %}
                     <span class="author-label">(Автор проекта)</span>
                     {% endif %}
-                    <span class="comment-date">({{ comment.created_date|date:"d M Y H:i" }})</span>:
-                </p>
-            </div>
-            <p class="comment-text">{{ comment.text }}</p>
-
-            <!-- Добавляем раздел для ответов -->
-            <div class="comment-replies">
-                {% for reply in comment.replies.all %}
-                <div class="reply">
-                    <div class="comment-header">
-                        <p class="comment-author">
-                            <strong>{{ reply.author }}</strong>
-                            {% if reply.author == project.creator %}
-                            <span class="author-label">(Автор проекта)</span>
-                            {% endif %}
-                            <span class="comment-date">({{ reply.created_date|date:"d M Y H:i" }})</span>:
-                            <span class="reply-to">в ответ на <strong>{{ reply.parent.author }}</strong></span>
-                        </p>
-                    </div>
-                    <p class="comment-text">{{ reply.text }}</p>
+                    <span class="comment-date">{{ comment.created_date|date:"d M Y H:i" }}</span>
                 </div>
-                {% endfor %}
-            </div>
+                <p class="comment-text">{{ comment.text }}</p>
 
-            {% if user.is_authenticated %}
-            <!-- Форма для добавления ответа на комментарий -->
-            <form method="post" action="{% url 'add_reply' comment.pk %}" class="reply-form">
-                {% csrf_token %}
-                <textarea name="text" rows="2" placeholder="Ответить на комментарий..."></textarea>
-                <button type="submit" class="submit-button">Ответить</button>
-            </form>
-            {% endif %}
+                <!-- Ответы -->
+                <div class="comment-replies">
+                    {% for reply in comment.replies.all %}
+                    <div class="reply">
+                        <div class="reply-content">
+                            <div class="comment-header">
+                                <span class="comment-author">{{ reply.author }}</span>
+                                {% if reply.author == project.creator %}
+                                <span class="author-label">(Автор проекта)</span>
+                                {% endif %}
+                                <span class="comment-date">{{ reply.created_date|date:"d M Y H:i" }}</span>
+                            </div>
+                            <p class="comment-text">{{ reply.text }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'add_reply' comment.pk %}" class="reply-form">
+                    {% csrf_token %}
+                    <textarea name="text" rows="2" placeholder="Ответить..." class="reply-input"></textarea>
+                    <button type="submit" class="submit-button">Ответить</button>
+                </form>
+                {% endif %}
+            </div>
         </div>
         {% endfor %}
     </div>
 
-    {% if user.is_authenticated %}
-    <h2 class="section-title">Добавить комментарий</h2>
-    <form method="post" action="{% url 'add_comment' project.pk %}" class="comment-form">
-        {% csrf_token %}
-        {{ comment_form.as_p }}
-        <button type="submit" class="submit-button">Отправить</button>
-    </form>
-    {% else %}
+    {% if not user.is_authenticated %}
     <p class="login-message">
         Пожалуйста, <a href="{% url 'login' %}" class="login-link">войдите</a>, чтобы оставить комментарий.
     </p>
     {% endif %}
 </section>
+
+
 {% endif %}
 
 <span class="error-message">{{ error }}</span>
