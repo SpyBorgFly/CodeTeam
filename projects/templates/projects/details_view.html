@@ -80,7 +80,9 @@
                 <p class="comment-text">{{ comment.text }}</p>
 
                 <!-- Ответы -->
-                <div class="comment-replies">
+                {% if comment.replies.all|length > 0 %}
+                <details class="comment-replies">
+                    <summary>Показать ответы</summary>
                     {% for reply in comment.replies.all %}
                     <div class="reply">
                         <div class="reply-content">
@@ -95,7 +97,8 @@
                         </div>
                     </div>
                     {% endfor %}
-                </div>
+                </details>
+                {% endif %}
 
                 {% if user.is_authenticated %}
                 <form method="post" action="{% url 'add_reply' comment.pk %}" class="reply-form">

@@ -39,6 +39,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     padding-bottom: 200px;
+    padding-bottom: 400px;
 }
 
 .btn1,
@@ -252,6 +253,7 @@ a:hover {
     border: 0.5px solid gray;
     grid-template-columns: 1fr 1fr 1fr;
     border-radius: 5px;
+    margin-bottom: 150px;
 }
 
 .cards-tehnolg div h3 {
@@ -383,3 +385,5 @@ a:hover {
     position: relative;
     z-index: 1;
 }
+
+

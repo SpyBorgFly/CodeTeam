@@ -196,23 +196,14 @@ body {
 .comments-container {
     margin-top: 20px;
 }
-.comment, .reply {
+.comment {
     display: flex;
     align-items: flex-start;
     margin-bottom: 20px;
     border-bottom: 1px solid #444;
     padding-bottom: 15px;
 }
-.comment-avatar, .reply .comment-avatar {
-    margin-right: 15px;
-}
-.avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-.comment-content, .reply-content {
+.comment-content {
     flex: 1;
 }
 .comment-header {
@@ -238,6 +229,15 @@ body {
     font-size: 1rem;
     margin: 10px 0;
     line-height: 1.5;
+}
+.reply {
+    margin-left: 20px;
+    border-left: 2px solid #444;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+.reply-content {
+    flex: 1;
 }
 .reply-form {
     margin-top: 10px;
@@ -269,19 +269,14 @@ body {
     color: #5a00d1;
     text-decoration: underline;
 }
-.show-more-button {
-    background-color: #6200ea;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-size: 0.9rem;
+.comment-replies summary {
     cursor: pointer;
-    display: block;
-    margin: 20px auto;
+    font-weight: bold;
+    color: #6200ea;
+    margin-bottom: 10px;
 }
-.show-more-button:hover {
-    background-color: #5a00d1;
+.comment-replies summary:hover {
+    color: #5a00d1;
 }
 
 /* Стили для модального окна */
