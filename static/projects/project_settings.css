@@ -32,6 +32,13 @@ h2 {
     text-align: center;
 }
 
+h3 {
+    font-size: 1.4em;
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
 .form-group {
     margin-bottom: 20px;
     display: flex;
@@ -60,19 +67,35 @@ button.btn {
     font-size: 1.3em;
     font-weight: bold;
     color: #ffffff;
-    background: linear-gradient(135deg, #3B82F6, #2563EB);
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.2s ease;
 }
 
-button.btn:hover {
-    background: linear-gradient(135deg, #2563EB, #3B82F6);
+button.btn-primary {
+    background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+}
+
+button.btn-primary:hover {
+    background: linear-gradient(135deg, #6D28D9, #8B5CF6);
     transform: scale(1.05);
 }
 
-button.btn:active {
+button.btn-primary:active {
+    transform: scale(1);
+}
+
+button.btn-danger {
+    background: linear-gradient(135deg, #EF4444, #DC2626);
+}
+
+button.btn-danger:hover {
+    background: linear-gradient(135deg, #DC2626, #EF4444);
+    transform: scale(1.05);
+}
+
+button.btn-danger:active {
     transform: scale(1);
 }
 
@@ -91,7 +114,7 @@ button.btn:active {
 
 .settings-container input:focus,
 .chosen-container-active {
-    border-color: #3B82F6;
+    border-color: #8B5CF6;
     box-shadow: none;
 }
 
@@ -120,8 +143,54 @@ button.btn:active {
 }
 
 .settings-container .chosen-container .chosen-results li.highlighted {
-    background-color: #3B82F6;
+    background-color: #8B5CF6;
     color: #ffffff;
+}
+
+.participants-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.participant-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #282828;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.participant-item span {
+    font-size: 1.2em;
+    color: #e0e0e0;
+}
+
+.btn-small {
+    padding: 6px 12px;
+    font-size: 1em;
+}
+
+.delete-project-form {
+    margin-top: 20px;
+}
+
+.delete-project-form button {
+    background: linear-gradient(135deg, #EF4444, #DC2626);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.delete-project-form button:hover {
+    background: linear-gradient(135deg, #DC2626, #EF4444);
+    transform: scale(1.05);
+}
+
+.delete-project-form button:active {
+    transform: scale(1);
 }
 
 @media (max-width: 768px) {
@@ -134,7 +203,6 @@ button.btn:active {
     }
 }
 
-
-.ishid{
+.ishid {
     margin-right: 137px;
 }

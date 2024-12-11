@@ -33,7 +33,10 @@
                         {% endif %}
                     </div>
                 </div>
+<<<<<<< HEAD
+=======
                 <HR>
+>>>>>>> 616531b3188ba965e8d6d878f648fe172a1ba506
                 <p class="project-stack">{{ project.stack }}</p>
                 <ul class="project-details">
                     <li><i class="fas fa-info-circle"></i> Описание: {{ project.description|safe }}</li>
@@ -43,12 +46,21 @@
                     <li><i class="fas fa-user"></i> Создатель: 
                         <a href="{% url 'profile' project.creator.username %}">{{ project.creator.username }}</a>
                     </li>
+                    <li><i class="fas fa-users"></i> Участники:
+                        <ul class="participants-list">
+                            {% for participant in project.participants.all %}
+                            <li><a href="{% url 'profile' participant.username %}">{{ participant.username }}</a></li>
+                            {% empty %}
+                            <li>Участников еще нет</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
                 </ul>
                 {% if user == project.creator %}
                 <a href="{% url 'edit_project' project.pk %}" class="btn btn-primary">
                     <i class="fas fa-edit"></i> Редактировать проект
                 </a>
-                <a href="{% url 'project_settings' project.pk %}" class="btn btn-secondary">
+                <a href="{% url 'project-settings' project.pk %}" class="btn btn-secondary">
                     <i class="fas fa-cogs"></i> Настройки проекта
                 </a>
                 {% endif %}
@@ -119,8 +131,12 @@
     {% endif %}
 </section>
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 616531b3188ba965e8d6d878f648fe172a1ba506
 {% endif %}
+
 
 <span class="error-message">{{ error }}</span>
 

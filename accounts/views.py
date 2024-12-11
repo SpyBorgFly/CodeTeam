@@ -54,8 +54,9 @@ class ProfileView(View):
         projects = user.projects.all()
         comments = Comment.objects.filter(author=user).order_by('-created_date')
         outgoing_applications = Application.objects.filter(user=user).order_by('-created_date')
-        active_projects = Projects.objects.filter(allowed_users=user)
+        active_projects = Projects.objects.filter(participants=user)
         is_owner = request.user == user
+        starred_projects = user.starred_projects.all()
 
         # Входящие заявки для проектов пользователя
         incoming_applications = Application.objects.filter(project__creator=user, status='pending').order_by('-created_date')
@@ -83,7 +84,8 @@ class ProfileView(View):
             'active_projects': active_projects,
             'is_owner': is_owner,
             'user_profile': user_profile,
-            'project_requests': project_requests
+            'project_requests': project_requests,
+            'starred_projects': starred_projects
         })
 
 @method_decorator(login_required, name='dispatch')
