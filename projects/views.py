@@ -63,6 +63,7 @@ def all_projects(request):
     custom_stack = request.GET.get('custom_stack')
     type_dev = request.GET.get('type')
     date = request.GET.get('date')
+    search = request.GET.get('search')
 
     if hashtag:
         projects = projects.filter(hashtag__icontains=hashtag)
@@ -77,6 +78,8 @@ def all_projects(request):
             projects = projects.order_by('-date_t')
         elif date == 'old':
             projects = projects.order_by('date_t')
+    if search:
+        projects = projects.filter(title__icontains=search)
 
     # Обработка POST-запросов для добавления/удаления из избранного
     if request.method == 'POST':
@@ -93,6 +96,21 @@ def all_projects(request):
                 project.save()
             except Projects.DoesNotExist:
                 pass
+
+    projects_with_access = []
+
+    for project in projects:
+        has_access = (
+            not project.is_private or 
+            (request.user.is_authenticated and (
+                project.creator == request.user or 
+                request.user in project.allowed_users.all()
+            ))
+        )
+        projects_with_access.append({
+            'project': project,
+            'has_access': has_access
+        })
 
     context = {
         'projects_with_access': projects_with_access
