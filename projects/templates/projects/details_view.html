@@ -53,12 +53,14 @@
                     </li>
                 </ul>
                 {% if user == project.creator %}
-                <a href="{% url 'edit_project' project.pk %}" class="btn btn-primary">
-                    <i class="fas fa-edit"></i> Редактировать проект
-                </a>
-                <a href="{% url 'project-settings' project.pk %}" class="btn btn-secondary">
-                    <i class="fas fa-cogs"></i> Настройки проекта
-                </a>
+                <div class="list-btn">
+                    <a href="{% url 'edit_project' project.pk %}" class="btn btn-primary">
+                        <i class="fas fa-edit"></i> Редактировать проект
+                    </a>
+                    <a href="{% url 'project-settings' project.pk %}" class="btn btn-secondary">
+                        <i class="fas fa-cogs"></i> Настройки проекта
+                    </a>
+                </div>
                 {% endif %}
             </div>
         </div>

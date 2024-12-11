@@ -120,7 +120,10 @@
                                         Star
                                     </button>
                                 {% endif %}
-                                <p class="star-count">{{ project_info.project.starred_by.count }} stars</p>
+                                <div class="count-stars">
+                                    <p class="star-count">{{ project_info.project.starred_by.count }}</p>
+                                    <img class="imgStar" src="{% static 'projects/img/1345884-ffeb3b.svg' %}" alt="" width="20" height="20">
+                                </div>
                             </form>
                         </div>
                     </div>

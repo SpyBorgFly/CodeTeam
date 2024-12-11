@@ -73,7 +73,7 @@ body {
 .add-project-btn {
     display: inline-block;
     padding: 12px 25px; /* Отступы */
-    background-color: #6200ea; /* Фиолетовый цвет */
+    background-color: #6200ea !important; /* Фиолетовый цвет */
     color: white; /* Цвет текста */
     text-decoration: none; /* Убираем подчеркивание */
     border-radius: 5px; /* Скругленные углы */
@@ -414,4 +414,21 @@ body {
 
 .btn-success{
     background: #6200ea !important;
+}
+
+
+.btn-primary{
+    background: #6200ea !important;
+
+}
+
+.btn-secondary{
+
+    background: #6200ea !important;
+}
+
+
+.list-btn{
+    display: flex;
+    gap: 20px;
 }

@@ -438,12 +438,27 @@ input[type="date"] {
     background: none;
     border: none;
     padding-top: 4px;
+    margin-bottom: 5px;
 }
 
 .star {
-    border: 0.5px solid #ccc; 
+    border-left: 0.5px solid #ccc; 
     padding: 4px 10px;
     border-radius: 10px;
     display: flex;
     align-items: center;
+}
+
+
+.count-stars{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 0.5px solid #ccc;
+}
+
+
+.star-count{
+    font-size: 18px;
 }
