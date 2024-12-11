@@ -33,10 +33,6 @@
                         {% endif %}
                     </div>
                 </div>
-<<<<<<< HEAD
-=======
-                <HR>
->>>>>>> 616531b3188ba965e8d6d878f648fe172a1ba506
                 <p class="project-stack">{{ project.stack }}</p>
                 <ul class="project-details">
                     <li><i class="fas fa-info-circle"></i> Описание: {{ project.description|safe }}</li>
@@ -57,12 +53,14 @@
                     </li>
                 </ul>
                 {% if user == project.creator %}
-                <a href="{% url 'edit_project' project.pk %}" class="btn btn-primary">
-                    <i class="fas fa-edit"></i> Редактировать проект
-                </a>
-                <a href="{% url 'project-settings' project.pk %}" class="btn btn-secondary">
-                    <i class="fas fa-cogs"></i> Настройки проекта
-                </a>
+                <div class="list-btn">
+                    <a href="{% url 'edit_project' project.pk %}" class="btn btn-primary">
+                        <i class="fas fa-edit"></i> Редактировать проект
+                    </a>
+                    <a href="{% url 'project-settings' project.pk %}" class="btn btn-secondary">
+                        <i class="fas fa-cogs"></i> Настройки проекта
+                    </a>
+                </div>
                 {% endif %}
             </div>
         </div>
@@ -131,10 +129,6 @@
     {% endif %}
 </section>
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 616531b3188ba965e8d6d878f648fe172a1ba506
 {% endif %}
 
 

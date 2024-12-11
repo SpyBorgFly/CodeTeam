@@ -73,7 +73,7 @@ body {
 .add-project-btn {
     display: inline-block;
     padding: 12px 25px; /* Отступы */
-    background-color: #6200ea; /* Фиолетовый цвет */
+    background-color: #6200ea !important; /* Фиолетовый цвет */
     color: white; /* Цвет текста */
     text-decoration: none; /* Убираем подчеркивание */
     border-radius: 5px; /* Скругленные углы */
@@ -145,10 +145,6 @@ body {
 
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 616531b3188ba965e8d6d878f648fe172a1ba506
 /* Общая секция комментариев */
 .comments-section {
     background-color: #2c2c2c;
@@ -416,15 +412,23 @@ body {
     align-items: center;
 }
 
-<<<<<<< HEAD
-.btn-success{
-    background: #6200ea !important;
-}
-=======
-
 .btn-success{
     background: #6200ea !important;
 }
 
 
->>>>>>> 616531b3188ba965e8d6d878f648fe172a1ba506
+.btn-primary{
+    background: #6200ea !important;
+
+}
+
+.btn-secondary{
+
+    background: #6200ea !important;
+}
+
+
+.list-btn{
+    display: flex;
+    gap: 20px;
+}
