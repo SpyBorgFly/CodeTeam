@@ -48,3 +48,8 @@ class ApplicationForm(forms.ModelForm):
         widgets = {
             'comment': Textarea(attrs={'class': "form-control", 'placeholder': 'Введите ваш комментарий'}),
         }
+
+
+
+class LeaveProjectForm(forms.Form):
+    pass

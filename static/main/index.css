@@ -1,5 +1,3 @@
-
-
 body {
     margin: 0;
     padding:0;
@@ -39,6 +37,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     padding-bottom: 200px;
+    padding-bottom: 400px;
 }
 
 .btn1,
@@ -191,7 +190,6 @@ a:hover {
 }
 
 
-
 .list{
     list-style: none;
     border: 0.5px solid gray;
@@ -252,6 +250,7 @@ a:hover {
     border: 0.5px solid gray;
     grid-template-columns: 1fr 1fr 1fr;
     border-radius: 5px;
+    margin-bottom: 150px;
 }
 
 .cards-tehnolg div h3 {
@@ -259,13 +258,11 @@ a:hover {
 }
 
 
-
 .Python {
     border-right: 0.5px solid gray;
     margin-left: 10px;
     position: relative;
 }
-
 
 .Python::before {
     content: '';
@@ -352,7 +349,6 @@ a:hover {
     gap: 5px;
 }
 
-
 .hs::before {
     content: '';
     position: absolute;
@@ -371,7 +367,6 @@ a:hover {
     opacity: 1; /* Полная прозрачность при наведении */
     filter: blur(10px); /* Размытие фона при наведении */
 }
-
 
 
 .background-video{

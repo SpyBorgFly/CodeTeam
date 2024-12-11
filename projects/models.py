@@ -14,7 +14,7 @@ class Projects(models.Model):
     is_hidden = models.BooleanField(default=False)
     allowed_users = models.ManyToManyField(User, related_name='allowed_in_projects', blank=True)
     starred_by = models.ManyToManyField(User, related_name='starred_projects', blank=True)
-    
+    participants = models.ManyToManyField(User, related_name='participating_projects', blank=True)
 
     def __str__(self):
         return self.title

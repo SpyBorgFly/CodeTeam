@@ -10,6 +10,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
 
 <section class="settings-section">
     <div class="settings-container">
@@ -30,9 +31,72 @@
             </div>
             <button type="submit" class="btn btn-primary">Сохранить настройки</button>
         </form>
+
+        <h3>Участники проекта</h3>
+        <ul class="participants-list">
+            {% for participant in project.participants.all %}
+            <li class="participant-item">
+                <span>{{ participant.username }}</span>
+                {% if request.user == project.creator %}
+                <button type="button" class="btn btn-danger btn-small" data-bs-toggle="modal" data-bs-target="#removeModal{{ participant.pk }}">Удалить</button>
+                <!-- Модальное окно для подтверждения удаления участника -->
+                <div class="modal fade" id="removeModal{{ participant.pk }}" tabindex="-1" aria-labelledby="removeModalLabel{{ participant.pk }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="removeModalLabel{{ participant.pk }}">Подтверждение удаления участника</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Вы уверены, что хотите удалить участника "{{ participant.username }}" из проекта "{{ project.title }}"?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                                <form method="post" action="{% url 'remove_participant' project.pk participant.pk %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </li>
+            {% empty %}
+            <li class="participant-item">Нет участников</li>
+            {% endfor %}
+        </ul>
+
+        {% if request.user == project.creator %}
+        <h3>Действия с проектом</h3>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Удалить проект</button>
+        <!-- Модальное окно для подтверждения удаления проекта -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Подтверждение удаления проекта</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Вы уверены, что хотите удалить проект "{{ project.title }}"?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                        <form method="post" action="{% url 'delete_project' project.pk %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function() {
         $('.chosen-select').chosen({

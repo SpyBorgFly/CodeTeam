@@ -54,7 +54,7 @@ class ProfileView(View):
         projects = user.projects.all()
         comments = Comment.objects.filter(author=user).order_by('-created_date')
         outgoing_applications = Application.objects.filter(user=user).order_by('-created_date')
-        active_projects = Projects.objects.filter(allowed_users=user)
+        active_projects = Projects.objects.filter(participants=user)
         is_owner = request.user == user
         starred_projects = user.starred_projects.all()
 

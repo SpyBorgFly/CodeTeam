@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from .models import Projects, Comment, Application
-from .forms import ProjectsForm, ProjectFilterForm, ProjectSettingsForm, CommentForm, ReplyForm, ApplicationForm
+from .forms import ProjectsForm, ProjectFilterForm, ProjectSettingsForm, CommentForm, ReplyForm, ApplicationForm, LeaveProjectForm
 from django.views.generic import DetailView, UpdateView, View
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -12,11 +12,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
-import json
-
+import json, logging
+from django.contrib.auth.models import User
 from django.views.decorators.http import require_POST
-
-
 
 def clean_html(description):
     allowed_tags = [
@@ -119,8 +117,8 @@ class ProjectsDetailView(DetailView):
         
         # Добавляем проверки для кнопки подачи заявки
         context['is_creator'] = user == project.creator
-        context['is_participant'] = project.allowed_users.filter(pk=user.pk).exists()
-        context['has_applied'] = Application.objects.filter(project=project, user=user).exists()
+        context['is_participant'] = project.participants.filter(pk=user.pk).exists()
+        context['has_applied'] = Application.objects.filter(project=project, user=user, status='pending').exists()
         
         return context
 
@@ -205,18 +203,18 @@ class ProjectSettingsView(View):
     def get(self, request, pk):
         project = get_object_or_404(Projects, pk=pk)
         if request.user != project.creator:
-            return redirect('project_details', pk=project.pk)
+            return redirect('project-details', pk=project.pk)
         form = ProjectSettingsForm(instance=project)
         return render(request, 'projects/project_settings.html', {'form': form, 'project': project})
 
     def post(self, request, pk):
         project = get_object_or_404(Projects, pk=pk)
         if request.user != project.creator:
-            return redirect('project_details', pk=project.pk)
+            return redirect('project-details', pk=project.pk)
         form = ProjectSettingsForm(request.POST, instance=project)
         if form.is_valid():
             form.save()
-            return redirect('project-details', pk=project.pk)
+            return redirect('project-settings', pk=project.pk)
         return render(request, 'projects/project_settings.html', {'form': form, 'project': project})
 
 @login_required
@@ -233,7 +231,7 @@ def apply_to_project(request, pk):
         return JsonResponse({'success': False, 'message': 'Вы уже подали заявку на этот проект.'})
     
     # Проверяем, является ли пользователь уже участником проекта
-    if project.allowed_users.filter(pk=user.pk).exists():
+    if project.participants.filter(pk=user.pk).exists():
         return JsonResponse({'success': False, 'message': 'Вы уже являетесь участником этого проекта.'})
     
     if request.method == "POST":
@@ -250,7 +248,6 @@ def apply_to_project(request, pk):
         form = ApplicationForm()
     return render(request, 'projects/apply_to_project.html', {'form': form, 'project': project})
 
-
 @login_required
 def accept_application(request, pk, app_id):
     application = get_object_or_404(Application, pk=app_id, project__pk=pk)
@@ -259,7 +256,8 @@ def accept_application(request, pk, app_id):
     application.status = 'accepted'
     application.save()
     project = application.project
-    project.allowed_users.add(application.user)
+    project.participants.add(application.user)
+    project.save()
     return JsonResponse({'success': True, 'message': 'Заявка успешно принята.'})
 
 @login_required
@@ -271,7 +269,44 @@ def reject_application(request, pk, app_id):
     application.save()
     return JsonResponse({'success': True, 'message': 'Заявка успешно отклонена.'})
 
+@login_required
+def remove_participant(request, project_id, user_id):
+    project = get_object_or_404(Projects, pk=project_id)
+    user = get_object_or_404(User, pk=user_id)
+    if request.user != project.creator:
+        return JsonResponse({'success': False, 'message': 'Вы не можете удалить участника этого проекта.'})
+    if user in project.participants.all():
+        project.participants.remove(user)
+        return JsonResponse({'success': True, 'message': 'Участник удален из проекта.'})
+    return JsonResponse({'success': False, 'message': 'Пользователь не является участником этого проекта.'})
 
+logger = logging.getLogger(__name__)
+
+@login_required
+@require_POST
+def leave_project(request, project_id):
+    form = LeaveProjectForm(request.POST)
+    if form.is_valid():
+        try:
+            project = get_object_or_404(Projects, pk=project_id)
+            user = request.user
+            if user in project.participants.all():
+                project.participants.remove(user)
+                return JsonResponse({'success': True, 'message': 'Вы успешно вышли из проекта.'})
+            else:
+                return JsonResponse({'success': False, 'message': 'Вы не являетесь участником этого проекта.'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': f'Произошла ошибка при выходе из проекта: {str(e)}'})
+    else:
+        return JsonResponse({'success': False, 'message': 'Неверные данные формы.'})
+
+@login_required
+def delete_project(request, pk):
+    project = get_object_or_404(Projects, pk=pk)
+    if request.user != project.creator:
+        return JsonResponse({'success': False, 'message': 'Вы не можете удалить этот проект.'})
+    project.delete()
+    return JsonResponse({'success': True, 'message': 'Проект успешно удален.'})
 
 @login_required
 @require_POST

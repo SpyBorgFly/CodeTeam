@@ -144,7 +144,7 @@
             </div>
             {% endfor %}
         </div>
-        <a href="/projects/add_projects">
+        <a href="{% url 'add_projects' %}">
             <button type="button" class="btn btn-success">Добавить проект</button>
         </a>
         <span class="error-message">{{ error }}</span>
