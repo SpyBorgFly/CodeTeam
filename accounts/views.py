@@ -1,4 +1,4 @@
-import logging
+
 from django.contrib.auth.models import User
 from projects.models import Projects, Comment, Application
 from django.views import View
@@ -11,8 +11,6 @@ from .models import UserProfile
 from django.http import Http404
 from collections import defaultdict
 
-# Настройка логирования
-logger = logging.getLogger(__name__)
 
 class RegisterView(View):
     def get(self, request):
@@ -58,15 +56,15 @@ class ProfileView(View):
         is_owner = request.user == user
         starred_projects = user.starred_projects.all()
 
-        # Входящие заявки для проектов пользователя
+        
         incoming_applications = Application.objects.filter(project__creator=user, status='pending').order_by('-created_date')
 
-        # Группировка заявок по проектам
+     
         grouped_apps = defaultdict(list)
         for app in incoming_applications:
             grouped_apps[app.project].append(app)
 
-        # Формируем список проектов с количеством нерассмотренных заявок
+        
         project_requests = []
         for project, apps in grouped_apps.items():
             project_requests.append({
@@ -154,13 +152,10 @@ def user_settings(request):
 def review_applications(request):
     user = request.user
     incoming_applications = Application.objects.filter(project__creator=user, status='pending').order_by('-created_date')
-    
-    # Группировка заявок по проектам
     grouped_apps = defaultdict(list)
     for app in incoming_applications:
         grouped_apps[app.project].append(app)
-    
-    # Формируем список проектов с количеством нерассмотренных заявок
+  
     project_requests = []
     for project, apps in grouped_apps.items():
         project_requests.append({
@@ -168,9 +163,5 @@ def review_applications(request):
             'count': len(apps),
             'applications': apps
         })
-    
-    # Логирование для проверки наличия входящих заявок
-    logger.info(f"Incoming applications count: {incoming_applications.count()}")
-    logger.info(f"Grouped applications: {grouped_apps}")
     
     return render(request, 'accounts/review_applications.html', {'project_requests': project_requests, 'user': user})

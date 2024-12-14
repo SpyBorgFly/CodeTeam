@@ -12,7 +12,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
-import json, logging
+import json
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_POST
 
@@ -298,7 +298,6 @@ def remove_participant(request, project_id, user_id):
         return JsonResponse({'success': True, 'message': 'Участник удален из проекта.'})
     return JsonResponse({'success': False, 'message': 'Пользователь не является участником этого проекта.'})
 
-logger = logging.getLogger(__name__)
 
 @login_required
 @require_POST

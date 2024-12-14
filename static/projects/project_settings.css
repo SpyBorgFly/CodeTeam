@@ -88,7 +88,15 @@ button.btn-primary:active {
 
 button.btn-danger {
     background: linear-gradient(135deg, #EF4444, #DC2626);
+    max-width: 300px;
 }
+
+.btn-dangerr{
+    background: linear-gradient(135deg, #EF4444, #DC2626);
+    max-width: 100% !important;
+}
+
+
 
 button.btn-danger:hover {
     background: linear-gradient(135deg, #DC2626, #EF4444);
